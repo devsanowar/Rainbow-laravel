@@ -120,7 +120,7 @@
 
 <body>
     <div class="container">
-        <h2>Create Dealer Account</h2>
+        <h2>Create  Account</h2>
         <form action="{{ route('dealer.store') }}" method="POST">
             @csrf
 
