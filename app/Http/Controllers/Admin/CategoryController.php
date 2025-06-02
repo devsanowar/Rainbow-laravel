@@ -15,7 +15,8 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::latest()->get();
+        // $categories = Category::latest()->get();
+        $categories = Category::orderBy('order')->get();
         return view('admin.layouts.pages.category.index', compact('categories'));
     }
 
@@ -175,6 +176,23 @@ class CategoryController extends Controller
             'message' => 'Status changed successfully.',
             'new_status' => $category->is_active ? 'Active' : 'DeActive',
             'class' => $category->is_active ? 'btn-success' : 'btn-danger',
+        ]);
+    }
+
+    // Category orderBy position
+    public function updateOrder(Request $request)
+    {
+        if (!$request->has('order') || !is_array($request->order)) {
+            return response()->json(['success' => false, 'message' => 'Invalid data received.'], 400);
+        }
+
+        foreach ($request->order as $index => $id) {
+            Category::where('id', $id)->update(['order' => $index + 1]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Order updated successfully.',
         ]);
     }
 

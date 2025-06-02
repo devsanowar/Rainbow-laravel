@@ -33,20 +33,16 @@
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="sortable-list">
 
                                 @forelse ($categories as $key => $category)
-                                    <tr id="row-{{ $category->id }}">
+                                    <tr data-id="{{ $category->id }}">
                                         <td>
-                                            <div class="form-check">
-                                                {{-- <input class="form-check-input custom-design row-checkbox" type="checkbox"
-                                                    id="defaultCheck1"> --}}
-                                                <input type="checkbox" class="form-check-input custom-design row-checkbox"
-                                                    value="{{ $category->id }}">
-
-                                            </div>
+                                            <input type="checkbox" class="form-check-input custom-design row-checkbox"
+                                                value="{{ $category->id }}">
                                         </td>
-                                        <td scope="row">{{ $key + 1 }}</th>
+                                        {{-- <td ><i class="zmdi zmdi-select-all"></i> {{ $key+1 }} </td> --}}
+                                        <td scope="row">{{ $key + 1 }}</td>
                                         <td><img src="{{ asset($category->image) }}" alt="category image" width="40">
                                         </td>
                                         <td>{{ $category->category_name }}</td>
@@ -65,26 +61,16 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"
-                                                    class="btn btn-raised bg-pink waves-effect show_confirm"> <i
-                                                        class="material-icons">delete</i> </button>
+                                                    class="btn btn-raised bg-pink waves-effect show_confirm">
+                                                    <i class="material-icons">delete</i>
+                                                </button>
                                             </form>
                                         </td>
-
+                                    </tr>
+                                @empty
                                     <tr>
-
-                                    @empty
-                                        <table>
-                                            <thead>
-                                                <tr>
-
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    Category Not Found! :) Please Add Category. Thank you
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                        <td colspan="6">Category Not Found! :) Please Add Category. Thank you</td>
+                                    </tr>
                                 @endforelse
 
                                 <tr>
@@ -106,6 +92,7 @@
 
 @push('scripts')
     <script src="{{ asset('backend') }}/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script src="{{ asset('backend') }}/assets/js/sweetalert2.all.min.js"></script>
 
     <script>
@@ -118,6 +105,41 @@
             });
         });
     </script>
+
+
+<script>
+    $(document).ready(function () {
+        $("#sortable-list").sortable({
+            placeholder: "ui-state-highlight",
+            axis: "y",
+            update: function (event, ui) {
+                var order = [];
+
+                $("#sortable-list tr").each(function () {
+                    order.push($(this).data('id')); // ✅ এখন এটি <tr data-id="..."> থেকে আইডি নিচ্ছে
+                });
+
+                console.log(order); // Debug: দেখুন array তৈরি হচ্ছে কিনা
+
+                $.ajax({
+                    url: "{{ route('category.updateOrder') }}",
+                    type: "POST",
+                    data: {
+                        order: order,
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: function (response) {
+                        toastr.success(response.message);
+                    },
+                    error: function (xhr) {
+                        toastr.error(response.message || 'Something went wrong.');
+                    }
+                });
+            }
+        });
+    });
+</script>
+
 
     <script>
         $('#bulk-delete').on('click', function() {
@@ -155,6 +177,7 @@
             }
         });
     </script>
+
 
     <script>
         const categoryStatusRoute = "{{ route('category.status') }}";

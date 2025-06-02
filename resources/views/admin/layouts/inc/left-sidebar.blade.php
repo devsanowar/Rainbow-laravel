@@ -83,15 +83,16 @@ $menuItem = ManageMenuItem::first();
                     <li class="{{ request()->routeIs('category.*') ? 'active' : '' }}">
                         <a href="{{ route('category.index') }}">Category</a>
                     </li>
-                    @if($menuItem->subcategory_status)
+                    @if($menuItem->subcategory_status === 0)
                     <li class="{{ request()->routeIs('subcategory.*') ? 'active' : '' }}">
                         <a href="{{ route('subcategory.index') }}">Sub Category</a>
                     </li>
                     @endif
-
+                    @if($menuItem->brand_status === 0)
                     <li class="{{ request()->routeIs('brand.*') ? 'active' : '' }}">
                         <a href="{{ route('brand.index') }}">Brand</a>
                     </li>
+                    @endif
 
                 </ul>
             </li>
