@@ -141,6 +141,7 @@ Route::prefix('admin')
             Route::put('{id}', [CategoryController::class, 'update'])->name('category.update');
             Route::delete('{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
             Route::post('/category/status-change', [CategoryController::class, 'categoryChangeStatus'])->name('category.status');
+            Route::post('bulk-delete', [CategoryController::class, 'bulkDelete'])->name('category.bulkDelete');
         });
 
         // Sub Category
