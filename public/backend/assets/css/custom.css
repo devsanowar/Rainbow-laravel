@@ -223,9 +223,23 @@ p span .sms {
 
 
 .switch label input[type="checkbox"]:checked + .lever {
-	background-color: var(--priamary) !important;
+background-color: var(--priamary) !important;
 }
 .switch label input[type="checkbox"]:checked + .lever::after {
-	background-color: var(--priamary) !important;
-	left: 24px;
+background-color: var(--priamary) !important;
+left: 24px;
+}
+
+
+[type="checkbox"]:not(:checked),
+[type="checkbox"]:checked {
+border: 1px solid var(--priamary) !important;
+opacity: 1 !important;
+width: 22px;
+height: 22px;
+}
+
+.custom-design:checked {
+background-color: var(--priamary) !important;
+border-color: var(--priamary) !important;
 }

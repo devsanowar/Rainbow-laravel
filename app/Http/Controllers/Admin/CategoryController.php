@@ -82,14 +82,13 @@ class CategoryController extends Controller
             return back();
         }
 
-
         $defaultCategory = Category::where('category_slug', 'default')->first();
         if (!$defaultCategory) {
             Toastr::error('Category deleted successfully.');
             return back();
         }
         $category->products()->update([
-            'category_id' => $defaultCategory->id
+            'category_id' => $defaultCategory->id,
         ]);
 
         if ($category) {
@@ -106,17 +105,58 @@ class CategoryController extends Controller
         return redirect()->back();
     }
 
-    // Image add and update code here
-    private function categoryImage(Request $request)
+    public function bulkDelete(Request $request)
     {
-        if ($request->hasFile('image')) {
-            $image = Image::read($request->file('image'));
-            $imageName = time() . '-' . $request->file('image')->getClientOriginalName();
-            $destinationPath = public_path('uploads/category_image/');
-            $image->save($destinationPath . $imageName);
-            return 'uploads/category_image/' . $imageName;
+        $ids = $request->input('ids', []);
+
+        if (empty($ids)) {
+            return response()->json(['success' => false, 'message' => 'No categories selected.']);
         }
-        return null;
+
+        // Get default category
+        $defaultCategory = Category::where('category_slug', 'default')->first();
+
+        if (!$defaultCategory) {
+            return response()->json(['success' => false, 'message' => 'Default category not found.']);
+        }
+
+        $deletedCount = 0;
+
+        foreach ($ids as $id) {
+            $category = Category::find($id);
+
+            if (!$category) {
+                continue;
+            }
+
+            // Prevent deleting the default category
+            if ($category->category_slug === 'default') {
+                continue;
+            }
+
+            // Transfer products to default category
+            $category->products()->update([
+                'category_id' => $defaultCategory->id,
+            ]);
+
+            // Delete category image from storage
+            if (!empty($category->image)) {
+                $oldImagePath = public_path($category->image);
+                if (file_exists($oldImagePath) && is_file($oldImagePath)) {
+                    unlink($oldImagePath);
+                }
+            }
+
+            $category->delete();
+            $deletedCount++;
+        }
+
+        if ($deletedCount > 0) {
+            // Optional: if you use Toastr in Blade after Ajax success
+            return response()->json(['success' => true, 'message' => "$deletedCount category(s) deleted successfully."]);
+        }
+
+        return response()->json(['success' => false, 'message' => 'No valid category was deleted.']);
     }
 
     public function categoryChangeStatus(Request $request)
@@ -136,5 +176,18 @@ class CategoryController extends Controller
             'new_status' => $category->is_active ? 'Active' : 'DeActive',
             'class' => $category->is_active ? 'btn-success' : 'btn-danger',
         ]);
+    }
+
+    // Image add and update code here
+    private function categoryImage(Request $request)
+    {
+        if ($request->hasFile('image')) {
+            $image = Image::read($request->file('image'));
+            $imageName = time() . '-' . $request->file('image')->getClientOriginalName();
+            $destinationPath = public_path('uploads/category_image/');
+            $image->save($destinationPath . $imageName);
+            return 'uploads/category_image/' . $imageName;
+        }
+        return null;
     }
 }
