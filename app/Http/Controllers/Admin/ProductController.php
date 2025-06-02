@@ -20,7 +20,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::with(['category', 'brand'])->latest()->get();
+        $products = Product::with(['category', 'brand'])
+            ->latest()
+            ->get();
         return view('admin.layouts.pages.product.index', compact('products'));
     }
 
@@ -83,7 +85,7 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         $categories = Category::get(['id', 'category_name']);
-        $brands = Brand::get(['id','brand_name']);
+        $brands = Brand::get(['id', 'brand_name']);
         return view('admin.layouts.pages.product.edit', compact('product', 'categories', 'brands'));
     }
 
@@ -220,8 +222,6 @@ class ProductController extends Controller
         return redirect()->back();
     }
 
-
-
     // Product multiple images
 
     private function productMultipleImages(Request $request)
@@ -280,33 +280,12 @@ class ProductController extends Controller
             }
         }
 
-
         $product->forceDelete();
 
         $toast = Toastr();
         $toast->success('Product permanently deleted successfully.');
         return redirect()->back();
     }
-
-
-
-
-    // public function changeStatus($id)
-    // {
-    //     $getStatus = Product::select('is_active')->where('id', $id)->first();
-
-    //     if ($getStatus->is_active == 1) {
-    //         $status = 0;
-    //     } else {
-    //         $status = 1;
-    //     }
-    //     Product::where('id', $id)->update(['is_active' => $status]);
-
-    //     $toast = Toastr();
-    //     $toast->success('Status change successfully.');
-    //     return redirect()->route('product.index');
-    // }
-
 
     public function productChangeStatus(Request $request)
     {
@@ -327,7 +306,57 @@ class ProductController extends Controller
         ]);
     }
 
+    public function bulkDelete(Request $request)
+    {
+        $ids = $request->input('ids', []);
 
+        if (empty($ids)) {
+            return response()->json(['success' => false, 'message' => 'No products selected.']);
+        }
+
+        $deletedCount = 0;
+
+        foreach ($ids as $id) {
+            $product = Product::find($id);
+
+            if (!$product) {
+                continue;
+            }
+
+            // ✅ Delete main product thumbnail
+            if (!empty($product->thumbnail)) {
+                $thumbnailPath = public_path($product->thumbnail);
+                if (file_exists($thumbnailPath) && is_file($thumbnailPath)) {
+                    unlink($thumbnailPath);
+                }
+            }
+
+            // ✅ Delete multiple images from JSON
+            $images = json_decode($product->images, true); // decode to array
+
+            if (is_array($images)) {
+                foreach ($images as $image) {
+                    $imagePath = public_path($image);
+                    if (file_exists($imagePath) && is_file($imagePath)) {
+                        unlink($imagePath);
+                    }
+                }
+            }
+
+            // ✅ Delete product row
+            $product->delete();
+            $deletedCount++;
+        }
+
+        if ($deletedCount > 0) {
+            return response()->json([
+                'success' => true,
+                'message' => "$deletedCount product(s) deleted successfully.",
+            ]);
+        }
+
+        return response()->json(['success' => false, 'message' => 'No valid product was deleted.']);
+    }
 
     // Product thumbnail image
     private function productImage(Request $request)
@@ -341,8 +370,4 @@ class ProductController extends Controller
         }
         return null;
     }
-
-
-
-
 }

@@ -12,55 +12,6 @@
 
     <link rel="stylesheet" href="{{ asset('backend') }}/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
 
-    <style>
-
-        .table td,
-        .table th {
-            vertical-align: middle;
-        }
-
-        .bootstrap-select.btn-group.show-tick>.btn {
-            padding-left: 10px;
-            padding-right: -5px;
-        }
-
-
-        .filter-form {
-            padding: 0px 5px;
-            margin-bottom: 40px;
-            margin-top: 20px;
-        }
-
-        .filter-form label {
-            font-weight: 600;
-            font-size: 15px;
-            color: #333;
-            margin-bottom: 6px;
-            display: block;
-        }
-
-
-        .filter-form .custom_btn {
-            padding: 10px 25px;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 14px;
-            transition: all 0.3s ease-in-out;
-        }
-
-        .filter-form .custom_btn:hover {
-            background-color: #e69500;
-            color: #fff;
-        }
-
-        @media (max-width: 768px) {
-
-            .filter-form .col-lg-3,
-            .filter-form .col-lg-2 {
-                margin-bottom: 15px;
-            }
-        }
-    </style>
 @endpush
 
 
@@ -80,11 +31,11 @@
                 <div class="card">
                     <div class="card-header pb-0 d-flex justify-content-between">
                         <h4>All Orders</h4>
-                        <div>
+                        {{-- <div>
                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#blocklistModal">
                                 Add to Blocklist
                             </button>
-                        </div>
+                        </div> --}}
                         <div>
                             <a href="{{ route('block.list') }}" class="btn btn-primary">Block Lists</a>
                         </div>
@@ -209,7 +160,7 @@
         </div>
     </div>
 
-    @include('admin.layouts.pages.order.add-block')
+    {{-- @include('admin.layouts.pages.order.add-block') --}}
 
 
 @endsection

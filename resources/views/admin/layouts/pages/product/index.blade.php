@@ -7,6 +7,9 @@
 <link rel="stylesheet" href="{{ asset('backend') }}/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="{{ asset('backend') }}/assets/css/sweetalert2.min.css">
 
+
+
+
 @endpush
 
 
@@ -21,14 +24,18 @@
         <div class="col-lg-12 col-md-12 col-sm-12 mt-4">
             <div class="card">
                 <div class="card-header">
-                    <h4> All Products <span><a href="{{ route('product.trash') }}" class="btn btn-primary text-uppercase" >Recycle Bin ( {{ $countDeletedData->count() }} )</a></span> <span><a href="{{ route('product.create') }}" class="btn btn-primary text-white text-uppercase text-bold right">
+                    <h4> All Products <span><button style="margin-bottom:0 !important" id="bulk-delete" class="btn btn-danger mb-3">Delete Selected</button> <a href="{{ route('product.trash') }}" class="btn btn-primary text-uppercase" >Recycle Bin ( {{ $countDeletedData->count() }} )</a></span> <span><a href="{{ route('product.create') }}" class="btn btn-primary text-white text-uppercase text-bold right">
                         + Add Product
                    </a></span></h4>
                 </div>
                 <div class="body">
                     <table id="productDataTable" class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                        
                         <thead>
                             <tr>
+                                <th>
+                                    <input type="checkbox" id="select-all" class="custom-design">
+                                </th>
                                 <th>S/N</th>
                                 <th style="width: 40px">Image</th>
 								<th>Name</th>
@@ -43,7 +50,11 @@
 
                         <tbody>
                             @foreach ($products as $key=>$product)
-                            <tr>
+                            <tr id="row-{{ $product->id }}" data-id="{{ $product->id }}">
+                                <td>
+                                    <input type="checkbox" class="form-check-input custom-design row-checkbox"
+                                        value="{{ $product->id }}">
+                                </td>
                                 <td>{{$key+1 }}</td>
                                 <td><img src="{{ asset($product->thumbnail) }}" alt="" width="30"></td>
 								<td>{{ Str::words($product->product_name, 6, '...') }}</td>
@@ -79,6 +90,8 @@
                             </tr>
                             @endforeach
 
+                            
+
                         </tbody>
                     </table>
                 </div>
@@ -105,6 +118,57 @@
 <!-- Custom Js -->
 <script src="{{ asset('backend') }}/assets/js/pages/tables/jquery-datatable.js"></script>
 <script src="{{ asset('backend') }}/assets/js/sweetalert2.all.min.js"></script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectAll = document.getElementById('select-all');
+            const checkboxes = document.querySelectorAll('.row-checkbox');
+
+            selectAll.addEventListener('change', function() {
+                checkboxes.forEach(cb => cb.checked = selectAll.checked);
+            });
+        });
+    </script>
+
+
+<script>
+        $('#bulk-delete').on('click', function() {
+            const selectedIds = [];
+            $('.row-checkbox:checked').each(function() {
+                selectedIds.push($(this).val());
+            });
+
+            if (selectedIds.length === 0) {
+                toastr.error('Please select at least one category.');
+                return;
+            }
+
+            if (confirm('Are you sure you want to delete selected categories?')) {
+                $.ajax({
+                    url: "{{ route('product.bulkDelete') }}",
+                    type: 'POST',
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        ids: selectedIds
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            toastr.success(response.message);
+
+                            // Remove deleted rows from DOM
+                            selectedIds.forEach(function(id) {
+                                $('#row-' + id).remove();
+                            });
+                        } else {
+                            toastr.error(response.message || 'Something went wrong.');
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+
 
 
  <!-- Script For status change -->

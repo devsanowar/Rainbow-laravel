@@ -157,6 +157,7 @@ Route::prefix('admin')
         Route::get('/restore/{id}/productData', [ProductController::class, 'restoreData'])->name('product.restore');
         Route::delete('/permanant/{id}/productdata', [ProductController::class, 'forceDeleteData'])->name('product.forceDelete');
         Route::get('changeStatus/{id}', [ProductController::class, 'changeStatus'])->name('changeStatus');
+        Route::post('bulk-delete', [ProductController::class, 'bulkDelete'])->name('product.bulkDelete');
 
         // District route
         Route::get('district', [DistrictController::class, 'index'])->name('district.index');
