@@ -36,7 +36,7 @@
                             <tbody id="sortable-list">
 
                                 @forelse ($categories as $key => $category)
-                                    <tr data-id="{{ $category->id }}">
+                                    <tr id="row-{{ $category->id }}" data-id="{{ $category->id }}">
                                         <td>
                                             <input type="checkbox" class="form-check-input custom-design row-checkbox"
                                                 value="{{ $category->id }}">

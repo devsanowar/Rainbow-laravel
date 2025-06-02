@@ -15,7 +15,7 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $brands = Brand::all();
+        $brands = Brand::orderBy('order')->get();
         return view('admin.layouts.pages.brand.index', compact('brands'));
     }
 
@@ -100,6 +100,20 @@ class BrandController extends Controller
     public function destroy(string $id)
     {
         $brand = Brand::find($id);
+        if ($brand->brand_name == 'Default') {
+            Toastr::error('Default brand cannot be deleted.');
+            return back();
+        }
+
+        $defaultBrand = Brand::where('brand_name', 'Default')->first();
+        if (!$defaultBrand) {
+            Toastr::error('Brand deleted successfully.');
+            return back();
+        }
+        $brand->products()->update([
+            'brand_id' => $defaultBrand->id,
+        ]);
+
         if ($brand) {
             $oldImagePath = public_path($brand->image);
             if (file_exists($oldImagePath)) {
@@ -111,17 +125,62 @@ class BrandController extends Controller
         return redirect()->route('brand.index');
     }
 
-    private function brandImage(Request $request)
+
+     public function bulkDelete(Request $request)
     {
-        if ($request->hasFile('image')) {
-            $image = Image::read($request->file('image'));
-            $imageName = time() . '-' . $request->file('image')->getClientOriginalName();
-            $destinationPath = public_path('uploads/brand_image/');
-            $image->save($destinationPath . $imageName);
-            return 'uploads/brand_image/' . $imageName;
+        $ids = $request->input('ids', []);
+
+        if (empty($ids)) {
+            return response()->json(['success' => false, 'message' => 'No brand selected.']);
         }
-        return null;
+
+        // Get default brand
+        $defaultBrand = Brand::where('brand_name', 'Default')->first();
+
+        if (!$defaultBrand) {
+            return response()->json(['success' => false, 'message' => 'Default brand not found.']);
+        }
+
+        $deletedCount = 0;
+
+        foreach ($ids as $id) {
+            $brand = Brand::find($id);
+
+            if (!$brand) {
+                continue;
+            }
+
+            // Prevent deleting the default brand
+            if ($brand->brand_name === 'Default') {
+                continue;
+            }
+
+            // Transfer products to default brand
+            $brand->products()->update([
+                'brand_id' => $defaultBrand->id,
+            ]);
+
+            // Delete brand image from storage
+            if (!empty($brand->image)) {
+                $oldImagePath = public_path($brand->image);
+                if (file_exists($oldImagePath) && is_file($oldImagePath)) {
+                    unlink($oldImagePath);
+                }
+            }
+
+            $brand->delete();
+            $deletedCount++;
+        }
+
+        if ($deletedCount > 0) {
+            // Optional: if you use Toastr in Blade after Ajax success
+            return response()->json(['success' => true, 'message' => "$deletedCount brand(s) deleted successfully."]);
+        }
+
+        return response()->json(['success' => false, 'message' => 'No valid brand was deleted.']);
     }
+
+
 
     public function brandChangeStatus(Request $request)
     {
@@ -141,4 +200,37 @@ class BrandController extends Controller
             'class' => $brand->is_active ? 'btn-success' : 'btn-danger',
         ]);
     }
+
+
+    // Brand orderBy position
+    public function updateOrder(Request $request)
+    {
+        if (!$request->has('order') || !is_array($request->order)) {
+            return response()->json(['success' => false, 'message' => 'Invalid data received.'], 400);
+        }
+
+        foreach ($request->order as $index => $id) {
+            Brand::where('id', $id)->update(['order' => $index + 1]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Order updated successfully.',
+        ]);
+    }
+
+
+    private function brandImage(Request $request)
+    {
+        if ($request->hasFile('image')) {
+            $image = Image::read($request->file('image'));
+            $imageName = time() . '-' . $request->file('image')->getClientOriginalName();
+            $destinationPath = public_path('uploads/brand_image/');
+            $image->save($destinationPath . $imageName);
+            return 'uploads/brand_image/' . $imageName;
+        }
+        return null;
+    }
+
+
 }

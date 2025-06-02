@@ -94,9 +94,11 @@ Route::prefix('admin')
                 Route::delete('destroy/{id}', [SliderController::class, 'destroy'])->name('slider.destroy');
             });
 
-            // Brand
+            // Brand route here
             Route::resource('brand', BrandController::class);
             Route::post('/brand/status-change', [BrandController::class, 'brandChangeStatus'])->name('brand.status');
+            Route::post('bulk-delete', [BrandController::class, 'bulkDelete'])->name('brand.bulkDelete');
+            Route::post('update-order', [BrandController::class, 'updateOrder'])->name('brand.updateOrder');
 
             // About
             Route::get('about', [AboutController::class, 'index'])->name('about.index');
@@ -142,7 +144,7 @@ Route::prefix('admin')
             Route::delete('{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
             Route::post('/category/status-change', [CategoryController::class, 'categoryChangeStatus'])->name('category.status');
             Route::post('bulk-delete', [CategoryController::class, 'bulkDelete'])->name('category.bulkDelete');
-            Route::post('/update-order', [CategoryController::class, 'updateOrder'])->name('category.updateOrder');
+            Route::post('update-order', [CategoryController::class, 'updateOrder'])->name('category.updateOrder');
         });
 
         // Sub Category

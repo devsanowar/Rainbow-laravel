@@ -20,7 +20,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::with('category')->latest()->get();
+        $products = Product::with(['category', 'brand'])->latest()->get();
         return view('admin.layouts.pages.product.index', compact('products'));
     }
 

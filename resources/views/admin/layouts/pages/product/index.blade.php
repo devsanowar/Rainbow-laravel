@@ -33,6 +33,7 @@
                                 <th style="width: 40px">Image</th>
 								<th>Name</th>
 								<th>Category</th>
+								<th>Brand</th>
 								<th>Stock</th>
 								<th>Price</th>
                                 <th>Status</th>
@@ -47,6 +48,7 @@
                                 <td><img src="{{ asset($product->thumbnail) }}" alt="" width="30"></td>
 								<td>{{ Str::words($product->product_name, 6, '...') }}</td>
 								<td>{{ $product->category->category_name ?? 'N/A' }}</td>
+								<td>{{ $product->brand->brand_name ?? 'N/A' }}</td>
 								<td>{{ $product->stock_quantity }}</td>
 								<td>{{ $product->regular_price }}</td>
                                 {{-- <td>
