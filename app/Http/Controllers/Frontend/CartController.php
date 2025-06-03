@@ -13,6 +13,7 @@ class CartController extends Controller
     public function cartPage()
     {
         $cartContents = session()->get('cart', []);
+        return $cartContents;
 
         $totalAmount = 0;
         foreach ($cartContents as $item) {

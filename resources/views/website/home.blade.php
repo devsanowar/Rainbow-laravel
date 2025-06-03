@@ -9,6 +9,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $website_setting->website_title }} | Home</title>
 
     <!-- Favicon -->
@@ -183,65 +184,7 @@
             </div>
         </section>
         <!-- =========Quality Product Section Start ============= -->
-        <section class="quality-product-section">
-            <div class="container">
-                <div class="section-title">
-                    <h2>Quality Products</h2>
-                </div>
-                <div class="row g-4">
-                    <!-- Product Card Start -->
-                    @forelse ($products as $product)
-                        <div class="col-12 col-sm-6 col-md-4 col-lg-3" data-aos="zoom-in" data-aos-delay="100">
-                            <div class="card product-card h-100">
-                                <img src="{{ asset($product->thumbnail) }}" class="card-img-top product-img"
-                                    alt="Moringa Leaf Powder" />
-                                <div class="card-body d-flex flex-column">
-                                    <h5 class="product-name"><a
-                                            href="singleProduct.html">{{ $product->product_name }}</a></h5>
-                                    <p class="text-muted">
-                                        Superfood for Energy & Immunity
-                                    </p>
-                                    <p class="product-price mb-2">
-                                        @if ($product->discount_price && $product->discount_type === 'flat')
-                                            @php
-                                                $product_discount_price =
-                                                    $product->regular_price - $product->discount_price;
-                                            @endphp
-                                            <span
-                                                class="text-decoration-line-through text-danger me-2">{{ number_format($product->regular_price, 2) }}</span>
-                                            <span
-                                                class="fw-bold active-price">{{ number_format($product_discount_price, 2) }}TK</span>
-                                        @elseif ($product->discount_price && $product->discount_type === 'percent')
-                                            @php
-                                                $discount_amount =
-                                                    ($product->regular_price * $product->discount_price) / 100;
-                                                $product_discount_price = $product->regular_price - $discount_amount;
-                                            @endphp
-                                            <span
-                                                class="text-decoration-line-through text-danger me-2">{{ number_format($product->regular_price, 2) }}</span>
-                                            <span
-                                                class="fw-bold active-price">{{ number_format($product_discount_price, 2) }}TK</span>
-                                        @else
-                                            <span
-                                                class="text-decoration-line-through text-danger me-2">{{ number_format($product->regular_price, 2) }}
-                                                TK</span>
-                                        @endif
-                                    </p>
-                                    <a href="#" class="rainbow-btn btn-buy mt-auto">Add To Cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    @empty
-                        <h4 style="color: #ccc">Product not found!!</h4>
-                    @endforelse
-
-
-
-
-                    <!-- Product Card End -->
-                </div>
-            </div>
-        </section>
+        @include('website.layouts.pages.home.product')
 
         <!-- Featured Section Start -->
         <section id="featured-logo-section">
@@ -419,12 +362,50 @@
     <!-- ======= MAIN CONTENT END ======= -->
 
     @include('website.layouts.inc.footer')
-
-
-
     <!-- ======= FOOTER END ======= -->
-
     @include('website.layouts.inc.script')
+
+
+    <script>
+    $(document).ready(function() {
+        $(document).on('submit', '.add-to-cart-form', function(e) {
+            e.preventDefault();
+
+            let form = $(this);
+            let formData = form.serialize();
+
+            let button = form.find('.btn-buy');
+            let spinner = button.find('.spinner-border');
+
+            button.prop('disabled', true);
+            spinner.removeClass('d-none');
+
+            $.ajax({
+                url: "{{ route('addToCart') }}",
+                method: "POST",
+                data: formData,
+                success: function(response) {
+                    toastr.success(response.message, '', { timeOut: 1500 });
+                    $('#cart-count').text(response.cart_count);
+
+                    // Optionally display the updated cart content if needed
+                    console.log(response.cart_contents);
+
+                    spinner.addClass('d-none');
+                    button.prop('disabled', false);
+
+                    $('#cart-count').text(response.itemCount);
+                },
+                error: function() {
+                    toastr.error('Failed to add product.', '', { timeOut: 2000 });
+                    spinner.addClass('d-none');
+                    button.prop('disabled', false);
+                }
+            });
+        });
+    });
+</script>
+
 </body>
 
 </html>
