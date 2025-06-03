@@ -22,7 +22,7 @@
                     <span></span><span></span><span></span>
                 </div>
                 <div class="logo">
-                    <a href="index.html">
+                    <a href="{{ route('home') }}">
                         <img src="{{ asset($website_setting->website_logo) }}" alt="Rainbow Global Logo" class="img-fluid"
                             style="height: 25px;">
                     </a>
@@ -66,7 +66,7 @@
                     <span></span><span></span><span></span>
                 </div>
                 <div class="logo">
-                    <a href="#">
+                    <a href="{{ route('home') }}">
                         <img src="{{ asset($website_setting->website_logo) }}" alt="Rainbow Global Logo" class="img-fluid"
                             style="height: 50px;">
                     </a>
@@ -98,7 +98,8 @@
         <div class="container">
             <div class="nav-bar">
                 <nav>
-                    <a href="index.html">Home</a>
+                    <a href="{{ route('home') }}">Home</a>
+                    <a href="{{ route('about.page') }}">About</a>
                     <div class="has-dropdown">
                         <a href="#">Shop <i class="fa-solid fa-caret-down"></i></a>
                         <div class="dropdown">
@@ -113,7 +114,7 @@
                                 <a href="#">Checkout</a>
                             </div>
                             </div> -->
-                    <a href="about.html">About</a>
+                    
                     <a href="blog.html">Blog</a>
                     <a href="contact.html">Contact</a>
                 </nav>
