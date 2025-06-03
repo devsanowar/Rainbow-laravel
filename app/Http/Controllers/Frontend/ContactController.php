@@ -10,10 +10,7 @@ use App\Models\Contact;
 class ContactController extends Controller
 {
     public function contactPage(){
-        $pageTitle = 'Contact Us';
-        return view('website.layouts.contact', compact([
-            'pageTitle',
-        ]));
+        return view('website.layouts.contact');
     }
 
 

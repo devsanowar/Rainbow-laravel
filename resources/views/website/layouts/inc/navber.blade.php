@@ -116,7 +116,7 @@
                             </div> -->
                     
                     <a href="{{ route('blog.page') }}">Blog</a>
-                    <a href="contact.html">Contact</a>
+                    <a href="{{ route('contact.page') }}">Contact</a>
                 </nav>
                 <div class="nav-actions">
                     <a href="#" class="seller-btn">Get Offers</a>
