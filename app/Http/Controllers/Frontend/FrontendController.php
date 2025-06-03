@@ -41,12 +41,10 @@ class FrontendController extends Controller
         // $social_icon = WebsiteSocialIcon::select(['id', 'messanger_url'])->first();
         // $website_setting = WebsiteSetting::select(['id', 'phone'])->first();
 
-        // $featured_products = Product::with(['category:id,category_name'])
-        //     ->where('is_active', 1)
-        //     ->where('is_featured', 1)
-        //     ->latest()
-        //     ->limit(8)
-        //     ->get(['id', 'category_id', 'product_name', 'product_slug', 'regular_price', 'discount_price', 'discount_type', 'thumbnail']);
+        $products = Product::where('is_active', 1)
+            ->latest()
+            ->limit(8)
+            ->get(['id', 'product_name', 'product_slug', 'regular_price', 'discount_price', 'discount_type', 'thumbnail']);
 
         
         // $achievements = Achievement::where('is_active', 1)
@@ -62,7 +60,9 @@ class FrontendController extends Controller
         // $blogs = Post::latest()->take(3)->get();
         // , compact(['banner', 'categories', 'achievements', 'reviews', 'about', 'featured_products', 'blogs', 'promobanners', 'social_icon', 'website_setting', 'cta'])
 
-        return view('website.home');
+        return view('website.home', compact([
+            'products',
+        ]));
     }
 
     public function shopPage(Request $request)

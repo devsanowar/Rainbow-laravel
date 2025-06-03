@@ -33,7 +33,8 @@
                     <div class="row align-items-center">
                         <div class="col-md-6 text-center text-md-start">
                             <h1 class="display-5 fw-bold">Explore Fashion & Beauty</h1>
-                            <p class="lead">Stylish fashion and premium beauty products curated just for you.Premium fashion accessories that match your lifestyle and elegance.</p>
+                            <p class="lead">Stylish fashion and premium beauty products curated just for you.Premium
+                                fashion accessories that match your lifestyle and elegance.</p>
                             <a href="#" class="rainbow-btn mt-3">Shop Collection</a>
                         </div>
                         <div class="col-md-6 text-center">
@@ -50,7 +51,8 @@
                     <div class="row align-items-center">
                         <div class="col-md-6 text-center text-md-start">
                             <h1 class="display-5 fw-bold">Feel Radiant, Be Confident</h1>
-                            <p class="lead">Discover skincare and cosmetics that highlight your natural beauty. Premium fashion accessories that match your lifestyle and elegance.</p>
+                            <p class="lead">Discover skincare and cosmetics that highlight your natural beauty.
+                                Premium fashion accessories that match your lifestyle and elegance.</p>
                             <a href="#" class="rainbow-btn mt-3">Browse Beauty</a>
                         </div>
                         <div class="col-md-6 text-center">
@@ -67,7 +69,8 @@
                     <div class="row align-items-center">
                         <div class="col-md-6 text-center text-md-start">
                             <h1 class="display-5 fw-bold">Luxury in Every Detail</h1>
-                            <p class="lead">Premium fashion accessories that match your lifestyle and elegance.Premium fashion accessories that match your lifestyle and elegance.</p>
+                            <p class="lead">Premium fashion accessories that match your lifestyle and elegance.Premium
+                                fashion accessories that match your lifestyle and elegance.</p>
                             <a href="#" class="rainbow-btn mt-3">Explore Accessories</a>
                         </div>
                         <div class="col-md-6 text-center">
@@ -224,151 +227,44 @@
                 </div>
                 <div class="row g-4">
                     <!-- Product Card Start -->
-                    <!-- Product Card 1 -->
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-3" data-aos="zoom-in">
-                        <div class="card product-card h-100">
-                            <img src="{{ asset('frontend') }}/assets/images/product/p-1.jpg"
-                                class="card-img-top product-img" alt="Wireless Headphones" />
-                            <div class="card-body d-flex flex-column">
-                                <h5 class="product-name"> <a href="singleProduct.html">Organic Neem Leaf Powder</a>
-                                </h5>
-                                <p class="text-muted">Skin & Blood Purifier</p>
-                                <p class="product-price mb-2">
-                                    <span class="text-decoration-line-through text-danger me-2">300</span>
-                                    <span class="fw-bold active-price">250 TK.</span>
-                                </p>
-                                <a href="#" class="rainbow-btn btn-buy mt-auto">Buy Now</a>
+                    @forelse ($products as $product)
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3" data-aos="zoom-in" data-aos-delay="100">
+                            <div class="card product-card h-100">
+                                <img src="{{ asset($product->thumbnail) }}"
+                                    class="card-img-top product-img" alt="Moringa Leaf Powder" />
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="product-name"><a href="singleProduct.html">{{ $product->product_name }}</a></h5>
+                                    <p class="text-muted">
+                                        Superfood for Energy & Immunity
+                                    </p>
+                                    <p class="product-price mb-2">
+                                        @if ($product->discount_price && $product->discount_type === 'flat')
+                                        @php
+                                            $product_discount_price = $product->regular_price - $product->discount_price;
+                                        @endphp
+                                        <span class="text-decoration-line-through text-danger me-2">{{ number_format($product->regular_price, 2) }}</span>
+                                        <span class="fw-bold active-price">{{ number_format($product_discount_price, 2) }}TK</span>
+                                        @elseif ($product->discount_price && $product->discount_type === 'percent')
+                                        @php
+                                        $discount_amount = ($product->regular_price * $product->discount_price) / 100;
+                                        $product_discount_price = $product->regular_price - $discount_amount;
+                                        @endphp
+                                        <span class="text-decoration-line-through text-danger me-2">{{ number_format($product->regular_price, 2) }}</span>
+                                        <span class="fw-bold active-price">{{ number_format($product_discount_price, 2) }}TK</span>
+                                        @else
+                                        <span class="text-decoration-line-through text-danger me-2">{{ number_format($product->regular_price, 2) }} TK</span>
+                                        @endif
+                                    </p>
+                                    <a href="#" class="rainbow-btn btn-buy mt-auto">Add To Cart</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @empty
+                    <h4 style="color: #ccc">Product not found!!</h4>
+                    @endforelse
 
-                    <!-- Product Card 2 -->
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-3" data-aos="zoom-in" data-aos-delay="100">
-                        <div class="card product-card h-100">
-                            <img src="{{ asset('frontend') }}/assets/images/product/p-2.jpg"
-                                class="card-img-top product-img" alt="Moringa Leaf Powder" />
-                            <div class="card-body d-flex flex-column">
-                                <h5 class="product-name"><a href="singleProduct.html">Moringa Leaf Powder</a></h5>
-                                <p class="text-muted">
-                                    Superfood for Energy & Immunity
-                                </p>
-                                <p class="product-price mb-2">
-                                    <span class="text-decoration-line-through text-danger me-2">300</span>
-                                    <span class="fw-bold active-price">250 TK.</span>
-                                </p>
-                                <a href="#" class="rainbow-btn btn-buy mt-auto">Buy Now</a>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- Product Card 3 -->
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-3" data-aos="zoom-in" data-aos-delay="200">
-                        <div class="card product-card h-100">
-                            <img src="{{ asset('frontend') }}/assets/images/product/p-3.jpg"
-                                class="card-img-top product-img" alt="Tulsi Infused Coconut Oil " />
-                            <div class="card-body d-flex flex-column">
-                                <h5 class="product-name"><a href="singleProduct.html">Tulsi Infused Coconut Oil </a>
-                                </h5>
-                                <p class="text-muted">Immunity & Hair Health</p>
-                                <p class="product-price mb-2">
-                                    <span class="text-decoration-line-through text-danger me-2">300</span>
-                                    <span class="fw-bold active-price">250 TK.</span>
-                                </p>
-                                <a href="#" class="rainbow-btn btn-buy mt-auto">Buy Now</a>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- Product Card 4 -->
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-3" data-aos="zoom-in" data-aos-delay="300">
-                        <div class="card product-card h-100">
-                            <img src="{{ asset('frontend') }}/assets/images/product/p-4.jpg"
-                                class="card-img-top product-img" alt="Backpack" />
-                            <div class="card-body d-flex flex-column">
-                                <h5 class="product-name"><a href="singleProduct.html">Ayurvedic Detox Rice Blend</a>
-                                </h5>
-                                <p class="text-muted">Supports Clean Digestion</p>
-                                <p class="product-price mb-2">
-                                    <span class="text-decoration-line-through text-danger me-2">300</span>
-                                    <span class="fw-bold active-price">250 TK.</span>
-                                </p>
-                                <a href="#" class="rainbow-btn btn-buy mt-auto">Buy Now</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Product Card 1 -->
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-3" data-aos="zoom-in">
-                        <div class="card product-card h-100">
-                            <img src="{{ asset('frontend') }}/assets/images/product/p-5.jpg"
-                                class="card-img-top product-img" alt="Turmeric Curcumin Powder" />
-                            <div class="card-body d-flex flex-column">
-                                <h5 class="product-name"><a href="singleProduct.html">Turmeric Curcumin Powder</a>
-                                </h5>
-                                <p class="text-muted">Anti-Inflammatory Support</p>
-                                <p class="product-price mb-2">
-                                    <span class="text-decoration-line-through text-danger me-2">300</span>
-                                    <span class="fw-bold active-price">250 TK.</span>
-                                </p>
-                                <a href="#" class="rainbow-btn btn-buy mt-auto">Buy Now</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Product Card 2 -->
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-3" data-aos="zoom-in" data-aos-delay="100">
-                        <div class="card product-card h-100">
-                            <img src="{{ asset('frontend') }}/assets/images/product/p-6.jpg"
-                                class="card-img-top product-img" alt="Multani Mitti Powder" />
-                            <div class="card-body d-flex flex-column">
-                                <h5 class="product-name"><a href="singleProduct.html">Multani Mitti Powder</a></h5>
-                                <p class="text-muted">
-                                    Natural Clay Face Pack
-                                </p>
-                                <p class="product-price mb-2">
-                                    <span class="text-decoration-line-through text-danger me-2">300</span>
-                                    <span class="fw-bold active-price">250 TK.</span>
-                                </p>
-                                <a href="#" class="rainbow-btn btn-buy mt-auto">Buy Now</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Product Card 3 -->
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-3" data-aos="zoom-in" data-aos-delay="200">
-                        <div class="card product-card h-100">
-                            <img src="{{ asset('frontend') }}/assets/images/product/p-7.jpg"
-                                class="card-img-top product-img" alt="Ayurvedic Pain Relief Oil" />
-                            <div class="card-body d-flex flex-column">
-                                <h5 class="product-name"><a href="singleProduct.html">Ayurvedic Pain Relief Oil</a>
-                                </h5>
-                                <p class="text-muted">Muscle & Joint Support</p>
-                                <p class="product-price mb-2">
-                                    <span class="text-decoration-line-through text-danger me-2">300</span>
-                                    <span class="fw-bold active-price">250 TK.</span>
-                                </p>
-                                <a href="#" class="rainbow-btn btn-buy mt-auto">Buy Now</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Product Card 4 -->
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-3" data-aos="zoom-in" data-aos-delay="300">
-                        <div class="card product-card h-100">
-                            <img src="{{ asset('frontend') }}/assets/images/product/p-1.jpg"
-                                class="card-img-top product-img" alt="Backpack" />
-                            <div class="card-body d-flex flex-column">
-                                <h5 class="product-name"><a href="singleProduct.html">Herbal Aloe Vera Shampoo</a>
-                                </h5>
-                                <p class="text-muted">Soothing & Hydrating</p>
-                                <!-- <p class="">$39.99</p> -->
-                                <p class="product-price mb-2">
-                                    <span class="text-decoration-line-through text-danger me-2">300</span>
-                                    <span class="fw-bold active-price">250 TK.</span>
-                                </p>
-                                <a href="#" class="rainbow-btn btn-buy mt-auto">Buy Now</a>
-                            </div>
-                        </div>
-                    </div>
 
                     <!-- Product Card End -->
                 </div>
