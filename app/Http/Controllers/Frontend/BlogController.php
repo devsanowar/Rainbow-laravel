@@ -11,16 +11,16 @@ class BlogController extends Controller
 {
     public function index()
     {
-        $pageTitle = 'Blog';
-        $blogs = Post::latest()->paginate(5);
+        // $pageTitle = 'Blog';
+        // $blogs = Post::latest()->paginate(5);
 
-        $postCategories = Postcategory::with('posts:id,post_title,category_id')->where('category_name', '!=', 'default')->latest()->get();
+        // $postCategories = Postcategory::with('posts:id,post_title,category_id')->where('category_name', '!=', 'default')->latest()->get();
 
-        $recentBlogs = Post::latest()
-            ->limit(5)
-            ->get(['id', 'post_title', 'post_slug', 'image','created_at']);
+        // $recentBlogs = Post::latest()
+        //     ->limit(5)
+        //     ->get(['id', 'post_title', 'post_slug', 'image','created_at']);
 
-        return view('website.layouts.blog', compact('blogs', 'recentBlogs', 'pageTitle', 'postCategories'));
+        return view('website.layouts.blog');
     }
 
     public function blogSinglePage($post_slug)
