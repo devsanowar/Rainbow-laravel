@@ -1,522 +1,562 @@
-@include('website.layouts.inc.header')
-<!--==================== Preloader Start ====================-->
-<div class="preloader">
-    <div class="loader-p"></div>
-</div>
+@php
+    use App\Models\WebsiteSetting;
+    $website_setting = WebsiteSetting::first();
+@endphp
 
-<div class="floating-icons">
-      <a href="https://wa.me/{{ $website_setting->phone }}" target="_blank" class="icon whatsapp">
-        <i class="fab fa-whatsapp" style="font-size: 25px"></i>
-      </a>
-      <a href="tel:{{ $website_setting->phone }}" class="icon call">
-        <i class="fas fa-phone-alt" style="font-size: 15px"></i>
-      </a>
-      <a href="{{ $social_icon->messanger_url }}" target="_blank" class="icon call2">
-        <i class="fa-brands fa-facebook-messenger" style="font-size: 22px"></i>
-      </a>
-    </div>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ $website_setting->website_title }} | Home</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="{{ asset('frontend') }}/assets/icons/favicon.ico" type="image/x-icon" />
+
+    @include('website.layouts.inc.style')
+</head>
+
+<body>
 
 
+    @include('website.layouts.inc.header')
 
-<!--==================== Preloader End ====================-->
-<!--========================== Banner Section Start ==========================-->
-<section class="banner-section pt-2 pb-60" style="background-color: #f8f9fa">
-    <div class="container">
-        <div class="row gy-4 justify-content-center">
-            <div class="col-lg-3">
-                <nav class="category">
-                    <span class="close-sidebar d-lg-none d-block"><i class="fa-solid fa-xmark"></i></span>
-                    <ul class="category-menu">
 
-                        @foreach ($categories as $category)
-                            <li class="category-menu__item">
-                                <a href="{{ route('get_category.products',$category->id) }}" class="category-menu__link">
-                                    <span class="category-menu__thumb"><img src="{{ asset($category->image) }}"
-                                            alt="" width="30" /></span>
-                                    {{ $category->category_name }}
-                                </a>
-                            </li>
-                        @endforeach
+    <!-- Swiper Slider -->
+    <div class="swiper hero-swiper" style="background-color: #f8f9fa;">
+        <div class="swiper-wrapper">
 
-                    </ul>
-                </nav>
-            </div>
-
-            <div class="col-lg-9 col-md-12">
-                <div class="banner">
-                    <div class="banner-content" data-aos="fade-up">
-                        <h4 class="banner-content__subtitle">{{ $banner->sub_title }}</h4>
-                        <h2 class="banner-content__title">{{ $banner->title }}</h2>
-                        <p class="banner-content__desc">
-                            {!! $banner->description !!}
-                        </p>
-                        <div class="banner-content__buttons">
-                            <a href="{{ $banner->button_url }}" class="btn btn--base pill">{{ $banner->button_name }}</a>
+            <!-- Slide 1 -->
+            <div class="swiper-slide first-slide-bg">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-md-6 text-center text-md-start">
+                            <h1 class="display-5 fw-bold">Explore Fashion & Beauty</h1>
+                            <p class="lead">Stylish fashion and premium beauty products curated just for you.Premium fashion accessories that match your lifestyle and elegance.</p>
+                            <a href="#" class="rainbow-btn mt-3">Shop Collection</a>
                         </div>
-                    </div>
-                    <div class="banner-thumb">
-                        <img src="{{ asset( $banner->image ) }}" alt="" />
-                        {{-- <div class="banner-thumb__shape">
-                            <img src="{{ asset('frontend') }}/assets/images/shapes/banner-shape.png" alt="" />
-                        </div> --}}
+                        <div class="col-md-6 text-center">
+                            <img src="{{ asset('frontend') }}/assets/images/slider/hero-img.png" alt="Fashion Product"
+                                class="img-fluid rounded shadow" />
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Slide 2 -->
+            <div class="swiper-slide second-slide-bg">
+                <div class="container ">
+                    <div class="row align-items-center">
+                        <div class="col-md-6 text-center text-md-start">
+                            <h1 class="display-5 fw-bold">Feel Radiant, Be Confident</h1>
+                            <p class="lead">Discover skincare and cosmetics that highlight your natural beauty. Premium fashion accessories that match your lifestyle and elegance.</p>
+                            <a href="#" class="rainbow-btn mt-3">Browse Beauty</a>
+                        </div>
+                        <div class="col-md-6 text-center">
+                            <img src="{{ asset('frontend') }}/assets/images/slider/ss-2.avif" alt="Skincare Product"
+                                class="img-fluid rounded shadow" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="swiper-slide three-slide-bg">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-md-6 text-center text-md-start">
+                            <h1 class="display-5 fw-bold">Luxury in Every Detail</h1>
+                            <p class="lead">Premium fashion accessories that match your lifestyle and elegance.Premium fashion accessories that match your lifestyle and elegance.</p>
+                            <a href="#" class="rainbow-btn mt-3">Explore Accessories</a>
+                        </div>
+                        <div class="col-md-6 text-center">
+                            <img src="{{ asset('frontend') }}/assets/images/slider/ss-3.avif" alt="Accessories"
+                                class="img-fluid rounded shadow" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
+
+        <!-- Swiper Pagination -->
+        <div class="swiper-pagination"></div>
+
+        <!-- Swiper Navigation -->
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
     </div>
-</section>
-<!--========================== Banner Section End ==========================-->
-
-<!--==============================offer-section start  here=============================-->
-<div class="offer-section pt-60 pb-60" style="overflow:hidden">
-    <div class="container">
-        <div class="row gy-4">
-            @forelse ($promobanners as $promobanner)
-            <div class="col-lg-6" data-aos="fade-right">
-                <a href="{{ $promobanner->url }}" class="offer">
-                    <img src="{{ asset($promobanner->image) }}" alt="" />
-                </a>
-            </div>
-            @empty
-
-            @endforelse
-
-        </div>
-    </div>
-</div>
-<!--======================product sections start here =================-->
-<div class="product-section py-60" style="background-color: #f8f9fa">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 mb-4">
-                <div class="section-heading" data-aos="fade-up">
-                    {{-- <h4 class="section-heading__subtitle">Special products</h4> --}}
-                    <h3 class="section-heading__title style-two">
-                        Featured Products<span class="section-heading__bars"></span>
-                    </h3>
-                </div>
-            </div>
-        </div>
-        <div class="row justify-content-center gy-4" data-aos="fade-up">
-
-            @forelse($featured_products as $key => $product)
-                <div class="col-lg-3 col-md-4 col-sm-6 col-xsm-6 mob-version-product">
-                    <div class="product-item">
-                        <div class="product-item__thumb">
-                            <a href="{{ route('product_single.page', $product->id) }}" class="product-item__thumb-link">
-                                <img src="{{ asset($product->thumbnail) }}" alt="" />
-                            </a>
-                            <button class="product-item__icon">
-                                <span class="product-item__icon-style">
-                                    <i class="las la-heart"></i>
-                                </span>
-                            </button>
-                        </div>
-                        <div class="product-item__content">
-                            <h5 class="product-item__title">
-                                <a href="{{ route('product_single.page', $product->id) }}"
-                                    class="product-item__title-link">
-                                    {{ $product->product_name }}
-                                </a>
-                            </h5>
-
-                            <h6 class="product-item__price">
-                                @if ($product->discount_price && $product->discount_type === 'flat')
-                                    @php
-                                        $product_discount_price = $product->regular_price - $product->discount_price;
-                                    @endphp
-                                    <span
-                                        class="product-item__price-new">৳{{ number_format($product_discount_price, 2) }}</span>
-                                    <span
-                                        class="text-decoration-line-through">৳{{ number_format($product->regular_price, 2) }}</span>
-                                @elseif ($product->discount_price && $product->discount_type === 'percent')
-                                    @php
-                                        $discount_amount = ($product->regular_price * $product->discount_price) / 100;
-                                        $product_discount_price = $product->regular_price - $discount_amount;
-                                    @endphp
-                                    <span
-                                        class="product-item__price-new">৳{{ number_format($product_discount_price, 2) }}</span>
-                                    <span
-                                        class="text-decoration-line-through">৳{{ number_format($product->regular_price, 2) }}</span>
-                                @else
-                                    <span class="">৳{{ number_format($product->regular_price, 2) }}</span>
-                                @endif
-
-                            </h6>
-                            <form class="add-to-cart-form">
-                                @csrf
-                                <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                <input type="hidden" name="order_qty" value="1">
-                                <button type="submit" class="btn btn--base pill btn--sm btn-buy">
-                                    Add to Cart
-                                    <span class="spinner-border spinner-border-sm d-none"></span>
-                                </button>
-
-                            </form>
-
-                        </div>
-                    </div>
-                </div>
-            @empty
-
-                <div class="col-lg-3 col-md-4 col-sm-6 col-xsm-6">
-                    <div class="product-item">
-                        <div class="product-item__thumb">
-                            <a href="/product-details.html" class="product-item__thumb-link">
-                                <img src="{{ asset('frontend') }}/assets/images/thumbs/product/product08.png"
-                                    alt="" />
-                            </a>
-                            <button class="product-item__icon">
-                                <span class="product-item__icon-style">
-                                    <i class="las la-heart"></i>
-                                </span>
-                            </button>
-                        </div>
-                        <div class="product-item__content">
-                            <h5 class="product-item__title">
-                                <a href="/product-details.html" class="product-item__title-link">
-                                    Moderna Trendy Story
-                                </a>
-                            </h5>
-                            {{-- <ul class="product-info__rating justify-content-center">
-                                <li class="product-info__rating-item">
-                                    <i class="fas fa-star"></i>
-                                </li>
-                                <li class="product-info__rating-item">
-                                    <i class="fas fa-star"></i>
-                                </li>
-                                <li class="product-info__rating-item">
-                                    <i class="fas fa-star"></i>
-                                </li>
-                                <li class="product-info__rating-item">
-                                    <i class="fas fa-star"></i>
-                                </li>
-                                <li class="product-info__rating-item">
-                                    <i class="fas fa-star"></i>
-                                </li>
-                                <li class="product-info__number">4.8</li>
-                            </ul> --}}
-                            <h6 class="product-item__price">
-                                <span class="product-item__price-new">$620</span> $520
-                            </h6>
-                            <a href="cart.html" class="btn btn--base pill btn--sm">Add to Cart
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            @endforelse
 
 
 
-        </div>
-    </div>
-</div>
+    <!-- ======= HEADER END ======= -->
 
-<!-- Cta -->
-<div>
-    <div id="cta-section" class="bg-position" style="background-image: url('{{ asset($cta->image) }}')">
-        <div class="container">
-            <div class="row g-5">
-                <div class="col-md-7">
-                    <div class="hurry" data-aos="fade-up">
-                        <h2 class="section-heading__title">{{ $cta->title }}</h2>
-                        <h4 class="heading-four">
-                            {{ $cta->sub_title }}
-                        </h4>
-                        <p>
-                            {!! $cta->content !!}
-                        </p>
-                        <div class="banner-content__buttons">
-                            <a href="{{ $cta->button_url }}" class="btn btn--base pill">{{ $cta->button_name }}</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!--===================== deal section end Here ====================-->
-<!--==========================new arrival section start here======================-->
-<div class="new-arrival-section py-60" style="background-color: #f8f9fa">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="section-heading" data-aos="fade-up">
-                    <h4 class="section-heading__subtitle">Special products</h4>
-                    <h3 class="section-heading__title style-two">
-                        New Arrivals product<span class="section-heading__bars"></span>
-                    </h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-12" data-aos="fade-up">
-            <div class="filter text-center mb-4">
-                <button type="button" class="mixitup-control-active category-button" data-filter="*">All</button>
-                @foreach ($categories as $category)
-                    <button type="button" class="category-button" data-filter=".{{ $category->category_slug }}">
-                        <span class="category-menu__thumb"><img src="{{ asset($category->image) }}"
-                                            alt="" width="20px" /></span>
-                        {{ $category->category_name }}
-                    </button>
-                @endforeach
-            </div>
-        </div>
-        <div class="product" data-aos="zoom-in">
-            <div class="row justify-content-center gy-4 mix-container">
-                @foreach ($categories as $category)
-                    @foreach ($category->products as $product)
-                        <div class="mob-version-product col-lg-3 col-md-6 col-sm-6 mix {{ $category->category_slug }}">
-                            <div class="product-item">
-                                <div class="product-item__thumb">
-                                    <a href="{{ route('product_single.page', $product->id) }}"
-                                        class="product-item__thumb-link">
-                                        <img src="{{ asset($product->thumbnail) }}" alt="" />
-                                    </a>
-                                    <button class="product-item__icon">
-                                        <span class="product-item__icon-style">
-                                            <i class="las la-heart"></i>
-                                        </span>
-                                    </button>
+    <!-- ======= MAIN CONTENT START ======= -->
+    <main>
+        <!-- =======Supprt Section Start========== -->
+        <section class="support-section">
+            <div class="container">
+                <div class="all-supports">
+                    <div class="row">
+                        <!-- single support colum -->
+                        <div class="col-md-3">
+                            <div class="single-support">
+                                <div>
+                                    <img src="{{ asset('frontend') }}/assets/images/support/support-1.png"
+                                        class="img-fluid" alt="">
                                 </div>
-                                <div class="product-item__content text-center">
-                                    <h5 class="product-item__title">
-                                        <a
-                                            href="{{ route('product_single.page', $product->id) }}">{{ $product->product_name }}</a>
-                                    </h5>
-                                    <h6 class="product-item__price">
-                                        <span class="product-item__price-new">${{ $product->regular_price }}</span>
-                                        ${{ $product->discount_price }}
-                                    </h6>
-                                    <form class="add-to-cart-form">
-                                        @csrf
-                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                        <input type="hidden" name="order_qty" value="1">
-                                        <button type="submit" class="btn btn--base pill btn--sm btn-buy">
-                                            Add to Cart
-                                            <span class="spinner-border spinner-border-sm d-none"></span>
-                                        </button>
-
-                                    </form>
+                                <div>
+                                    <h4>Free Shipping</h4>
+                                    <p>Free shipping on all order</p>
                                 </div>
                             </div>
                         </div>
-                    @endforeach
-                @endforeach
-            </div>
-        </div>
-
-    </div>
-</div>
-<!-- ==================new offer section start here==================-->
-
-<!-- ===================new offer section end here =====================-->
-<!-- ==========================testimonial section start here=======================-->
-<div class="testimonial-section py-60">
-    <div class="container">
-        <div class="row align-items-center flex-wrap">
-            <div class="col-lg-6">
-                <div class="testimonials-thumb-slider">
-                    @foreach ($reviews as $review)
-                        <div class="testimonial-thumb">
-                            <img src="{{ asset($review->image) }}" alt="" />
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="testimonial-slick-slider">
-
-                    @foreach ($reviews as $review)
-                        <div class="testimonial-slider">
-                            <div class="testimonial-slider__icon">
-                                <img src="{{ asset('frontend') }}/assets/images/icons/testimonial-icon.png"
-                                    alt="" />
-                            </div>
-                            <p class="testimonial-slider__desc">
-                                {!! $review->review !!}
-                            </p>
-                            <div class="testimonial-slider__details">
-                                <h4 class="testimonial-slider__name">{{ $review->name }}</h4>
-                                <span class="testimonial-slider__designation">{{ $review->profession }} </span>
+                        <!-- single support colum -->
+                        <div class="col-md-3">
+                            <div class="single-support">
+                                <div>
+                                    <img src="{{ asset('frontend') }}/assets/images/support/support-2.png"
+                                        class="img-fluid" alt="">
+                                </div>
+                                <div>
+                                    <h4>Support 24/7</h4>
+                                    <p>Free shipping on all order</p>
+                                </div>
                             </div>
                         </div>
-                    @endforeach
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- ==================== Blog Start Here ==================== -->
-<section class="blog">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 mb-4">
-                <div class="section-heading">
-                    <h2 class="section-heading__subtitle">Blog Post</h2>
-                    <h3 class="section-heading__title style-two">
-                        Latest news post <span class="section-heading__bars"></span>
-                    </h3>
-                </div>
-            </div>
-        </div>
-        <div class="row gy-4 justify-content-center align-items-center">
-
-            @forelse ($blogs as $blog)
-                <div class="col-lg-4 col-md-6 col-sm-6 col-xsm-6">
-                    <div class="blog-item">
-                        <div class="blog-item__thumb">
-                            <a href="blog-details.html" class="blog-item__thumb-link">
-                                <img src="{{ asset($blog->image) }}"
-                                    alt="" />
-                            </a>
+                        <!-- single support colum -->
+                        <div class="col-md-3">
+                            <div class="single-support">
+                                <div>
+                                    <img src="{{ asset('frontend') }}/assets/images/support/support-3.png"
+                                        class="img-fluid" alt="">
+                                </div>
+                                <div>
+                                    <h4>Money Return</h4>
+                                    <p>Free shipping on all order</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="blog-item__date">
-                            <span class="blog-item__month">{{ \Carbon\Carbon::parse($blog->created_at)->format('d') }}</span>
-                            <span class="blog-item__month">{{ \Carbon\Carbon::parse($blog->created_at)->format('M') }}</span>
-                        </div>
-                        <div class="blog-item__content">
-                            <h4 class="blog-item__title">
-                                <a href="blog-details.html" class="blog-item__title-link">{{ $blog->post_title }}
-                                </a>
-                            </h4>
+                        <!-- single support colum -->
+                        <div class="col-md-3">
+                            <div class="single-support">
+                                <div>
+                                    <img src="{{ asset('frontend') }}/assets/images/support/support-4.png"
+                                        class="img-fluid" alt="">
+                                </div>
+                                <div>
+                                    <h4>Order Discount</h4>
+                                    <p>Free shipping on all order</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            @empty
-                <h4 class="mt-4">Blog post not found!!</h4>
-            @endforelse
+            </div>
+        </section>
 
-
-        </div>
-    </div>
-</section>
-<!-- ==================== Blog End Here ==================== -->
-<!--============================feature section start here =======================-->
-<div class="feature-section bg-img py-60"
-    style="
-        background-image: url({{ asset('frontend') }}/assets/images/home/bg-banner.jpg);
-      ">
-    <div class="container">
-        <div class="row gy-4">
-            <div class="col-md-3 col-sm-6 col-xxsm-6">
-                <div class="feature-item">
-                    <div class="feature-item__thumb">
-                        <img src="{{ asset('frontend') }}/assets/images/thumbs/feature/f04.png" alt="" />
-                    </div>
-                    <div class="feature-item__info">
-                        <h5 class="feature-item__title">FREE SHIPPING</h5>
-                        <span class="feature-item__payment">
-                            For All Order Over $99
-                        </span>
+        <!-- =========Categories Section Start=============== -->
+        <section class="categories-section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Categories</h2>
+                </div>
+                <div class="all-categories-row">
+                    <div class="row">
+                        <!-- single colum category -->
+                        <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                            <div class="single-category">
+                                <img src="{{ asset('frontend') }}/assets/images/categories/product-1.jpg"
+                                    class="img-fluid" alt="category_1_img">
+                                <h4><a href="#">Cleaners</a></h4>
+                            </div>
+                        </div>
+                        <!-- single colum category -->
+                        <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                            <div class="single-category">
+                                <img src="{{ asset('frontend') }}/assets/images/categories/product-2.jpg"
+                                    class="img-fluid" alt="category_1_img">
+                                <h4><a href="#">Moisturizers</a></h4>
+                            </div>
+                        </div>
+                        <!-- single colum category -->
+                        <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                            <div class="single-category">
+                                <img src="{{ asset('frontend') }}/assets/images/categories/product-3.jpg"
+                                    class="img-fluid" alt="category_1_img">
+                                <h4><a href="#">Serums & Treatments</a></h4>
+                            </div>
+                        </div>
+                        <!-- single colum category -->
+                        <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                            <div class="single-category">
+                                <img src="{{ asset('frontend') }}/assets/images/categories/product-4.jpg"
+                                    class="img-fluid" alt="category_1_img">
+                                <h4><a href="#">Body & Face Masks</a></h4>
+                            </div>
+                        </div>
+                        <!-- single colum category -->
+                        <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                            <div class="single-category">
+                                <img src="{{ asset('frontend') }}/assets/images/categories/product-5.jpg"
+                                    class="img-fluid" alt="category_1_img">
+                                <h4><a href="#">Body Lotions</a></h4>
+                            </div>
+                        </div>
+                        <!-- single colum category -->
+                        <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                            <div class="single-category">
+                                <img src="{{ asset('frontend') }}/assets/images/categories/product-6.jpg"
+                                    class="img-fluid" alt="category_1_img">
+                                <h4><a href="#">Sun Care & Tanning</a></h4>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 col-sm-6 col-xxsm-6">
-                <div class="feature-item">
-                    <div class="feature-item__thumb">
-                        <img src="{{ asset('frontend') }}/assets/images/thumbs/feature/f03.png" alt="" />
+        </section>
+        <!-- =========Quality Product Section Start ============= -->
+        <section class="quality-product-section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Quality Products</h2>
+                </div>
+                <div class="row g-4">
+                    <!-- Product Card Start -->
+                    <!-- Product Card 1 -->
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3" data-aos="zoom-in">
+                        <div class="card product-card h-100">
+                            <img src="{{ asset('frontend') }}/assets/images/product/p-1.jpg"
+                                class="card-img-top product-img" alt="Wireless Headphones" />
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="product-name"> <a href="singleProduct.html">Organic Neem Leaf Powder</a>
+                                </h5>
+                                <p class="text-muted">Skin & Blood Purifier</p>
+                                <p class="product-price mb-2">
+                                    <span class="text-decoration-line-through text-danger me-2">300</span>
+                                    <span class="fw-bold active-price">250 TK.</span>
+                                </p>
+                                <a href="#" class="rainbow-btn btn-buy mt-auto">Buy Now</a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="feature-item__info">
-                        <h5 class="feature-item__title">FRIENDLY SUPPORT</h5>
-                        <span class="feature-item__payment">
-                            24/7 Customer Support
-                        </span>
+
+                    <!-- Product Card 2 -->
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3" data-aos="zoom-in" data-aos-delay="100">
+                        <div class="card product-card h-100">
+                            <img src="{{ asset('frontend') }}/assets/images/product/p-2.jpg"
+                                class="card-img-top product-img" alt="Moringa Leaf Powder" />
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="product-name"><a href="singleProduct.html">Moringa Leaf Powder</a></h5>
+                                <p class="text-muted">
+                                    Superfood for Energy & Immunity
+                                </p>
+                                <p class="product-price mb-2">
+                                    <span class="text-decoration-line-through text-danger me-2">300</span>
+                                    <span class="fw-bold active-price">250 TK.</span>
+                                </p>
+                                <a href="#" class="rainbow-btn btn-buy mt-auto">Buy Now</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 3 -->
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3" data-aos="zoom-in" data-aos-delay="200">
+                        <div class="card product-card h-100">
+                            <img src="{{ asset('frontend') }}/assets/images/product/p-3.jpg"
+                                class="card-img-top product-img" alt="Tulsi Infused Coconut Oil " />
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="product-name"><a href="singleProduct.html">Tulsi Infused Coconut Oil </a>
+                                </h5>
+                                <p class="text-muted">Immunity & Hair Health</p>
+                                <p class="product-price mb-2">
+                                    <span class="text-decoration-line-through text-danger me-2">300</span>
+                                    <span class="fw-bold active-price">250 TK.</span>
+                                </p>
+                                <a href="#" class="rainbow-btn btn-buy mt-auto">Buy Now</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 4 -->
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3" data-aos="zoom-in" data-aos-delay="300">
+                        <div class="card product-card h-100">
+                            <img src="{{ asset('frontend') }}/assets/images/product/p-4.jpg"
+                                class="card-img-top product-img" alt="Backpack" />
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="product-name"><a href="singleProduct.html">Ayurvedic Detox Rice Blend</a>
+                                </h5>
+                                <p class="text-muted">Supports Clean Digestion</p>
+                                <p class="product-price mb-2">
+                                    <span class="text-decoration-line-through text-danger me-2">300</span>
+                                    <span class="fw-bold active-price">250 TK.</span>
+                                </p>
+                                <a href="#" class="rainbow-btn btn-buy mt-auto">Buy Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Product Card 1 -->
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3" data-aos="zoom-in">
+                        <div class="card product-card h-100">
+                            <img src="{{ asset('frontend') }}/assets/images/product/p-5.jpg"
+                                class="card-img-top product-img" alt="Turmeric Curcumin Powder" />
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="product-name"><a href="singleProduct.html">Turmeric Curcumin Powder</a>
+                                </h5>
+                                <p class="text-muted">Anti-Inflammatory Support</p>
+                                <p class="product-price mb-2">
+                                    <span class="text-decoration-line-through text-danger me-2">300</span>
+                                    <span class="fw-bold active-price">250 TK.</span>
+                                </p>
+                                <a href="#" class="rainbow-btn btn-buy mt-auto">Buy Now</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 2 -->
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3" data-aos="zoom-in" data-aos-delay="100">
+                        <div class="card product-card h-100">
+                            <img src="{{ asset('frontend') }}/assets/images/product/p-6.jpg"
+                                class="card-img-top product-img" alt="Multani Mitti Powder" />
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="product-name"><a href="singleProduct.html">Multani Mitti Powder</a></h5>
+                                <p class="text-muted">
+                                    Natural Clay Face Pack
+                                </p>
+                                <p class="product-price mb-2">
+                                    <span class="text-decoration-line-through text-danger me-2">300</span>
+                                    <span class="fw-bold active-price">250 TK.</span>
+                                </p>
+                                <a href="#" class="rainbow-btn btn-buy mt-auto">Buy Now</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 3 -->
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3" data-aos="zoom-in" data-aos-delay="200">
+                        <div class="card product-card h-100">
+                            <img src="{{ asset('frontend') }}/assets/images/product/p-7.jpg"
+                                class="card-img-top product-img" alt="Ayurvedic Pain Relief Oil" />
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="product-name"><a href="singleProduct.html">Ayurvedic Pain Relief Oil</a>
+                                </h5>
+                                <p class="text-muted">Muscle & Joint Support</p>
+                                <p class="product-price mb-2">
+                                    <span class="text-decoration-line-through text-danger me-2">300</span>
+                                    <span class="fw-bold active-price">250 TK.</span>
+                                </p>
+                                <a href="#" class="rainbow-btn btn-buy mt-auto">Buy Now</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 4 -->
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3" data-aos="zoom-in" data-aos-delay="300">
+                        <div class="card product-card h-100">
+                            <img src="{{ asset('frontend') }}/assets/images/product/p-1.jpg"
+                                class="card-img-top product-img" alt="Backpack" />
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="product-name"><a href="singleProduct.html">Herbal Aloe Vera Shampoo</a>
+                                </h5>
+                                <p class="text-muted">Soothing & Hydrating</p>
+                                <!-- <p class="">$39.99</p> -->
+                                <p class="product-price mb-2">
+                                    <span class="text-decoration-line-through text-danger me-2">300</span>
+                                    <span class="fw-bold active-price">250 TK.</span>
+                                </p>
+                                <a href="#" class="rainbow-btn btn-buy mt-auto">Buy Now</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Card End -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Section Start -->
+        <section id="featured-logo-section">
+            <div class="container">
+                <div class="row align-items-center featured-section">
+                    <div class="col-md-2 d-flex align-items-center">
+                        <h3 class="featured-title">Featured In</h3>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="featured-logo-wrapper overflow-hidden">
+                            <div class="featured-logo-track d-flex" id="logoTrack">
+                                <img src="{{ asset('frontend') }}/assets/images/features/logo1.png"
+                                    class="img-fluid logo-item" alt="" />
+                                <img src="{{ asset('frontend') }}/assets/images/features/logo2.png"
+                                    class="img-fluid logo-item" alt="" />
+                                <img src="{{ asset('frontend') }}/assets/images/features/logo3.png"
+                                    class="img-fluid logo-item" alt="" />
+                                <img src="{{ asset('frontend') }}/assets/images/features/logo4.png"
+                                    class="img-fluid logo-item" alt="" />
+                                <img src="{{ asset('frontend') }}/assets/images/features/logo5.png"
+                                    class="img-fluid logo-item" alt="" />
+                                <img src="{{ asset('frontend') }}/assets/images/features/logo3.png"
+                                    class="img-fluid logo-item" alt="" />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 col-sm-6 col-xxsm-6">
-                <div class="feature-item">
-                    <div class="feature-item__thumb">
-                        <img src="{{ asset('frontend') }}/assets/images/thumbs/feature/f02.png" alt="" />
+        </section>
+        <!-- Featured Section End -->
+        <!-- Top Selling Product -->
+        <section class="top-selling-product">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Top Selling Product</h2>
+                </div>
+                <div class="row g-4">
+                    <!-- Product 1 -->
+                    <div class="col-12 col-sm-6 col-lg-6">
+                        <div class="single-top-selling shadow p-4 h-100">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="top-selling-img mb-3 text-center">
+                                        <img src="{{ asset('frontend') }}/assets/images/product/p-5.jpg"
+                                            class="img-fluid rounded" alt="Product Image">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="top-selling-content text-center text-md-start">
+                                        <div class="reviews mb-2">
+                                            <span><i class="fa-solid fa-star text-warning"></i></span>
+                                            <span><i class="fa-solid fa-star text-warning"></i></span>
+                                            <span><i class="fa-solid fa-star text-warning"></i></span>
+                                            <span><i class="fa-solid fa-star text-warning"></i></span>
+                                            <span><i class="fa-solid fa-star text-warning"></i></span>
+                                        </div>
+                                        <h4 class="top-selling-title fs-5">
+                                            <a href="singleProduct.html">Turmeric Curcumin Powder</a>
+                                            <!-- <p class="text-muted mt-3">Anti-Inflammatory Support</p> -->
+                                        </h4>
+                                        <p class="selling-price mb-2">
+                                            <span class="text-decoration-line-through text-muted me-2">300</span>
+                                            <span class="fw-bold text-success">250</span>
+                                        </p>
+                                        <a href="#" class="btn btn-primary rainbow-btn">Add To Cart</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="feature-item__info">
-                        <h5 class="feature-item__title">SECURE PAYMENT</h5>
-                        <span class="feature-item__payment">100% Secure Payment</span>
+
+                    <!-- Repeat for each product with different image or title -->
+                    <div class="col-12 col-sm-6 col-lg-6">
+                        <div class="single-top-selling shadow p-4 h-100">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="top-selling-img mb-3 text-center">
+                                        <img src="{{ asset('frontend') }}/assets/images/product/p-2.jpg"
+                                            class="img-fluid rounded" alt="Product Image">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="top-selling-content text-center text-md-start">
+                                        <div class="reviews mb-2">
+                                            <span><i class="fa-solid fa-star text-warning"></i></span>
+                                            <span><i class="fa-solid fa-star text-warning"></i></span>
+                                            <span><i class="fa-solid fa-star text-warning"></i></span>
+                                            <span><i class="fa-solid fa-star text-warning"></i></span>
+                                            <span><i class="fa-solid fa-star text-warning"></i></span>
+                                        </div>
+                                        <h4 class="top-selling-title fs-5">
+                                            <a href="singleProduct.html">Moringa Leaf Powder</a>
+                                        </h4>
+                                        <p class="selling-price mb-2">
+                                            <span class="text-decoration-line-through text-muted me-2">300</span>
+                                            <span class="fw-bold text-success">250</span>
+                                        </p>
+                                        <a href="#" class="btn btn-primary rainbow-btn">Add To Cart</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 3 -->
+                    <div class="col-12 col-sm-6 col-lg-6">
+                        <div class="single-top-selling shadow p-4 h-100">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="top-selling-img mb-3 text-center">
+                                        <img src="{{ asset('frontend') }}/assets/images/product/p-2.jpg"
+                                            class="img-fluid rounded" alt="Product Image">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="top-selling-content text-center text-md-start">
+                                        <div class="reviews mb-2">
+                                            <span><i class="fa-solid fa-star text-warning"></i></span>
+                                            <span><i class="fa-solid fa-star text-warning"></i></span>
+                                            <span><i class="fa-solid fa-star text-warning"></i></span>
+                                            <span><i class="fa-solid fa-star text-warning"></i></span>
+                                            <span><i class="fa-solid fa-star text-warning"></i></span>
+                                        </div>
+                                        <h4 class="top-selling-title fs-5">
+                                            <a href="singleProduct.html">Fenugreek Seed Powder</a>
+                                        </h4>
+                                        <p class="selling-price mb-2">
+                                            <span class="text-decoration-line-through text-muted me-2">300</span>
+                                            <span class="fw-bold text-success">250</span>
+                                        </p>
+                                        <a href="#" class="btn btn-primary rainbow-btn">Add To Cart</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 4 -->
+                    <div class="col-12 col-sm-6 col-lg-6">
+                        <div class="single-top-selling shadow p-4 h-100">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="top-selling-img mb-3 text-center">
+                                        <img src="{{ asset('frontend') }}/assets/images/product/p-5.jpg"
+                                            class="img-fluid rounded" alt="Product Image">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="top-selling-content text-center text-md-start">
+                                        <div class="reviews mb-2">
+                                            <span><i class="fa-solid fa-star text-warning"></i></span>
+                                            <span><i class="fa-solid fa-star text-warning"></i></span>
+                                            <span><i class="fa-solid fa-star text-warning"></i></span>
+                                            <span><i class="fa-solid fa-star text-warning"></i></span>
+                                            <span><i class="fa-solid fa-star text-warning"></i></span>
+                                        </div>
+                                        <h4 class="top-selling-title fs-5">
+                                            <a href="singleProduct.html">Ashwagandha Root Powder</a>
+                                        </h4>
+                                        <p class="selling-price mb-2">
+                                            <span class="text-decoration-line-through text-muted me-2">300</span>
+                                            <span class="fw-bold text-success">250</span>
+                                        </p>
+                                        <a href="#" class="btn btn-primary rainbow-btn">Add To Cart</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 col-sm-6 col-xxsm-6">
-                <div class="feature-item">
-                    <div class="feature-item__thumb">
-                        <img src="{{ asset('frontend') }}/assets/images/thumbs/feature/f01.png" alt="" />
-                    </div>
-                    <div class="feature-item__info">
-                        <h5 class="feature-item__title">SHIPPING & RETURN</h5>
-                        <span class="feature-item__payment">
-                            within 30days For Refund
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+        </section>
 
-<!-- ==========================feature setion end here ============================-->
+    </main>
+    <!-- ======= MAIN CONTENT END ======= -->
 
-@push('scripts')
-
-<script>
-      const icons = document.querySelector(".floating-icons");
-
-      window.addEventListener("scroll", () => {
-        if (window.scrollY > 140) {
-          icons.classList.add("visible");
-        } else {
-          icons.classList.remove("visible");
-        }
-});
-</script>
-
-
-    <script>
-        $(document).ready(function() {
-            $(document).on('submit', '.add-to-cart-form', function(e) {
-                e.preventDefault();
-
-                let form = $(this);
-                let formData = form.serialize();
-
-                let button = form.find('.btn-buy');
-                let spinner = button.find('.spinner-border');
-
-                button.prop('disabled', true);
-                spinner.removeClass('d-none');
-
-                $.ajax({
-                    url: "{{ route('addToCart') }}",
-                    method: "POST",
-                    data: formData,
-                    success: function(response) {
-                        toastr.success(response.message, '', {
-                            timeOut: 1500
-                        });
-                        $('#cart-count').text(response.cart_count);
-
-                        // Optionally display the updated cart content if needed
-                        console.log(response.cart_contents);
-
-                        spinner.addClass('d-none');
-                        button.prop('disabled', false);
-
-                        $('#cart-count').text(response.itemCount);
-                    },
-                    error: function() {
-                        toastr.error('Failed to add product.', '', {
-                            timeOut: 2000
-                        });
-                        spinner.addClass('d-none');
-                        button.prop('disabled', false);
-                    }
-                });
-            });
-        });
-    </script>
+    @include('website.layouts.inc.footer')
 
 
 
-@endpush
+    <!-- ======= FOOTER END ======= -->
 
-@include('website.layouts.inc.footer')
+    @include('website.layouts.inc.script')
+</body>
+
+</html>

@@ -2,44 +2,45 @@
     use App\Models\WebsiteSetting;
     $website_setting = WebsiteSetting::first();
 @endphp
-<!DOCTYPE html>
-<html lang="en">
+<!-- Topbar -->
+<div class="topbar py-2 border-bottom bg-light">
+    <div class="container">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center small">
+            <!-- Left Side - Contact Numbers -->
+            <div class="d-flex flex-wrap gap-3 mb-2 mb-md-0">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-phone-alt me-2 text-primary"></i>
+                    <span class="text-muted">Customer Service: <a href="tel:01960473828"
+                            class="text-decoration-none">01960473828</a></span>
+                </div>
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-headset me-2 text-primary"></i>
+                    <span class="text-muted">Dealer Support: <a href="tel:01907109181"
+                            class="text-decoration-none">01907109181</a></span>
+                </div>
+            </div>
 
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+            <!-- Right Side - Social Links -->
+            <div class="d-flex gap-3 align-items-center">
+                <a href="#" class="social-icon" title="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" class="social-icon" title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#" class="social-icon" title="Twitter">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" class="social-icon" title="YouTube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="#" class="social-icon" title="LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <!-- Title -->
-    <title>@yield('title') {{ $website_setting->website_title }}</title>
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ asset($website_setting->website_favicon)}}" />
-    @include('website.layouts.inc.style')
-</head>
-
-<body id="home-page">
-
-    <!--==================== Overlay Start ====================-->
-    <div class="body-overlay"></div>
-    <!--==================== Overlay End ====================-->
-
-    <!--==================== Sidebar Overlay End ====================-->
-    <div class="sidebar-overlay"></div>
-    <!--==================== Sidebar Overlay End ====================-->
-
-    <!-- ==================== Scroll to Top End Here ==================== -->
-    <a class="scroll-top"><i class="fas fa-angle-double-up"></i></a>
-    <!-- ==================== Scroll to Top End Here ==================== -->
-
-    <!-- ==================== Header Top Start Here ==================== -->
+<!-- Header Menu Start -->
 @include('website.layouts.inc.navber')
-    <!-- ==================== Bottom Header End Here ==================== -->
-
-    <!--========================== Search Modal Start ==========================-->
-@include('website.layouts.inc.search-modal')
-    <!--========================== Search Modal End ==========================-->
-
-
-
-

@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Post Title | Your Blog</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #34495e;
+            --gray-color: #95a5a6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-color);
+            line-height: 1.7;
+            background-color: #f9f9f9;
+        }
+
+        .blog-header {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            padding: 5rem 0;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blog-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') center/cover;
+            opacity: 0.2;
+        }
+
+        .blog-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .blog-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .blog-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .blog-meta-item i {
+            color: var(--accent-color);
+        }
+
+        .featured-image {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 3rem;
+            transform: translateY(0);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .featured-image:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .featured-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .blog-content {
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+        }
+
+        .blog-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .blog-content h2,
+        .blog-content h3,
+        .blog-content h4 {
+            margin: 2.5rem 0 1.5rem;
+            color: var(--secondary-color);
+        }
+
+        .blog-content h2 {
+            font-size: 2rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .blog-content h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+
+        .blog-content blockquote {
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem 1.5rem;
+            margin: 2rem 0;
+            background-color: var(--light-color);
+            font-style: italic;
+            color: var(--dark-color);
+        }
+
+        .blog-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 2rem 0;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background-color: var(--light-color);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--dark-color);
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .author-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            margin: 3rem 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .author-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--light-color);
+            margin-bottom: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .author-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+
+        .author-bio {
+            margin-bottom: 1.5rem;
+            color: var(--gray-color);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .comments-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            margin: 3rem 0;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+
+        .comment {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .comment:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .comment-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .comment-content {
+            flex: 1;
+        }
+
+        .comment-author {
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+            color: var(--secondary-color);
+        }
+
+        .comment-date {
+            font-size: 0.8rem;
+            color: var(--gray-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .comment-text {
+            margin-bottom: 0.5rem;
+        }
+
+        .comment-reply {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .comment-reply:hover {
+            color: var(--accent-color);
+        }
+
+        .reply-form {
+            margin-top: 1.5rem;
+            padding-left: 75px;
+        }
+
+        .comment-form {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            margin: 3rem 0;
+        }
+
+        .form-control {
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+            border-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .related-posts {
+            margin: 3rem 0;
+        }
+
+        .related-post-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .related-post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .related-post-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .related-post-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .related-post-card:hover .related-post-image img {
+            transform: scale(1.05);
+        }
+
+        .related-post-body {
+            padding: 1.5rem;
+        }
+
+        .related-post-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+
+        .related-post-meta {
+            font-size: 0.8rem;
+            color: var(--gray-color);
+        }
+
+        /* Animation classes */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .blog-title {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .blog-header {
+                padding: 3rem 0;
+            }
+
+            .blog-title {
+                font-size: 2rem;
+            }
+
+            .comment {
+                flex-direction: column;
+            }
+
+            .reply-form {
+                padding-left: 0;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .blog-title {
+                font-size: 1.8rem;
+            }
+
+            .blog-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .author-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Blog Header -->
+    <header class="blog-header">
+        <div class="container">
+            <div class="row justify-content-center text-center">
+                <div class="col-lg-8">
+                    <div class="animate-on-scroll" data-animation="fadeInDown">
+                        <span class="badge bg-light text-dark mb-3">Technology</span>
+                        <h1 class="blog-title">The Future of Artificial Intelligence in Everyday Life</h1>
+                        <div class="blog-meta justify-content-center">
+                            <div class="blog-meta-item">
+                                <i class="far fa-user"></i>
+                                <span>By John Doe</span>
+                            </div>
+                            <div class="blog-meta-item">
+                                <i class="far fa-calendar-alt"></i>
+                                <span>June 15, 2023</span>
+                            </div>
+                            <div class="blog-meta-item">
+                                <i class="far fa-clock"></i>
+                                <span>8 min read</span>
+                            </div>
+                            <div class="blog-meta-item">
+                                <i class="far fa-comment"></i>
+                                <span>12 Comments</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <!-- Featured Image -->
+                <div class="featured-image animate-on-scroll">
+                    <img src="https://images.unsplash.com/photo-1677442135136-760c813a743e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80"
+                        alt="AI Technology" class="img-fluid">
+                </div>
+
+                <!-- Blog Content -->
+                <article class="blog-content">
+                    <div class="animate-on-scroll">
+                        <p class="lead">Artificial Intelligence (AI) is no longer just a futuristic concept—it's rapidly
+                            becoming an integral part of our daily lives, transforming how we work, communicate, and
+                            even think.</p>
+
+                        <p>The integration of AI into everyday applications has accelerated in recent years, with
+                            advancements in machine learning, natural language processing, and computer vision leading
+                            the charge. From voice assistants to recommendation systems, AI is making our lives more
+                            convenient and efficient.</p>
+
+                        <h2>The Rise of Personal AI Assistants</h2>
+
+                        <p>One of the most visible applications of AI in daily life is through personal assistants like
+                            Siri, Alexa, and Google Assistant. These tools have evolved from simple voice command
+                            systems to sophisticated platforms that can:</p>
+
+                        <ul>
+                            <li>Understand and respond to natural language queries</li>
+                            <li>Learn user preferences over time</li>
+                            <li>Control smart home devices</li>
+                            <li>Provide personalized recommendations</li>
+                            <li>Anticipate needs based on context and past behavior</li>
+                        </ul>
+
+                        <div class="row my-4">
+                            <div class="col-md-6 animate-on-scroll">
+                                <img src="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80"
+                                    alt="Smart Home" class="img-fluid rounded">
+                            </div>
+                            <div class="col-md-6 animate-on-scroll">
+                                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                                    alt="Voice Assistant" class="img-fluid rounded">
+                            </div>
+                        </div>
+
+                        <blockquote class="animate-on-scroll">
+                            "AI is likely to be either the best or worst thing to happen to humanity. We need to make
+                            sure it's the best by doing the research and work needed to make it beneficial for
+                            everyone." — Stephen Hawking
+                        </blockquote>
+
+                        <h2>AI in Healthcare</h2>
+
+                        <p>The healthcare sector has seen remarkable advancements through AI applications:</p>
+
+                        <div class="animate-on-scroll">
+                            <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                                alt="AI in Healthcare" class="img-fluid">
+                        </div>
+
+                        <p>Diagnostic tools powered by AI can analyze medical images with accuracy rivaling human
+                            experts. Wearable devices monitor vital signs and alert users to potential health issues
+                            before symptoms appear. AI-driven drug discovery is accelerating the development of new
+                            treatments.</p>
+
+                        <h2>Ethical Considerations</h2>
+
+                        <p>As AI becomes more pervasive, important ethical questions emerge:</p>
+
+                        <ol>
+                            <li><strong>Privacy:</strong> How much personal data should AI systems collect and analyze?
+                            </li>
+                            <li><strong>Bias:</strong> How do we ensure AI systems don't perpetuate existing societal
+                                biases?</li>
+                            <li><strong>Accountability:</strong> Who is responsible when AI systems make mistakes?</li>
+                            <li><strong>Employment:</strong> How will AI affect jobs across various industries?</li>
+                        </ol>
+
+                        <p>Addressing these concerns requires collaboration between technologists, policymakers, and the
+                            public to establish guidelines and regulations that promote beneficial AI development.</p>
+
+                        <h2>The Future Landscape</h2>
+
+                        <p>Looking ahead, we can expect AI to become even more seamlessly integrated into our lives.
+                            Potential developments include:</p>
+
+                        <ul>
+                            <li>More intuitive human-computer interfaces</li>
+                            <li>AI-powered education tailored to individual learning styles</li>
+                            <li>Enhanced creativity tools for artists and designers</li>
+                            <li>Smarter cities with optimized traffic and energy systems</li>
+                            <li>Breakthroughs in scientific research through AI analysis</li>
+                        </ul>
+
+                        <p>While challenges remain, the potential benefits of AI in improving quality of life, advancing
+                            knowledge, and solving complex global problems are immense. The key will be developing these
+                            technologies thoughtfully and inclusively.</p>
+                    </div>
+                </article>
+
+                <!-- Tags -->
+                <div class="animate-on-scroll">
+                    <div class="tags-container">
+                        <a href="#" class="tag">Artificial Intelligence</a>
+                        <a href="#" class="tag">Technology</a>
+                        <a href="#" class="tag">Future</a>
+                        <a href="#" class="tag">Innovation</a>
+                        <a href="#" class="tag">Machine Learning</a>
+                    </div>
+                </div>
+
+                <!-- Author Bio -->
+                <div class="author-card animate-on-scroll">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Author" class="author-avatar">
+                    <h3 class="author-name">John Doe</h3>
+                    <p class="author-bio">John is a technology journalist and AI researcher with over 10 years of
+                        experience covering emerging technologies and their impact on society.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                        <a href="#" class="social-link"><i class="fas fa-globe"></i></a>
+                    </div>
+                </div>
+
+                <!-- Comments Section -->
+                <div class="comments-section animate-on-scroll">
+                    <h3 class="section-title">Comments (12)</h3>
+
+                    <div class="comment">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User" class="comment-avatar">
+                        <div class="comment-content">
+                            <h5 class="comment-author">Sarah Johnson</h5>
+                            <div class="comment-date">June 16, 2023 at 10:30 AM</div>
+                            <p class="comment-text">Great article! I've been following AI developments closely, and
+                                you've captured the current state perfectly. The ethical considerations section is
+                                particularly important.</p>
+                            <span class="comment-reply">Reply</span>
+
+                            <!-- Reply Form (hidden by default) -->
+                            <div class="reply-form mt-3" style="display: none;">
+                                <form>
+                                    <div class="mb-3">
+                                        <textarea class="form-control" rows="3"
+                                            placeholder="Write your reply..."></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Post Reply</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="comment">
+                        <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="User" class="comment-avatar">
+                        <div class="comment-content">
+                            <h5 class="comment-author">Michael Chen</h5>
+                            <div class="comment-date">June 15, 2023 at 8:45 PM</div>
+                            <p class="comment-text">As an AI developer, I appreciate the balanced perspective. Many
+                                articles either hype AI too much or focus only on the negatives. This strikes the right
+                                tone.</p>
+                            <span class="comment-reply">Reply</span>
+                        </div>
+                    </div>
+
+                    <div class="comment">
+                        <img src="https://randomuser.me/api/portraits/women/63.jpg" alt="User" class="comment-avatar">
+                        <div class="comment-content">
+                            <h5 class="comment-author">Emily Rodriguez</h5>
+                            <div class="comment-date">June 15, 2023 at 3:20 PM</div>
+                            <p class="comment-text">I'm curious about the job displacement aspect. What fields do you
+                                think will be most affected by AI in the next 5 years?</p>
+                            <span class="comment-reply">Reply</span>
+
+                            <!-- Nested Comment -->
+                            <div class="comment mt-3">
+                                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Author"
+                                    class="comment-avatar">
+                                <div class="comment-content">
+                                    <h5 class="comment-author">John Doe (Author)</h5>
+                                    <div class="comment-date">June 15, 2023 at 5:45 PM</div>
+                                    <p class="comment-text">Great question, Emily! Based on current trends, customer
+                                        service, data entry, and certain aspects of legal research seem most vulnerable.
+                                        However, history shows that technology often creates as many jobs as it
+                                        displaces.</p>
+                                    <span class="comment-reply">Reply</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comment Form -->
+                <div class="comment-form animate-on-scroll">
+                    <h3 class="section-title">Leave a Comment</h3>
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" placeholder="Your Name">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="email" class="form-control" placeholder="Your Email">
+                            </div>
+                        </div>
+                        <textarea class="form-control" rows="5" placeholder="Your Comment"></textarea>
+                        <button type="submit" class="btn btn-primary">Post Comment</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Posts -->
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="related-posts animate-on-scroll">
+                    <h3 class="section-title">You Might Also Like</h3>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="related-post-card">
+                                <div class="related-post-image">
+                                    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                                        alt="Related Post">
+                                </div>
+                                <div class="related-post-body">
+                                    <h4 class="related-post-title">How Machine Learning is Changing Business</h4>
+                                    <div class="related-post-meta">May 28, 2023 • 6 min read</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="related-post-card">
+                                <div class="related-post-image">
+                                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                                        alt="Related Post">
+                                </div>
+                                <div class="related-post-body">
+                                    <h4 class="related-post-title">The Ethics of Voice Assistant Technology</h4>
+                                    <div class="related-post-meta">June 5, 2023 • 8 min read</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="related-post-card">
+                                <div class="related-post-image">
+                                    <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=765&q=80"
+                                        alt="Related Post">
+                                </div>
+                                <div class="related-post-body">
+                                    <h4 class="related-post-title">Quantum Computing: The Next Frontier</h4>
+                                    <div class="related-post-meta">June 10, 2023 • 10 min read</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>About Our Blog</h5>
+                    <p>Exploring the intersection of technology, innovation, and society to understand how emerging
+                        technologies will shape our future.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">Home</a></li>
+                        <li><a href="#" class="text-white">Blog</a></li>
+                        <li><a href="#" class="text-white">About</a></li>
+                        <li><a href="#" class="text-white">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Subscribe</h5>
+                    <p>Get the latest posts delivered to your inbox.</p>
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" placeholder="Your Email">
+                        <button class="btn btn-primary" type="button">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4 bg-secondary">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>&copy; 2023 TechFuture Blog. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-white me-3"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Animation on scroll
+        $(document).ready(function () {
+            // Initialize animation on page load for elements in viewport
+            checkAnimation();
+
+            // Check animation on scroll
+            $(window).scroll(function () {
+                checkAnimation();
+            });
+
+            // Reply button functionality
+            $('.comment-reply').click(function () {
+                $(this).siblings('.reply-form').slideToggle();
+            });
+        });
+
+        function checkAnimation() {
+            $('.animate-on-scroll').each(function () {
+                var position = $(this).offset().top;
+                var scroll = $(window).scrollTop();
+                var windowHeight = $(window).height();
+
+                if (scroll + windowHeight > position) {
+                    $(this).addClass('animated');
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

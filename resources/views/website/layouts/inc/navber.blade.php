@@ -14,82 +14,133 @@
 
 @endphp
 
-<header class="top-header">
+<header>
     <div class="container">
-        <div class="row align-items-center d-flex justify-content-between">
-
-            <!-- Logo -->
-            <div class="col-md-2 col-6">
-                <a href="{{ route('home') }}">
-                    <div class="logo">
-                        <img src="{{ asset($website_setting->website_logo) }}" alt="Logo">
-                    </div>
-                </a>
-            </div>
-
-            <!-- Search bar -->
-            <!-- Search bar -->
-            <div class="col-md-6 d-none d-md-block">
-                <div class="search-container d-flex justify-content-end">
-                    <input type="text" class="form-control search-input" id="searchInput" placeholder=""
-                        style="max-width: 450px;" />
-                    <div class="search-box-result">
-                        <ul>
-                            <li class="search-box-list"></li>
-                        </ul>
-                    </div>
+        <div class="top-bar">
+            <div class="left">
+                <div class="menu-toggle" onclick="toggleMobileNav()">
+                    <span></span><span></span><span></span>
+                </div>
+                <div class="logo">
+                    <a href="index.html">
+                        <img src="{{ asset($website_setting->website_logo) }}" alt="Rainbow Global Logo" class="img-fluid"
+                            style="height: 25px;">
+                    </a>
                 </div>
             </div>
 
-
-            <!-- Location and Button -->
-            <div class="col-md-4 col-6 text-end">
-                <div class="d-flex g-2" style="flex-wrap: wrap; float: right;">
-                    <span class="me-3"><i class="fas fa-map-marker-alt"></i> {{ $website_setting->address }}</span>
-                    <span class="me-3"><i class="fa-solid fa-phone"></i> {{ $website_setting->phone }}</span>
+            <div class="center">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search..." />
+                    <select>
+                        <option value="">All</option>
+                        <option value="electronics">Electronics</option>
+                        <option value="fashion">Fashion</option>
+                    </select>
+                    <button><i class="fas fa-search"></i></button>
                 </div>
             </div>
 
+            <div class="right">
+                <div class="icon">
+                    <i class="fas fa-bag-shopping"></i>
+                    <span>15</span>
+                    <div class="dropdown">
+                        <p>View Cart</p>
+                    </div>
+                </div>
+                <div class="icon user" id="userIcon">
+                    <i class="fas fa-user"></i>
+                    <div class="dropdown">
+                        <a href="login.html">Login</a>
+                        <a href="sign-up.html">Register</a>
+                        <a href="memberLogin.html">Member Login</a>
+                        <a href="memberRegister.html">Member Register</a>
+                        <a href="#">Dashboard</a>
+                    </div>
+                </div>
+            </div>
+            <!-- mobile sticky bar menu -->
+            <div class="mobile-sticky-bar-menu">
+                <div class="menu-toggle" onclick="toggleMobileNav()">
+                    <span></span><span></span><span></span>
+                </div>
+                <div class="logo">
+                    <a href="#">
+                        <img src="{{ asset($website_setting->website_logo) }}" alt="Rainbow Global Logo" class="img-fluid"
+                            style="height: 50px;">
+                    </a>
+                </div>
+                <div class="user-cart-icons d-flex align-items-center gap-3">
+                    <div class="icon">
+                        <i class="fas fa-bag-shopping"></i>
+                        <span>15</span>
+                        <div class="dropdown">
+                            <p>View Cart</p>
+                        </div>
+                    </div>
+                    <div class="icon user" id="userIcon2">
+                        <i class="fas fa-user"></i>
+                        <div class="dropdown">
+                            <a href="login.html">Login</a>
+                            <a href="sign-up.html">Register</a>
+                            <a href="memberLogin.html">Member Login</a>
+                            <a href="memberRegister.html">Member Register</a>
+                            <a href="#">Dashboard</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="navbar-menu-items">
+        <div class="container">
+            <div class="nav-bar">
+                <nav>
+                    <a href="index.html">Home</a>
+                    <div class="has-dropdown">
+                        <a href="#">Shop <i class="fa-solid fa-caret-down"></i></a>
+                        <div class="dropdown">
+                            <a href="#">Shop Grid</a>
+                            <a href="#">Product Details</a>
+                        </div>
+                    </div>
+                    <!-- <div class="has-dropdown">
+                            <a href="#">Pages</a>
+                            <div class="dropdown">
+                                <a href="#">Cart</a>
+                                <a href="#">Checkout</a>
+                            </div>
+                            </div> -->
+                    <a href="about.html">About</a>
+                    <a href="blog.html">Blog</a>
+                    <a href="contact.html">Contact</a>
+                </nav>
+                <div class="nav-actions">
+                    <a href="#" class="seller-btn">Get Offers</a>
+                </div>
+            </div>
         </div>
     </div>
 </header>
 
-<!-- ==================== Header Top End Here ==================== -->
+<div class="mobile-nav" id="mobileNav">
+    <div class="mobile-close" onclick="toggleMobileNav()">×</div>
+    <a href="index.html">Home</a>
+    <a href="#">Shop</a>
+    <a href="#">Product Details</a>
+    <a href="#">Cart</a>
+    <a href="#">Checkout</a>
+    <a href="about.html">About</a>
+    <a href="blog.html">Blog</a>
+    <a href="contact.html">Contact</a>
+    <a href="#" class="seller-btn" style="margin-top:20px;">Become a Seller</a>
+</div>
+
 
 <!-- ==================== Bottom Header End Here ==================== -->
-<nav class="category-two">
-    <span class="close-sidebar"><i class="las la-times"></i></span>
-    <ul class="category-menu-two">
-        @foreach ($categories as $category)
-            <li class="category-menu-two__item">
-                <a href="{{ route('get_category.products', $category->id) }}" class="category-menu-two__link">
-                    <span class="category-menu-two__thumb">
-                        <img src="{{ asset($category->image) }}" width="30px" alt="" />
-                    </span>
-                    {{ $category->category_name }}
-                </a>
-            </li>
-        @endforeach
-    </ul>
-    <div class="contact-list__wrapper d-md-none d-block">
-        <div class="contact-list">
-            <span class="contact-list__icon">
-                <img src="{{ asset('frontend') }}/assets/images/icons/phone.png" alt="" />
-            </span>
-            <span class="contact-list__info"> {{ $website_setting->phone }}</span>
-        </div>
-        <div class="contact-list">
-            <span class="contact-list__icon">
-                <img src="{{ asset('frontend') }}/assets/images/icons/email.png" alt="" />
-            </span>
-            <span class="contact-list__info">
-                <a href="mail:to{{ $website_setting->email }}" class="">{{ $website_setting->email }}</a></span>
-        </div>
-    </div>
-</nav>
-
-<!-- ==================== Bottom Header End Here ==================== -->
-<header class="main-header">
+{{-- <header class="main-header">
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light">
             <button class="navbar-toggler header-button" type="button" data-bs-toggle="collapse"
@@ -133,7 +184,7 @@
                 {{-- <div class="header-info__wishlist">
                         <a href="wishlist.html" class="header-info__link"><i class="far fa-heart"></i></a>
                     </div> --}}
-                <div class="header-info__cart">
+                {{-- <div class="header-info__cart">
                     <a href="{{ route('cart.page') }}" class="header-info__link"><i
                             class="fas fa-shopping-cart"></i></a>
                     <span class="header-info__cart-quantity cart-count" id="cart-count">{{ $itemCount }}</span>
@@ -153,7 +204,7 @@
             </div>
         </nav>
     </div>
-</header>
+</header> --}}
 
 @push('scripts')
     <script>

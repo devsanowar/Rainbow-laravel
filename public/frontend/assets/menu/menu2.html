@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShopO Navbar</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      background: #fff;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      z-index: 999;
+    }
+
+    .top-bar,
+    .nav-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 5%;
+      background: #fff;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #f9b233;
+      text-align: center;
+    }
+
+    .logo span {
+      color: #111;
+    }
+
+    .search-bar {
+      display: flex;
+      flex: 1;
+      max-width: 600px;
+      margin: 0 20px;
+    }
+
+    .search-bar input,
+    .search-bar select {
+      padding: 10px;
+      border: 1px solid #ccc;
+      outline: none;
+    }
+
+    .search-bar input {
+      flex: 1;
+      border-right: none;
+    }
+
+    .search-bar button {
+      background: #f9b233;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .icons {
+      display: flex;
+      gap: 20px;
+      position: relative;
+    }
+
+    .icon {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .icon span {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: #f9b233;
+      color: #fff;
+      border-radius: 50%;
+      padding: 2px 5px;
+      font-size: 12px;
+    }
+
+    .icon .dropdown {
+      display: none;
+      position: absolute;
+      top: 30px;
+      right: 0;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      min-width: 150px;
+      z-index: 1000;
+    }
+
+    .icon.user.open .dropdown {
+      display: block;
+    }
+
+    .dropdown p,
+    .dropdown a {
+      padding: 10px;
+      color: #111;
+      text-decoration: none;
+      display: block;
+      white-space: nowrap;
+    }
+
+    .nav-bar {
+      background: #f9b233;
+      justify-content: center;
+      position: relative;
+    }
+
+    nav {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #111;
+      padding: 10px;
+      position: relative;
+    }
+
+    .has-dropdown {
+      position: relative;
+    }
+
+    .has-dropdown .dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #fff;
+      min-width: 160px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .has-dropdown:hover .dropdown {
+      display: block;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .dropdown a::after {
+      content: "\f105";
+      font-family: FontAwesome;
+      float: right;
+      color: #666;
+    }
+
+    .nav-actions {
+      margin-left: auto;
+    }
+
+    .seller-btn {
+      background: #111;
+      color: #fff;
+      padding: 10px 15px;
+      text-decoration: none;
+      border-radius: 4px;
+    }
+
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      height: 3px;
+      width: 25px;
+      background: #111;
+      margin: 4px 0;
+    }
+
+    /* Off-canvas menu */
+    .mobile-nav {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100vh;
+      background: #f9b233;
+      transition: 0.3s ease;
+      padding: 20px;
+      z-index: 1000;
+    }
+
+    .mobile-nav.active {
+      left: 0;
+    }
+
+    .mobile-nav a {
+      display: block;
+      padding: 10px;
+      color: #111;
+      text-decoration: none;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(5px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      .top-bar {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 10px;
+      }
+
+      .top-bar .logo {
+        order: 2;
+        flex: 1;
+        text-align: center;
+      }
+
+      .top-bar .icons {
+        order: 3;
+      }
+
+      .menu-toggle {
+        display: flex;
+        order: 1;
+      }
+
+      nav,
+      .nav-actions {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="top-bar">
+      <div class="menu-toggle" onclick="toggleMobileNav()">
+        <span></span><span></span><span></span>
+      </div>
+
+      <div class="logo">Shop<span>O</span></div>
+
+      <div class="icons">
+        <div class="icon">
+          <i class="fas fa-bag-shopping"></i>
+          <span>15</span>
+          <div class="dropdown">
+            <p>View Cart</p>
+          </div>
+        </div>
+        <div class="icon user" id="userIcon">
+          <i class="fas fa-user"></i>
+          <div class="dropdown">
+            <a href="#">Login</a>
+            <a href="#">Register</a>
+            <a href="#">Dashboard</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-bar">
+      <nav id="nav">
+        <a href="index.html">Home</a>
+        <div class="has-dropdown">
+          <a href="#">Shop</a>
+          <div class="dropdown">
+            <a href="#">Shop Grid</a>
+            <a href="#">Product Details</a>
+          </div>
+        </div>
+        <div class="has-dropdown">
+          <a href="#">Pages</a>
+          <div class="dropdown">
+            <a href="#">Cart</a>
+            <a href="#">Checkout</a>
+          </div>
+        </div>
+        <a href="about.html">About</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="#" class="seller-btn">Become a Seller</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-nav" id="mobileNav">
+    <a href="index.html">Home</a>
+    <a href="#">Shop</a>
+    <a href="#">Product Details</a>
+    <a href="#">Cart</a>
+    <a href="#">Checkout</a>
+    <a href="about.html">About</a>
+    <a href="blog.html">Blog</a>
+    <a href="contact.html">Contact</a>
+    <a href="#" class="seller-btn" style="margin-top:20px;">Become a Seller</a>
+  </div>
+
+  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem consequatur soluta dolor praesentium a saepe
+    dignissimos, obcaecati illum labore. Voluptates eum fugit, quos distinctio magni consectetur nihil quae soluta
+    atque! Quibusdam corporis, vitae facilis accusamus eum ipsam odio! Ut incidunt quia voluptatum atque illum facere
+    repudiandae laboriosam, dolore officiis reiciendis officia neque delectus quas. Quod dolorum nemo explicabo sequi,
+    tenetur perspiciatis enim quae illum, expedita, quisquam accusantium? Omnis, fugiat? Tenetur corrupti amet quos
+    perferendis sint accusantium eum esse error, obcaecati maiores repudiandae facilis fuga laborum eaque mollitia
+    temporibus ipsum nemo reiciendis magnam fugiat alias optio magni itaque. Quo reiciendis tenetur impedit fuga esse.
+    Aliquid libero possimus aliquam necessitatibus maiores excepturi quidem, alias est neque error dolores totam nemo
+    perspiciatis sequi obcaecati, voluptas eum. Fuga, minus hic impedit nam molestiae assumenda. Alias enim cupiditate,
+    accusantium harum doloribus odit aperiam veritatis? Sunt recusandae earum delectus eum atque voluptates inventore
+    sapiente ratione esse. Excepturi iure impedit consequatur provident ratione sapiente pariatur repellendus ipsum!
+    Voluptates eaque quis minus quas id autem? Doloremque explicabo dignissimos commodi odio a voluptatem magnam libero
+    minus. Quae exercitationem beatae deserunt, maxime officiis excepturi possimus officia iure porro, temporibus illo
+    vitae voluptatibus eaque accusamus iste repellat eveniet accusantium a aut.</p>
+  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem consequatur soluta dolor praesentium a saepe
+    dignissimos, obcaecati illum labore. Voluptates eum fugit, quos distinctio magni consectetur nihil quae soluta
+    atque! Quibusdam corporis, vitae facilis accusamus eum ipsam odio! Ut incidunt quia voluptatum atque illum facere
+    repudiandae laboriosam, dolore officiis reiciendis officia neque delectus quas. Quod dolorum nemo explicabo sequi,
+    tenetur perspiciatis enim quae illum, expedita, quisquam accusantium? Omnis, fugiat? Tenetur corrupti amet quos
+    perferendis sint accusantium eum esse error, obcaecati maiores repudiandae facilis fuga laborum eaque mollitia
+    temporibus ipsum nemo reiciendis magnam fugiat alias optio magni itaque. Quo reiciendis tenetur impedit fuga esse.
+    Aliquid libero possimus aliquam necessitatibus maiores excepturi quidem, alias est neque error dolores totam nemo
+    perspiciatis sequi obcaecati, voluptas eum. Fuga, minus hic impedit nam molestiae assumenda. Alias enim cupiditate,
+    accusantium harum doloribus odit aperiam veritatis? Sunt recusandae earum delectus eum atque voluptates inventore
+    sapiente ratione esse. Excepturi iure impedit consequatur provident ratione sapiente pariatur repellendus ipsum!
+    Voluptates eaque quis minus quas id autem? Doloremque explicabo dignissimos commodi odio a voluptatem magnam libero
+    minus. Quae exercitationem beatae deserunt, maxime officiis excepturi possimus officia iure porro, temporibus illo
+    vitae voluptatibus eaque accusamus iste repellat eveniet accusantium a aut.</p>
+  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem consequatur soluta dolor praesentium a saepe
+    dignissimos, obcaecati illum labore. Voluptates eum fugit, quos distinctio magni consectetur nihil quae soluta
+    atque! Quibusdam corporis, vitae facilis accusamus eum ipsam odio! Ut incidunt quia voluptatum atque illum facere
+    repudiandae laboriosam, dolore officiis reiciendis officia neque delectus quas. Quod dolorum nemo explicabo sequi,
+    tenetur perspiciatis enim quae illum, expedita, quisquam accusantium? Omnis, fugiat? Tenetur corrupti amet quos
+    perferendis sint accusantium eum esse error, obcaecati maiores repudiandae facilis fuga laborum eaque mollitia
+    temporibus ipsum nemo reiciendis magnam fugiat alias optio magni itaque. Quo reiciendis tenetur impedit fuga esse.
+    Aliquid libero possimus aliquam necessitatibus maiores excepturi quidem, alias est neque error dolores totam nemo
+    perspiciatis sequi obcaecati, voluptas eum. Fuga, minus hic impedit nam molestiae assumenda. Alias enim cupiditate,
+    accusantium harum doloribus odit aperiam veritatis? Sunt recusandae earum delectus eum atque voluptates inventore
+    sapiente ratione esse. Excepturi iure impedit consequatur provident ratione sapiente pariatur repellendus ipsum!
+    Voluptates eaque quis minus quas id autem? Doloremque explicabo dignissimos commodi odio a voluptatem magnam libero
+    minus. Quae exercitationem beatae deserunt, maxime officiis excepturi possimus officia iure porro, temporibus illo
+    vitae voluptatibus eaque accusamus iste repellat eveniet accusantium a aut.</p>
+  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem consequatur soluta dolor praesentium a saepe
+    dignissimos, obcaecati illum labore. Voluptates eum fugit, quos distinctio magni consectetur nihil quae soluta
+    atque! Quibusdam corporis, vitae facilis accusamus eum ipsam odio! Ut incidunt quia voluptatum atque illum facere
+    repudiandae laboriosam, dolore officiis reiciendis officia neque delectus quas. Quod dolorum nemo explicabo sequi,
+    tenetur perspiciatis enim quae illum, expedita, quisquam accusantium? Omnis, fugiat? Tenetur corrupti amet quos
+    perferendis sint accusantium eum esse error, obcaecati maiores repudiandae facilis fuga laborum eaque mollitia
+    temporibus ipsum nemo reiciendis magnam fugiat alias optio magni itaque. Quo reiciendis tenetur impedit fuga esse.
+    Aliquid libero possimus aliquam necessitatibus maiores excepturi quidem, alias est neque error dolores totam nemo
+    perspiciatis sequi obcaecati, voluptas eum. Fuga, minus hic impedit nam molestiae assumenda. Alias enim cupiditate,
+    accusantium harum doloribus odit aperiam veritatis? Sunt recusandae earum delectus eum atque voluptates inventore
+    sapiente ratione esse. Excepturi iure impedit consequatur provident ratione sapiente pariatur repellendus ipsum!
+    Voluptates eaque quis minus quas id autem? Doloremque explicabo dignissimos commodi odio a voluptatem magnam libero
+    minus. Quae exercitationem beatae deserunt, maxime officiis excepturi possimus officia iure porro, temporibus illo
+    vitae voluptatibus eaque accusamus iste repellat eveniet accusantium a aut.</p>
+  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem consequatur soluta dolor praesentium a saepe
+    dignissimos, obcaecati illum labore. Voluptates eum fugit, quos distinctio magni consectetur nihil quae soluta
+    atque! Quibusdam corporis, vitae facilis accusamus eum ipsam odio! Ut incidunt quia voluptatum atque illum facere
+    repudiandae laboriosam, dolore officiis reiciendis officia neque delectus quas. Quod dolorum nemo explicabo sequi,
+    tenetur perspiciatis enim quae illum, expedita, quisquam accusantium? Omnis, fugiat? Tenetur corrupti amet quos
+    perferendis sint accusantium eum esse error, obcaecati maiores repudiandae facilis fuga laborum eaque mollitia
+    temporibus ipsum nemo reiciendis magnam fugiat alias optio magni itaque. Quo reiciendis tenetur impedit fuga esse.
+    Aliquid libero possimus aliquam necessitatibus maiores excepturi quidem, alias est neque error dolores totam nemo
+    perspiciatis sequi obcaecati, voluptas eum. Fuga, minus hic impedit nam molestiae assumenda. Alias enim cupiditate,
+    accusantium harum doloribus odit aperiam veritatis? Sunt recusandae earum delectus eum atque voluptates inventore
+    sapiente ratione esse. Excepturi iure impedit consequatur provident ratione sapiente pariatur repellendus ipsum!
+    Voluptates eaque quis minus quas id autem? Doloremque explicabo dignissimos commodi odio a voluptatem magnam libero
+    minus. Quae exercitationem beatae deserunt, maxime officiis excepturi possimus officia iure porro, temporibus illo
+    vitae voluptatibus eaque accusamus iste repellat eveniet accusantium a aut.</p>
+  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem consequatur soluta dolor praesentium a saepe
+    dignissimos, obcaecati illum labore. Voluptates eum fugit, quos distinctio magni consectetur nihil quae soluta
+    atque! Quibusdam corporis, vitae facilis accusamus eum ipsam odio! Ut incidunt quia voluptatum atque illum facere
+    repudiandae laboriosam, dolore officiis reiciendis officia neque delectus quas. Quod dolorum nemo explicabo sequi,
+    tenetur perspiciatis enim quae illum, expedita, quisquam accusantium? Omnis, fugiat? Tenetur corrupti amet quos
+    perferendis sint accusantium eum esse error, obcaecati maiores repudiandae facilis fuga laborum eaque mollitia
+    temporibus ipsum nemo reiciendis magnam fugiat alias optio magni itaque. Quo reiciendis tenetur impedit fuga esse.
+    Aliquid libero possimus aliquam necessitatibus maiores excepturi quidem, alias est neque error dolores totam nemo
+    perspiciatis sequi obcaecati, voluptas eum. Fuga, minus hic impedit nam molestiae assumenda. Alias enim cupiditate,
+    accusantium harum doloribus odit aperiam veritatis? Sunt recusandae earum delectus eum atque voluptates inventore
+    sapiente ratione esse. Excepturi iure impedit consequatur provident ratione sapiente pariatur repellendus ipsum!
+    Voluptates eaque quis minus quas id autem? Doloremque explicabo dignissimos commodi odio a voluptatem magnam libero
+    minus. Quae exercitationem beatae deserunt, maxime officiis excepturi possimus officia iure porro, temporibus illo
+    vitae voluptatibus eaque accusamus iste repellat eveniet accusantium a aut.</p>
+
+  <script>
+    function toggleMobileNav() {
+      document.getElementById('mobileNav').classList.toggle('active');
+    }
+
+    document.getElementById('userIcon').addEventListener('click', function (e) {
+      e.stopPropagation();
+      this.classList.toggle('open');
+    });
+
+    document.addEventListener('click', function (e) {
+      const userIcon = document.getElementById('userIcon');
+      if (!userIcon.contains(e.target)) {
+        userIcon.classList.remove('open');
+      }
+    });
+  </script>
+</body>
+
+</html>

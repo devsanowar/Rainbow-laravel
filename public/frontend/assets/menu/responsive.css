@@ -1,0 +1,32 @@
+@media (max-width: 1024px) {
+    .nav-menu {
+        gap: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: flex;
+    }
+
+    .nav-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: white;
+        box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+        flex-direction: column;
+        text-align: center;
+        padding: 15px 0;
+    }
+
+    .nav-menu li {
+        margin: 10px 0;
+    }
+
+    .nav-menu.show {
+        display: flex;
+    }
+}

@@ -30,41 +30,39 @@ class FrontendController extends Controller
 {
     public function index()
     {
-        $banner = Banner::select(['id', 'title', 'sub_title', 'description', 'button_name', 'button_url', 'image'])->first();
-        $categories = Category::with('products')->where('category_slug', '!=', 'default')->select('id', 'category_name', 'image', 'category_slug')->get();
+        // $banner = Banner::select(['id', 'title', 'sub_title', 'description', 'button_name', 'button_url', 'image'])->first();
+        // $categories = Category::with('products')->where('category_slug', '!=', 'default')->select('id', 'category_name', 'image', 'category_slug')->get();
 
-        $promobanners = Promobanner::where('is_active', 1)
-            ->latest()
-            ->get(['id', 'image', 'url']);
+        // $promobanners = Promobanner::where('is_active', 1)
+        //     ->latest()
+        //     ->get(['id', 'image', 'url']);
 
-        $about = About::first();
-        $social_icon = WebsiteSocialIcon::select(['id', 'messanger_url'])->first();
-        $website_setting = WebsiteSetting::select(['id', 'phone'])->first();
+        // $about = About::first();
+        // $social_icon = WebsiteSocialIcon::select(['id', 'messanger_url'])->first();
+        // $website_setting = WebsiteSetting::select(['id', 'phone'])->first();
 
-        $featured_products = Product::with(['category:id,category_name'])
-            ->where('is_active', 1)
-            ->where('is_featured', 1)
-            ->latest()
-            ->limit(8)
-            ->get(['id', 'category_id', 'product_name', 'product_slug', 'regular_price', 'discount_price', 'discount_type', 'thumbnail']);
+        // $featured_products = Product::with(['category:id,category_name'])
+        //     ->where('is_active', 1)
+        //     ->where('is_featured', 1)
+        //     ->latest()
+        //     ->limit(8)
+        //     ->get(['id', 'category_id', 'product_name', 'product_slug', 'regular_price', 'discount_price', 'discount_type', 'thumbnail']);
 
-        // $project_videos = ProjectVideo::latest()->limit(8)->get(['id', 'video_url']);
+        
+        // $achievements = Achievement::where('is_active', 1)
+        //     ->latest()
+        //     ->get(['id', 'title', 'count_number', 'image']);
 
-        // $whychoses = WhyChoseUs::where('is_active', 1)->latest()->get(['id', 'title', 'description', 'image']);
+        // $reviews = Review::latest()->get(['id', 'name', 'profession', 'review', 'image']);
 
-        $achievements = Achievement::where('is_active', 1)
-            ->latest()
-            ->get(['id', 'title', 'count_number', 'image']);
+        // $cta = Cta::where('is_active', 1)->first();
 
-        $reviews = Review::latest()->get(['id', 'name', 'profession', 'review', 'image']);
+       
 
-        $cta = Cta::where('is_active', 1)->first();
+        // $blogs = Post::latest()->take(3)->get();
+        // , compact(['banner', 'categories', 'achievements', 'reviews', 'about', 'featured_products', 'blogs', 'promobanners', 'social_icon', 'website_setting', 'cta'])
 
-        // $faqs = Faq::latest()->get(['id', 'question', 'answer']);
-
-        $blogs = Post::latest()->take(3)->get();
-
-        return view('website.home', compact(['banner', 'categories', 'achievements', 'reviews', 'about', 'featured_products', 'blogs', 'promobanners', 'social_icon', 'website_setting', 'cta']));
+        return view('website.home');
     }
 
     public function shopPage(Request $request)

@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ShopO Navbar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 999;
+        }
+
+        .top-bar,
+        .nav-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 5%;
+            flex-wrap: wrap;
+            background: #fff;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #f9b233;
+            text-align: center;
+        }
+
+        .logo span {
+            color: #111;
+        }
+
+        .search-bar {
+            display: flex;
+            max-width: 500px;
+            margin-left: auto;
+        }
+
+        .search-bar input,
+        .search-bar select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            outline: none;
+        }
+
+        .search-bar input {
+            flex: 1;
+            border-right: none;
+        }
+
+        .search-bar button {
+            background: #f9b233;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .icons {
+            display: flex;
+            gap: 20px;
+            position: relative;
+            align-items: center;
+        }
+
+        .icon {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .icon span {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #f9b233;
+            color: #fff;
+            border-radius: 50%;
+            padding: 2px 5px;
+            font-size: 12px;
+        }
+
+        .icon .dropdown {
+            display: none;
+            position: absolute;
+            top: 30px;
+            right: 0;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            min-width: 150px;
+            z-index: 1000;
+        }
+
+        .icon.user.open .dropdown {
+            display: block;
+        }
+
+        .dropdown p,
+        .dropdown a {
+            padding: 10px;
+            color: #111;
+            text-decoration: none;
+            display: block;
+        }
+
+        .nav-bar {
+            background: #f9b233;
+            justify-content: center;
+            position: relative;
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #111;
+            padding: 10px;
+            position: relative;
+        }
+
+        .has-dropdown {
+            position: relative;
+        }
+
+        .has-dropdown .dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #fff;
+            min-width: 160px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .has-dropdown:hover .dropdown {
+            display: block;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .dropdown a::after {
+            content: "\f105";
+            font-family: FontAwesome;
+            float: right;
+            color: #666;
+        }
+
+        .nav-actions {
+            margin-left: auto;
+        }
+
+        .seller-btn {
+            background: #111;
+            color: #fff;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            height: 3px;
+            width: 25px;
+            background: #111;
+            margin: 4px 0;
+        }
+
+        /* Off-canvas menu */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 250px;
+            height: 100vh;
+            background: #f9b233;
+            transition: 0.3s ease;
+            padding: 20px;
+            z-index: 1000;
+        }
+
+        .mobile-nav.active {
+            left: 0;
+        }
+
+        .mobile-nav a {
+            display: block;
+            padding: 10px;
+            color: #111;
+            text-decoration: none;
+        }
+
+        .mobile-close {
+            font-size: 22px;
+            font-weight: bold;
+            text-align: right;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .top-bar {
+                flex-direction: row;
+                justify-content: space-between;
+                padding: 10px;
+            }
+
+            .menu-toggle {
+                display: flex;
+                order: 1;
+            }
+
+            .top-bar .logo {
+                order: 2;
+                flex: 1;
+                text-align: center;
+            }
+
+            .top-bar .icons {
+                order: 3;
+            }
+
+            nav,
+            .nav-actions,
+            .search-bar {
+                display: none;
+            }
+        }
+
+        @media screen and (min-width: 769px) {
+            .search-bar {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="py-3 text-center border">
+        <p>Lorem ipsum dolor sit.</p>
+    </div>
+    <header>
+        <div class="top-bar">
+            <div class="menu-toggle" onclick="toggleMobileNav()">
+                <span></span><span></span><span></span>
+            </div>
+
+            <div class="logo">Shop<span>O</span></div>
+
+            <div class="search-bar">
+                <input type="text" placeholder="Search..." />
+                <select>
+                    <option value="">All</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="fashion">Fashion</option>
+                </select>
+                <button><i class="fas fa-search"></i></button>
+            </div>
+
+            <div class="icons">
+                <div class="icon">
+                    <i class="fas fa-bag-shopping"></i>
+                    <span>15</span>
+                    <div class="dropdown">
+                        <p>View Cart</p>
+                    </div>
+                </div>
+                <div class="icon user" id="userIcon">
+                    <i class="fas fa-user"></i>
+                    <div class="dropdown">
+                        <a href="#">Login</a>
+                        <a href="#">Register</a>
+                        <a href="#">Dashboard</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-bar">
+            <nav>
+                <a href="index.html">Home</a>
+                <div class="has-dropdown">
+                    <a href="#">Shop</a>
+                    <div class="dropdown">
+                        <a href="#">Shop Grid</a>
+                        <a href="#">Product Details</a>
+                    </div>
+                </div>
+                <div class="has-dropdown">
+                    <a href="#">Pages</a>
+                    <div class="dropdown">
+                        <a href="#">Cart</a>
+                        <a href="#">Checkout</a>
+                    </div>
+                </div>
+                <a href="about.html">About</a>
+                <a href="blog.html">Blog</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+            <div class="nav-actions">
+                <a href="#" class="seller-btn">Become a Seller</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="mobile-nav" id="mobileNav">
+        <div class="mobile-close" onclick="toggleMobileNav()">×</div>
+        <a href="index.html">Home</a>
+        <a href="#">Shop</a>
+        <a href="#">Product Details</a>
+        <a href="#">Cart</a>
+        <a href="#">Checkout</a>
+        <a href="about.html">About</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
+        <a href="#" class="seller-btn" style="margin-top:20px;">Become a Seller</a>
+    </div>
+
+
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla voluptatem excepturi aliquid itaque quam modi
+        veritatis iure fuga voluptatibus, aliquam ipsum ullam illo non id vero voluptatum nemo animi praesentium ipsa
+        sequi totam sapiente! Totam consectetur illo sapiente maiores asperiores a provident doloribus facilis, fugit
+        optio iure ea cupiditate cum! Dolorum suscipit incidunt soluta molestiae delectus laboriosam ad, reiciendis
+        cupiditate ex sunt optio tempore ipsam adipisci facilis iure ratione voluptas nisi reprehenderit odit quaerat
+        unde non repellat voluptate maiores? Fugiat ipsam molestiae necessitatibus in omnis architecto corrupti. Sequi
+        blanditiis quibusdam officiis eveniet ducimus recusandae quod aperiam id. Iste laboriosam illo laborum officiis.
+        Id nihil iste, iusto amet, asperiores omnis placeat ratione molestiae ipsum eum, fuga necessitatibus! Atque
+        dolores porro, labore nemo assumenda quasi minus, ducimus nam, debitis nostrum cum! Maxime inventore et aliquam
+        numquam sapiente est atque dicta, iste excepturi, consequatur velit fuga natus itaque impedit rem! Pariatur
+        dolorum, corporis voluptatem, animi quae veritatis quaerat asperiores earum modi doloremque debitis velit
+        mollitia, aliquam sit vitae quam ipsa fuga nemo aperiam. Dolores repellat, similique quos sint eos quam nobis
+        sequi saepe debitis exercitationem inventore amet quidem, laudantium excepturi at ut fugit aliquam, nulla quasi
+        sit error modi itaque blanditiis! Maxime, minima.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla voluptatem excepturi aliquid itaque quam modi
+        veritatis iure fuga voluptatibus, aliquam ipsum ullam illo non id vero voluptatum nemo animi praesentium ipsa
+        sequi totam sapiente! Totam consectetur illo sapiente maiores asperiores a provident doloribus facilis, fugit
+        optio iure ea cupiditate cum! Dolorum suscipit incidunt soluta molestiae delectus laboriosam ad, reiciendis
+        cupiditate ex sunt optio tempore ipsam adipisci facilis iure ratione voluptas nisi reprehenderit odit quaerat
+        unde non repellat voluptate maiores? Fugiat ipsam molestiae necessitatibus in omnis architecto corrupti. Sequi
+        blanditiis quibusdam officiis eveniet ducimus recusandae quod aperiam id. Iste laboriosam illo laborum officiis.
+        Id nihil iste, iusto amet, asperiores omnis placeat ratione molestiae ipsum eum, fuga necessitatibus! Atque
+        dolores porro, labore nemo assumenda quasi minus, ducimus nam, debitis nostrum cum! Maxime inventore et aliquam
+        numquam sapiente est atque dicta, iste excepturi, consequatur velit fuga natus itaque impedit rem! Pariatur
+        dolorum, corporis voluptatem, animi quae veritatis quaerat asperiores earum modi doloremque debitis velit
+        mollitia, aliquam sit vitae quam ipsa fuga nemo aperiam. Dolores repellat, similique quos sint eos quam nobis
+        sequi saepe debitis exercitationem inventore amet quidem, laudantium excepturi at ut fugit aliquam, nulla quasi
+        sit error modi itaque blanditiis! Maxime, minima.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla voluptatem excepturi aliquid itaque quam modi
+        veritatis iure fuga voluptatibus, aliquam ipsum ullam illo non id vero voluptatum nemo animi praesentium ipsa
+        sequi totam sapiente! Totam consectetur illo sapiente maiores asperiores a provident doloribus facilis, fugit
+        optio iure ea cupiditate cum! Dolorum suscipit incidunt soluta molestiae delectus laboriosam ad, reiciendis
+        cupiditate ex sunt optio tempore ipsam adipisci facilis iure ratione voluptas nisi reprehenderit odit quaerat
+        unde non repellat voluptate maiores? Fugiat ipsam molestiae necessitatibus in omnis architecto corrupti. Sequi
+        blanditiis quibusdam officiis eveniet ducimus recusandae quod aperiam id. Iste laboriosam illo laborum officiis.
+        Id nihil iste, iusto amet, asperiores omnis placeat ratione molestiae ipsum eum, fuga necessitatibus! Atque
+        dolores porro, labore nemo assumenda quasi minus, ducimus nam, debitis nostrum cum! Maxime inventore et aliquam
+        numquam sapiente est atque dicta, iste excepturi, consequatur velit fuga natus itaque impedit rem! Pariatur
+        dolorum, corporis voluptatem, animi quae veritatis quaerat asperiores earum modi doloremque debitis velit
+        mollitia, aliquam sit vitae quam ipsa fuga nemo aperiam. Dolores repellat, similique quos sint eos quam nobis
+        sequi saepe debitis exercitationem inventore amet quidem, laudantium excepturi at ut fugit aliquam, nulla quasi
+        sit error modi itaque blanditiis! Maxime, minima.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla voluptatem excepturi aliquid itaque quam modi
+        veritatis iure fuga voluptatibus, aliquam ipsum ullam illo non id vero voluptatum nemo animi praesentium ipsa
+        sequi totam sapiente! Totam consectetur illo sapiente maiores asperiores a provident doloribus facilis, fugit
+        optio iure ea cupiditate cum! Dolorum suscipit incidunt soluta molestiae delectus laboriosam ad, reiciendis
+        cupiditate ex sunt optio tempore ipsam adipisci facilis iure ratione voluptas nisi reprehenderit odit quaerat
+        unde non repellat voluptate maiores? Fugiat ipsam molestiae necessitatibus in omnis architecto corrupti. Sequi
+        blanditiis quibusdam officiis eveniet ducimus recusandae quod aperiam id. Iste laboriosam illo laborum officiis.
+        Id nihil iste, iusto amet, asperiores omnis placeat ratione molestiae ipsum eum, fuga necessitatibus! Atque
+        dolores porro, labore nemo assumenda quasi minus, ducimus nam, debitis nostrum cum! Maxime inventore et aliquam
+        numquam sapiente est atque dicta, iste excepturi, consequatur velit fuga natus itaque impedit rem! Pariatur
+        dolorum, corporis voluptatem, animi quae veritatis quaerat asperiores earum modi doloremque debitis velit
+        mollitia, aliquam sit vitae quam ipsa fuga nemo aperiam. Dolores repellat, similique quos sint eos quam nobis
+        sequi saepe debitis exercitationem inventore amet quidem, laudantium excepturi at ut fugit aliquam, nulla quasi
+        sit error modi itaque blanditiis! Maxime, minima.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla voluptatem excepturi aliquid itaque quam modi
+        veritatis iure fuga voluptatibus, aliquam ipsum ullam illo non id vero voluptatum nemo animi praesentium ipsa
+        sequi totam sapiente! Totam consectetur illo sapiente maiores asperiores a provident doloribus facilis, fugit
+        optio iure ea cupiditate cum! Dolorum suscipit incidunt soluta molestiae delectus laboriosam ad, reiciendis
+        cupiditate ex sunt optio tempore ipsam adipisci facilis iure ratione voluptas nisi reprehenderit odit quaerat
+        unde non repellat voluptate maiores? Fugiat ipsam molestiae necessitatibus in omnis architecto corrupti. Sequi
+        blanditiis quibusdam officiis eveniet ducimus recusandae quod aperiam id. Iste laboriosam illo laborum officiis.
+        Id nihil iste, iusto amet, asperiores omnis placeat ratione molestiae ipsum eum, fuga necessitatibus! Atque
+        dolores porro, labore nemo assumenda quasi minus, ducimus nam, debitis nostrum cum! Maxime inventore et aliquam
+        numquam sapiente est atque dicta, iste excepturi, consequatur velit fuga natus itaque impedit rem! Pariatur
+        dolorum, corporis voluptatem, animi quae veritatis quaerat asperiores earum modi doloremque debitis velit
+        mollitia, aliquam sit vitae quam ipsa fuga nemo aperiam. Dolores repellat, similique quos sint eos quam nobis
+        sequi saepe debitis exercitationem inventore amet quidem, laudantium excepturi at ut fugit aliquam, nulla quasi
+        sit error modi itaque blanditiis! Maxime, minima.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla voluptatem excepturi aliquid itaque quam modi
+        veritatis iure fuga voluptatibus, aliquam ipsum ullam illo non id vero voluptatum nemo animi praesentium ipsa
+        sequi totam sapiente! Totam consectetur illo sapiente maiores asperiores a provident doloribus facilis, fugit
+        optio iure ea cupiditate cum! Dolorum suscipit incidunt soluta molestiae delectus laboriosam ad, reiciendis
+        cupiditate ex sunt optio tempore ipsam adipisci facilis iure ratione voluptas nisi reprehenderit odit quaerat
+        unde non repellat voluptate maiores? Fugiat ipsam molestiae necessitatibus in omnis architecto corrupti. Sequi
+        blanditiis quibusdam officiis eveniet ducimus recusandae quod aperiam id. Iste laboriosam illo laborum officiis.
+        Id nihil iste, iusto amet, asperiores omnis placeat ratione molestiae ipsum eum, fuga necessitatibus! Atque
+        dolores porro, labore nemo assumenda quasi minus, ducimus nam, debitis nostrum cum! Maxime inventore et aliquam
+        numquam sapiente est atque dicta, iste excepturi, consequatur velit fuga natus itaque impedit rem! Pariatur
+        dolorum, corporis voluptatem, animi quae veritatis quaerat asperiores earum modi doloremque debitis velit
+        mollitia, aliquam sit vitae quam ipsa fuga nemo aperiam. Dolores repellat, similique quos sint eos quam nobis
+        sequi saepe debitis exercitationem inventore amet quidem, laudantium excepturi at ut fugit aliquam, nulla quasi
+        sit error modi itaque blanditiis! Maxime, minima.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla voluptatem excepturi aliquid itaque quam modi
+        veritatis iure fuga voluptatibus, aliquam ipsum ullam illo non id vero voluptatum nemo animi praesentium ipsa
+        sequi totam sapiente! Totam consectetur illo sapiente maiores asperiores a provident doloribus facilis, fugit
+        optio iure ea cupiditate cum! Dolorum suscipit incidunt soluta molestiae delectus laboriosam ad, reiciendis
+        cupiditate ex sunt optio tempore ipsam adipisci facilis iure ratione voluptas nisi reprehenderit odit quaerat
+        unde non repellat voluptate maiores? Fugiat ipsam molestiae necessitatibus in omnis architecto corrupti. Sequi
+        blanditiis quibusdam officiis eveniet ducimus recusandae quod aperiam id. Iste laboriosam illo laborum officiis.
+        Id nihil iste, iusto amet, asperiores omnis placeat ratione molestiae ipsum eum, fuga necessitatibus! Atque
+        dolores porro, labore nemo assumenda quasi minus, ducimus nam, debitis nostrum cum! Maxime inventore et aliquam
+        numquam sapiente est atque dicta, iste excepturi, consequatur velit fuga natus itaque impedit rem! Pariatur
+        dolorum, corporis voluptatem, animi quae veritatis quaerat asperiores earum modi doloremque debitis velit
+        mollitia, aliquam sit vitae quam ipsa fuga nemo aperiam. Dolores repellat, similique quos sint eos quam nobis
+        sequi saepe debitis exercitationem inventore amet quidem, laudantium excepturi at ut fugit aliquam, nulla quasi
+        sit error modi itaque blanditiis! Maxime, minima.</p>
+
+    <script>
+        function toggleMobileNav() {
+            document.getElementById('mobileNav').classList.toggle('active');
+        }
+
+        document.getElementById('userIcon').addEventListener('click', function (e) {
+            e.stopPropagation();
+            this.classList.toggle('open');
+        });
+
+        document.addEventListener('click', function (e) {
+            const userIcon = document.getElementById('userIcon');
+            if (!userIcon.contains(e.target)) {
+                userIcon.classList.remove('open');
+            }
+        });
+    </script>
+</body>
+
+</html>

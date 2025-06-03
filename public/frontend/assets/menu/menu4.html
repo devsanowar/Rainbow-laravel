@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ShopO Navbar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 999;
+        }
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 5%;
+            flex-wrap: wrap;
+            background: #fff;
+        }
+
+        .top-bar .left,
+        .top-bar .center,
+        .top-bar .right {
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .top-bar .left {
+            justify-content: flex-start;
+            gap: 10px;
+        }
+
+        .top-bar .center {
+            justify-content: center;
+        }
+
+        .top-bar .right {
+            justify-content: flex-end;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #f9b233;
+        }
+
+        .logo span {
+            color: #111;
+        }
+
+        .search-bar {
+            display: flex;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .search-bar input,
+        .search-bar select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            outline: none;
+        }
+
+        .search-bar input {
+            flex: 1;
+            border-right: none;
+        }
+
+        .search-bar button {
+            background: #f9b233;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .icons {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .icon {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .icon span {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #f9b233;
+            color: #fff;
+            border-radius: 50%;
+            padding: 2px 5px;
+            font-size: 12px;
+        }
+
+        .icon .dropdown {
+            display: none;
+            position: absolute;
+            top: 30px;
+            right: 0;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            min-width: 150px;
+            z-index: 1000;
+        }
+
+        .icon.user.open .dropdown {
+            display: block;
+        }
+
+        .dropdown p,
+        .dropdown a {
+            padding: 10px;
+            color: #111;
+            text-decoration: none;
+            display: block;
+        }
+
+        .nav-bar {
+            background: #f9b233;
+            display: flex;
+            justify-content: center;
+            position: relative;
+            padding: 10px 5%;
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #111;
+            padding: 10px;
+            position: relative;
+        }
+
+        .has-dropdown {
+            position: relative;
+        }
+
+        .has-dropdown .dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #fff;
+            min-width: 160px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .has-dropdown:hover .dropdown {
+            display: block;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .dropdown a::after {
+            content: "\f105";
+            font-family: FontAwesome;
+            float: right;
+            color: #666;
+        }
+
+        .nav-actions {
+            margin-left: auto;
+        }
+
+        .seller-btn {
+            background: #111;
+            color: #fff;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            height: 3px;
+            width: 25px;
+            background: #111;
+            margin: 4px 0;
+        }
+
+        /* Off-canvas menu */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 250px;
+            height: 100vh;
+            background: #f9b233;
+            transition: 0.3s ease;
+            padding: 20px;
+            z-index: 1000;
+        }
+
+        .mobile-nav.active {
+            left: 0;
+        }
+
+        .mobile-nav a {
+            display: block;
+            padding: 10px;
+            color: #111;
+            text-decoration: none;
+        }
+
+        .mobile-close {
+            font-size: 22px;
+            font-weight: bold;
+            text-align: right;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .top-bar {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                gap: 0;
+            }
+
+            .top-bar .left {
+                flex: 0 0 auto;
+                justify-content: flex-start;
+            }
+
+            .top-bar .center {
+                flex: 1;
+                justify-content: center;
+            }
+
+            .top-bar .right {
+                flex: 0 0 auto;
+                justify-content: flex-end;
+                gap: 15px;
+            }
+
+            .search-bar {
+                display: none;
+                /* Hide search bar on mobile */
+            }
+        }
+
+
+        /* @media screen and (max-width: 768px) {
+            .top-bar {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+
+            .top-bar .left,
+            .top-bar .center,
+            .top-bar .right {
+                justify-content: center;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            nav,
+            .nav-actions {
+                display: none;
+            }
+        } */
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="top-bar">
+            <div class="left">
+                <div class="menu-toggle" onclick="toggleMobileNav()">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+
+            <div class="center">
+                <div class="logo">Shop<span>O</span></div>
+            </div>
+
+            <div class="right">
+                <div class="icon">
+                    <i class="fas fa-bag-shopping"></i>
+                    <span>15</span>
+                </div>
+                <div class="icon user" id="userIcon">
+                    <i class="fas fa-user"></i>
+                    <div class="dropdown">
+                        <a href="#">Login</a>
+                        <a href="#">Register</a>
+                        <a href="#">Dashboard</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="nav-bar">
+            <nav>
+                <a href="index.html">Home</a>
+                <div class="has-dropdown">
+                    <a href="#">Shop</a>
+                    <div class="dropdown">
+                        <a href="#">Shop Grid</a>
+                        <a href="#">Product Details</a>
+                    </div>
+                </div>
+                <div class="has-dropdown">
+                    <a href="#">Pages</a>
+                    <div class="dropdown">
+                        <a href="#">Cart</a>
+                        <a href="#">Checkout</a>
+                    </div>
+                </div>
+                <a href="about.html">About</a>
+                <a href="blog.html">Blog</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+            <div class="nav-actions">
+                <a href="#" class="seller-btn">Become a Seller</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="mobile-nav" id="mobileNav">
+        <div class="mobile-close" onclick="toggleMobileNav()">×</div>
+        <a href="index.html">Home</a>
+        <a href="#">Shop</a>
+        <a href="#">Product Details</a>
+        <a href="#">Cart</a>
+        <a href="#">Checkout</a>
+        <a href="about.html">About</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
+        <a href="#" class="seller-btn" style="margin-top:20px;">Become a Seller</a>
+    </div>
+
+
+    <script>
+        function toggleMobileNav() {
+            document.getElementById('mobileNav').classList.toggle('active');
+        }
+
+        document.getElementById('userIcon').addEventListener('click', function (e) {
+            e.stopPropagation();
+            this.classList.toggle('open');
+        });
+
+        document.addEventListener('click', function (e) {
+            const userIcon = document.getElementById('userIcon');
+            if (!userIcon.contains(e.target)) {
+                userIcon.classList.remove('open');
+            }
+        });
+    </script>
+</body>
+
+</html>

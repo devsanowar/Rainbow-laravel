@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rainbow Global</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="assets/icons/favicon.ico" type="image/x-icon" />
+
+  <!-- Bootstrap CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="css/all.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+
+  <style>
+    :root {
+      --primary-color: #007bff;
+      --bg-light: #f8f9fa;
+      --text-dark: #343a40;
+    }
+
+    /* ========== Header ========== */
+    header {
+      padding: 15px 0;
+    }
+
+    .topbar {
+      background: var(--bg-light);
+      font-size: 13px;
+    }
+
+    .main-header .nav-link {
+      font-weight: 500;
+      color: var(--text-dark);
+    }
+
+    .main-header .nav-link:hover,
+    .main-header .nav-link:focus {
+      color: var(--primary-color);
+    }
+
+    .search-box input.form-control {
+      border: 1px solid #ccc;
+    }
+
+    .mobile-menu-toggle {
+      border: none;
+      background: none;
+    }
+
+    /* Base mobile menu */
+#mobileNav {
+  position: fixed;
+  top: 0;
+  left: -250px;
+  height: 100%;
+  width: 250px;
+  background-color: #fff;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+  z-index: 1050;
+  padding: 20px;
+  transition: left 0.3s ease-in-out;
+  flex-direction: column;
+}
+
+/* Slide in on toggle */
+#mobileNav.active {
+  left: 0;
+}
+
+/* Navigation Links */
+#mobileNav .nav-link {
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+  color: #333;
+  font-weight: 500;
+}
+
+/* On Desktop */
+@media (min-width: 768px) {
+  #mobileNav {
+    position: static;
+    height: auto;
+    width: auto;
+    box-shadow: none;
+    padding: 0;
+    left: 0 !important;
+    flex-direction: row;
+  }
+
+  #mobileNav .nav-link {
+    padding: 0 15px;
+    border-bottom: none;
+  }
+}
+
+  </style>
+</head>
+
+<body>
+  <!-- ======= HEADER START ======= -->
+  <div class="topbar py-1 border-bottom">
+    <div class="container d-flex flex-wrap justify-content-between align-items-center small">
+      <div class="text-muted">
+        📞 Customer Service - 01960473828 | Dealer Support - 01907109181
+      </div>
+      <div class="d-flex gap-3 align-items-center">
+        <div class="dropdown">
+          <a href="#" class="dropdown-toggle text-decoration-none text-muted" data-bs-toggle="dropdown">🌐 Language</a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="#">English</a></li>
+            <li><a class="dropdown-item" href="#">বাংলা</a></li>
+          </ul>
+        </div>
+        <a href="#" class="text-muted">❓ Help</a>
+        <div class="dropdown">
+          <a href="#" class="dropdown-toggle text-muted d-flex align-items-center gap-1" data-bs-toggle="dropdown">
+            <i class="fa fa-user-circle"></i> Account
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="#">Customer Registration</a></li>
+            <li><a class="dropdown-item" href="#">Customer Login</a></li>
+            <li><a class="dropdown-item" href="#">Dealer Login</a></li>
+            <li><a class="dropdown-item" href="#">My Orders</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+<header class="container-fluid py-2 border-bottom d-flex justify-content-between align-items-center">
+  <!-- Logo -->
+  <div class="d-flex align-items-center">
+    <img src="assets/images/logo.png" alt="Logo" style="height: 40px;">
+  </div>
+
+  <!-- Search Box (Hidden on small screens, optimized layout for mobile) -->
+  <form class="d-none d-md-flex flex-grow-1 mx-3" role="search">
+    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-primary" type="submit">Search</button>
+  </form>
+
+  <!-- Mobile Search (visible only on small screens) -->
+  <form class="d-md-none d-flex flex-grow-1 mx-2" role="search">
+    <input class="form-control me-1" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-sm btn-primary" type="submit">Go</button>
+  </form>
+
+  <!-- Mobile Menu Toggle Button -->
+  <button class="btn d-md-none" id="mobileMenuToggle">
+    <i class="fa fa-bars fa-lg"></i>
+  </button>
+</header>
+
+<!-- Navigation Menu (desktop & mobile) -->
+<div class="main-nav-wrapper d-md-flex justify-content-center" id="mobileNav">
+  <nav class="nav flex-column flex-md-row text-center text-md-start">
+    <a href="#" class="nav-link">CATEGORIES</a>
+    <a href="#" class="nav-link">BRANDS</a>
+    <a href="#" class="nav-link">BUSINESS</a>
+    <a href="#" class="nav-link">ADVISORY PANEL</a>
+    <a href="#" class="nav-link">CONTACT</a>
+  </nav>
+</div>
+
+
+  <!-- ======= MAIN CONTENT START ======= -->
+  <main>
+    <section class="hero-section py-5 text-center">
+      <div class="container">
+        <h1>Welcome to Luminous World</h1>
+      </div>
+    </section>
+  </main>
+
+  <footer class="py-3 border-top">
+    <div class="container text-center">
+      <p class="mb-0">&copy; 2025 Luminous World. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/all.min.js"></script>
+  <script src="js/script.js"></script>
+  <script>
+   // Toggle mobile menu
+document.addEventListener("DOMContentLoaded", function () {
+  const toggleBtn = document.getElementById("mobileMenuToggle");
+  const mobileNav = document.getElementById("mobileNav");
+
+  toggleBtn?.addEventListener("click", function () {
+    mobileNav.classList.toggle("active");
+  });
+});
+
+  </script>
+</body>
+
+</html>
