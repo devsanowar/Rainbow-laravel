@@ -12,6 +12,7 @@
 
     <!-- responsiveness -->
     <link rel="stylesheet" href="{{ asset('frontend') }}/assets/css/responsive.css" />
+    <link rel="stylesheet" href="{{ asset('frontend') }}/assets/css/custom.css" />
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
 

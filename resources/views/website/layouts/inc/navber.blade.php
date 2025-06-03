@@ -3,6 +3,7 @@
     $website_setting = WebsiteSetting::first();
 @endphp
 
+
 <!-- Header Menu Start -->
 <header>
     <div class="container">
@@ -39,7 +40,7 @@
                         <p>View Cart</p>
                     </div>
                 </div>
-                <div class="icon user" id="userIcon">
+                <div class="icon-user" id="userIcon">
                     <i class="fas fa-user"></i>
                     <div class="dropdown">
                         <a href="login.html">Login</a>
@@ -69,7 +70,7 @@
                             <p>View Cart</p>
                         </div>
                     </div>
-                    <div class="icon user" id="userIcon2">
+                    <div class="icon-user" id="userIcon">
                         <i class="fas fa-user"></i>
                         <div class="dropdown">
                             <a href="login.html">Login</a>
@@ -121,3 +122,24 @@
     <a href="contact.html">Contact</a>
     <a href="#" class="seller-btn" style="margin-top:20px;">Become a Seller</a>
 </div>
+
+
+
+@push('scripts')
+<script>
+    const userIcon = document.getElementById('userIcon');
+
+    // Toggle dropdown on click
+    userIcon.addEventListener('click', function(e) {
+        e.stopPropagation(); // Prevent bubbling
+        this.classList.toggle('active');
+    });
+
+    // Close dropdown if clicked outside
+    document.addEventListener('click', function(e) {
+        if (!userIcon.contains(e.target)) {
+            userIcon.classList.remove('active');
+        }
+    });
+</script>
+@endpush

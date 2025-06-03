@@ -33,6 +33,11 @@ class FrontendController extends Controller
         // $banner = Banner::select(['id', 'title', 'sub_title', 'description', 'button_name', 'button_url', 'image'])->first();
         // $categories = Category::with('products')->where('category_slug', '!=', 'default')->select('id', 'category_name', 'image', 'category_slug')->get();
 
+        $categories = Category::where('category_slug', '!=', 'default')
+                ->select(['id', 'category_name', 'category_slug', 'image'])
+                ->orderBy('order')
+                ->get();
+
         // $promobanners = Promobanner::where('is_active', 1)
         //     ->latest()
         //     ->get(['id', 'image', 'url']);
@@ -46,7 +51,7 @@ class FrontendController extends Controller
             ->limit(8)
             ->get(['id', 'product_name', 'product_slug', 'regular_price', 'discount_price', 'discount_type', 'thumbnail']);
 
-        
+
         // $achievements = Achievement::where('is_active', 1)
         //     ->latest()
         //     ->get(['id', 'title', 'count_number', 'image']);
@@ -55,13 +60,14 @@ class FrontendController extends Controller
 
         // $cta = Cta::where('is_active', 1)->first();
 
-       
+
 
         // $blogs = Post::latest()->take(3)->get();
         // , compact(['banner', 'categories', 'achievements', 'reviews', 'about', 'featured_products', 'blogs', 'promobanners', 'social_icon', 'website_setting', 'cta'])
 
         return view('website.home', compact([
             'products',
+            'categories',
         ]));
     }
 
