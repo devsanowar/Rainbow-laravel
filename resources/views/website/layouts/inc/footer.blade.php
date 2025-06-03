@@ -131,6 +131,8 @@
      </div>
  </footer>
 
+ @include('website.layouts.inc.script')
+
  <script>
      $(document).ready(function() {
          $(document).on('click', '.subscribe-button', function(e) {

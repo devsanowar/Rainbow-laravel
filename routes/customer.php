@@ -12,7 +12,6 @@ Route::prefix('customer')->group(function () {
     Route::post('logout', [RegisterController::class, 'logout'])->name('customer.logout');
 
     Route::get('register', [RegisterController::class, 'register'])->name('customer.register');
-
     Route::post('register-store', [RegisterController::class, 'store'])->name('customer.store');
 
 
