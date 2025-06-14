@@ -55,8 +55,8 @@
 
                             <tr id="upazilaRow-{{ $upazila->id }}">
                                 <td>{{ $key+1 }}</td>
-                                <td class="upazila-name">{{ $upazila->name }}</td>
-                                <td class="upazila-name">{{ $upazila->district->name }}</td>
+                                <td class="upazila-name">{{ $upazila->upazila_name }}</td>
+                                <td class="upazila-name">{{ $upazila->district->district_name }}</td>
 
                                 {{-- <td>
                                     @if($upazila->is_active == 1)

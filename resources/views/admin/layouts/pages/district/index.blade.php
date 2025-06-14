@@ -65,7 +65,7 @@
                                 <td>
                                     <a href="javascript:void(0)" class="btn btn-warning btn-sm editDistrict"
                                        data-id="{{ $district->id }}"
-                                       data-name="{{ $district->name }}"
+                                       data-name="{{ $district->district_name }}"
                                        data-status="{{ $district->is_active }}">
                                         <i class="material-icons text-white">edit</i>
                                     </a>

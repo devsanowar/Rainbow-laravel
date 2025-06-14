@@ -35,19 +35,19 @@
                                     </div>
 
                                     <!-- <div class="mb-3">
-                                        <label for="" class="form-label">Authentication Type</label>
-                                        <select name="" id="">
-                                            <option value="NID">NID Number</option>
-                                            <option value="Birth">Birth Registration Number</option>
-                                            <option value="Birth">Passport Number</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="" class="form-label">Authentication Number</label>
-                                        <input type="text" placeholder="NID">
-                                        <input type="text" placeholder="Birth Registration Number">
-                                        <input type="text" placeholder="Passport Number">
-                                    </div> -->
+                                                        <label for="" class="form-label">Authentication Type</label>
+                                                        <select name="" id="">
+                                                            <option value="NID">NID Number</option>
+                                                            <option value="Birth">Birth Registration Number</option>
+                                                            <option value="Birth">Passport Number</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="" class="form-label">Authentication Number</label>
+                                                        <input type="text" placeholder="NID">
+                                                        <input type="text" placeholder="Birth Registration Number">
+                                                        <input type="text" placeholder="Passport Number">
+                                                    </div> -->
                                     <div class="mb-3">
                                         <label for="authType" class="form-label">Authentication Type</label>
                                         <select class="form-select" id="authType" name="authType">
@@ -55,13 +55,6 @@
                                             <option value="Birth">Birth Registration Number</option>
                                             <option value="Passport">Passport Number</option>
                                         </select>
-                                    </div>
-
-                                    <div class="form-check terms-check">
-                                        <input class="form-check-input" type="checkbox" id="termsCheck" />
-                                        <label class="form-check-label" for="termsCheck">
-                                            I accept the terms and conditions of use
-                                        </label>
                                     </div>
                                 </div>
                                 <!-- Colum Two Inputs -->
@@ -103,43 +96,90 @@
                                     </div>
 
 
-                                    <!-- <div class="form-check terms-check">
+                                    {{-- <div class="form-check terms-check">
                                         <input class="form-check-input" type="checkbox" id="termsCheck" />
                                         <label class="form-check-label" for="termsCheck">
                                             I accept the terms and conditions of use
                                         </label>
-                                    </div> -->
+                                    </div> --}}
+
                                 </div>
+
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <select id="division" name="division_id" class="form-select">
+                                            <option value="">-- সিলেক্ট ডিভিশন --</option>
+                                            @foreach ($divisions as $division)
+                                                <option value="{{ $division->id }}">{{ $division->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <select id="district" name="district_id" class="form-select">
+                                            <option value="">-- সিলেক্ট জেলা --</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <select id="upazila" name="upazila_id" class="form-select">
+                                            <option value="">-- সিলেক্ট উপজেলা --</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <select id="union" name="union_id" class="form-select">
+                                            <option value="">-- সিলেক্ট ইউনিয়ন --</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-check terms-check">
+                                        <input class="form-check-input" type="checkbox" id="termsCheck" />
+                                        <label class="form-check-label" for="termsCheck">
+                                            I accept the terms and conditions of use
+                                        </label>
+                                    </div>
+                                </div>
+
+
                             </div>
                             <!-- <div class="mb-3">
-                                <label for="name" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="name" placeholder="Enter your full name" />
-                            </div>
+                                                <label for="name" class="form-label">Name</label>
+                                                <input type="text" class="form-control" id="name" placeholder="Enter your full name" />
+                                            </div>
 
-                            <div class="mb-3">
-                                <label for="mobileNumber" class="form-label">Mobile Number</label>
-                                <input type="tel" class="form-control" id="mobileNumber"
-                                    placeholder="Enter your mobile number" />
-                            </div>
+                                            <div class="mb-3">
+                                                <label for="mobileNumber" class="form-label">Mobile Number</label>
+                                                <input type="tel" class="form-control" id="mobileNumber"
+                                                    placeholder="Enter your mobile number" />
+                                            </div>
 
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password"
-                                    placeholder="Create a password" />
-                            </div>
+                                            <div class="mb-3">
+                                                <label for="password" class="form-label">Password</label>
+                                                <input type="password" class="form-control" id="password"
+                                                    placeholder="Create a password" />
+                                            </div>
 
-                            <div class="mb-3">
-                                <label for="confirmPassword" class="form-label">Confirm Password</label>
-                                <input type="password" class="form-control" id="confirmPassword"
-                                    placeholder="Confirm your password">
-                            </div>
+                                            <div class="mb-3">
+                                                <label for="confirmPassword" class="form-label">Confirm Password</label>
+                                                <input type="password" class="form-control" id="confirmPassword"
+                                                    placeholder="Confirm your password">
+                                            </div>
 
-                            <div class="form-check terms-check">
-                                <input class="form-check-input" type="checkbox" id="termsCheck" />
-                                <label class="form-check-label" for="termsCheck">
-                                    I accept the terms and conditions of use
-                                </label>
-                            </div> -->
+                                            <div class="form-check terms-check">
+                                                <input class="form-check-input" type="checkbox" id="termsCheck" />
+                                                <label class="form-check-label" for="termsCheck">
+                                                    I accept the terms and conditions of use
+                                                </label>
+                                            </div> -->
 
                             <div class="d-grid gap-2">
                                 <button type="submit" class="rainbow-btn">Sign Up</button>
@@ -157,3 +197,49 @@
         </div>
     </main>
 @endsection
+
+@push('scripts')
+    <script>
+        $('#division').on('change', function() {
+            var divisionID = $(this).val();
+            if (divisionID) {
+                $.get('/get-districts/' + divisionID, function(data) {
+                    $('#district').empty().append('<option value="">-- সিলেক্ট জেলা --</option>');
+                    $('#upazila').empty().append('<option value="">-- সিলেক্ট উপজেলা --</option>');
+                    $('#union').empty().append('<option value="">-- সিলেক্ট ইউনিয়ন --</option>');
+                    $.each(data, function(key, value) {
+                        $('#district').append('<option value="' + value.id + '">' + value
+                            .district_name + '</option>');
+                    });
+                });
+            }
+        });
+
+        $('#district').on('change', function() {
+            var districtID = $(this).val();
+            if (districtID) {
+                $.get('/get-upazilas/' + districtID, function(data) {
+                    $('#upazila').empty().append('<option value="">-- সিলেক্ট উপজেলা --</option>');
+                    $('#union').empty().append('<option value="">-- সিলেক্ট ইউনিয়ন --</option>');
+                    $.each(data, function(key, value) {
+                        $('#upazila').append('<option value="' + value.id + '">' + value
+                            .upazila_name + '</option>');
+                    });
+                });
+            }
+        });
+
+        $('#upazila').on('change', function() {
+            var upazilaID = $(this).val();
+            if (upazilaID) {
+                $.get('/get-unions/' + upazilaID, function(data) {
+                    $('#union').empty().append('<option value="">-- সিলেক্ট ইউনিয়ন --</option>');
+                    $.each(data, function(key, value) {
+                        $('#union').append('<option value="' + value.id + '">' + value.name +
+                            '</option>');
+                    });
+                });
+            }
+        });
+    </script>
+@endpush
