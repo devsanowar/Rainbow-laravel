@@ -46,7 +46,7 @@
                         <a href="login.html">Login</a>
                         <a href="sign-up.html">Register</a>
                         <a href="memberLogin.html">Member Login</a>
-                        <a href="memberRegister.html">Member Register</a>
+                        <a href="{{ route('member.register') }}">Member Register</a>
                         <a href="#">Dashboard</a>
                     </div>
                 </div>

@@ -13,7 +13,7 @@ class UpazilaController extends Controller
     public function index()
     {
         $districts = District::all();
-        $upazilas = Upazila::with('district')->latest()->get();
+        $upazilas = Upazila::with('district')->orderBy('id', 'desc')->get();
         return view('admin.layouts.pages.upazila.index', compact('districts', 'upazilas'));
     }
 

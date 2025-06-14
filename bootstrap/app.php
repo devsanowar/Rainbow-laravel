@@ -36,6 +36,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin' => \App\Http\Middleware\isAdmin::class,
             'customer' => \App\Http\Middleware\is_customer::class,
             'dealer' => \App\Http\Middleware\isDealer::class,
+            'member' => \App\Http\Middleware\IsMember::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

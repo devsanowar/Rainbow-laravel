@@ -55,7 +55,7 @@
                             @foreach ($districts as $key=>$district)
                             <tr id="districtRow-{{ $district->id }}">
                                 <td>{{ $key+1 }}</td>
-                                <td class="district-name">{{ $district->district_name }}</td>
+                                <td class="district-name">{{ $district->name }}</td>
 
                                 <td>
                                     <button data-id="{{ $district->id }}" class="btn btn-sm status-toggle-btn {{ $district->is_active ? 'btn-success' : 'btn-danger' }}">
@@ -65,7 +65,7 @@
                                 <td>
                                     <a href="javascript:void(0)" class="btn btn-warning btn-sm editDistrict"
                                        data-id="{{ $district->id }}"
-                                       data-name="{{ $district->district_name }}"
+                                       data-name="{{ $district->name }}"
                                        data-status="{{ $district->is_active }}">
                                         <i class="material-icons text-white">edit</i>
                                     </a>
