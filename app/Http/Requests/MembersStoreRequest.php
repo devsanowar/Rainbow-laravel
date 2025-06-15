@@ -11,7 +11,7 @@ class MembersStoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -26,7 +26,7 @@ class MembersStoreRequest extends FormRequest
             'password' => 'required|string|min:6|confirmed',
             'name' => 'required|string|max:255',
             'authentication_type' => 'required|in:NID,Birth,Passport',
-            'authNumber' => 'required|string|max:255',
+            'authentication_number' => 'required',
             'mobile_number' => 'required|regex:/^01[0-9]{9}$/',
             'division_id' => 'required|exists:divisions,id',
             'district_id' => 'required|exists:districts,id',
@@ -47,7 +47,7 @@ class MembersStoreRequest extends FormRequest
             'password.confirmed' => 'Password confirmation does not match.',
             'name.required' => 'Full name is required.',
             'authentication_type.required' => 'Please select an authentication type.',
-            'authNumber.required' => 'Authentication number is required.',
+            'authentication_number.required' => 'Authentication number is required.',
             'mobile_number.required' => 'Mobile number is required.',
             'mobile_number.regex' => 'Mobile number format is invalid.',
             'division_id.required' => 'Please select a division.',
