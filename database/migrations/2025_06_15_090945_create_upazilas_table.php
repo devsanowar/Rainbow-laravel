@@ -11,9 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('divisions', function (Blueprint $table) {
+        Schema::create('upazilas', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->foreignId('district_id')->constrained()->onDelete('cascade'); // foreign key constraint to `districts.id`
+            $table->string('upazila_name', 25);
+            $table->string('bn_name', 25);
+            $table->string('url', 50);
+            $table->tinyInteger('is_active')->default(1);
             $table->timestamps();
         });
     }
@@ -23,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('divisions');
+        Schema::dropIfExists('upazilas');
     }
 };

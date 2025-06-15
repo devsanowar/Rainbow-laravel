@@ -11,8 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('districts', function (Blueprint $table) {
-            $table->foreignId('division_id')->constrained()->onDelete('cascade');
+        Schema::create('divisions', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('bn_name');
+            $table->string('url');
+            $table->timestamps();
         });
     }
 
@@ -21,8 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('districts', function (Blueprint $table) {
-            $table->dropColumn('division_id');
-        });
+        Schema::dropIfExists('divisions');
     }
 };

@@ -12,7 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->string('sponsor_username')->nullable();
+            $table->tinyInteger('position')->default(0);
+            $table->string('date_of_birth')->nullable();
+            $table->string('authentication_type')->nullable();
+            $table->string('authentication_number')->nullable();
+            $table->string('division')->nullable();
+            $table->string('district')->nullable();
+            $table->string('upazila')->nullable();
+            $table->string('union')->nullable();
+            $table->tinyInteger('accept')->default(1);
         });
     }
 

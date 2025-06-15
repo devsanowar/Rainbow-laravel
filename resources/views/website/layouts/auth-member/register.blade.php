@@ -1,7 +1,7 @@
 @extends('website.layouts.app')
 @section('title', 'Member Register')
 @section('website_content')
-<main>
+    <main>
         <div class="form-section">
             <div class="container">
                 <div class="row justify-content-center mt-4 mb-3">
@@ -13,35 +13,38 @@
                             <!-- <p class="text-muted">Create your account</p> -->
                         </div>
 
-                        <form>
+                        <form method="POST" action="{{ route('member.register') }}">
+                            @csrf
                             <div class="row">
                                 <div class="col-md-6">
                                     <!-- Sponsor Username -->
                                     <div class="mb-3">
-                                        <label for="username" class="form-label">Sponsor Username <small
-                                                class="text-danger"> *
-                                            </small> </label>
-                                        <input type="text" class="form-control" id="username"
-                                            placeholder="Enter your username" />
+                                        <label for="sponsor_username" class="form-label">Sponsor Username <small
+                                                class="text-danger"> *</small></label>
+                                        <input type="text" class="form-control" id="sponsor_username"
+                                            name="sponsor_username" placeholder="Enter your username" required />
                                     </div>
+
                                     <!-- Password -->
                                     <div class="mb-3">
-                                        <label for="password" class="form-label">Password <small class="text-danger"> *
-                                            </small></label>
-                                        <input type="password" class="form-control" id="password"
-                                            placeholder="Create a password" />
+                                        <label for="password" class="form-label">Password <small class="text-danger">
+                                                *</small></label>
+                                        <input type="password" class="form-control" id="password" name="password"
+                                            placeholder="Create a password" required />
                                     </div>
 
                                     <!-- Full Name -->
                                     <div class="mb-3">
-                                        <label for="name" class="form-label">Full Name</label>
-                                        <input type="text" class="form-control" id="name"
-                                            placeholder="Enter your full name" />
+                                        <label for="name" class="form-label">Full Name <small class="text-danger">
+                                                *</small></label>
+                                        <input type="text" class="form-control" id="name" name="name"
+                                            placeholder="Enter your full name" required />
                                     </div>
+
                                     <!-- Authentication Type -->
                                     <div class="mb-3">
-                                        <label for="authType" class="form-label">Authentication Type</label>
-                                        <select class="form-select" id="authType" name="authType">
+                                        <label for="authentication_type" class="form-label">Authentication Type</label>
+                                        <select class="form-select" id="authentication_type" name="authentication_type">
                                             <option value="NID" selected>NID Number</option>
                                             <option value="Birth">Birth Registration Number</option>
                                             <option value="Passport">Passport Number</option>
@@ -50,49 +53,50 @@
 
                                     <!-- Phone Number -->
                                     <div class="mb-3">
-                                        <label for="mobileNumber" class="form-label">Phone Number <small
+                                        <label for="mobile_number" class="form-label">Phone Number <small
                                                 class="text-danger"> * </small></label>
-                                        <input type="tel" class="form-control" id="mobileNumber"
-                                            placeholder="Enter your mobile number" />
+                                        <input type="tel" class="form-control" id="mobile_number" name="mobile_number"
+                                            placeholder="Enter your mobile number" required />
                                     </div>
 
                                     <!-- Select Division -->
                                     <div class="mb-3">
-                                        <label for="authType" class="form-label">Select Division</label>
-                                        <select id="division" name="division_id" class="form-select">
-                                            <option value="">-- সিলেক্ট ডিভিশন --</option>
+                                        <label for="division_id" class="form-label">Select Division</label>
+                                        <select id="division_id" name="division_id" class="form-select" required>
+                                            <option value="">-- Select Division --</option>
                                             @foreach ($divisions as $division)
-                                            <option value="{{ $division->id }}">{{ $division->name }}</option>
+                                                <option value="{{ $division->id }}">{{ $division->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
+
                                     <!-- Select Upzila -->
                                     <div class="mb-3">
-                                        <label for="authType" class="form-label">Select Upzila</label>
-                                        <select id="upazila" name="upazila_id" class="form-select">
-                                            <option value="">-- সিলেক্ট উপজেলা --</option>
+                                        <label for="upazila_id" class="form-label">Select Upazila</label>
+                                        <select id="upazila_id" name="upazila_id" class="form-select" required>
+                                            <option value="">-- Select Upazila --</option>
                                         </select>
                                     </div>
 
+                                    <!-- Terms -->
                                     <div class="form-check terms-check">
-                                        <input class="form-check-input" type="checkbox" id="termsCheck" />
+                                        <input class="form-check-input" type="checkbox" id="termsCheck" name="termsCheck"
+                                            required />
                                         <label class="form-check-label" for="termsCheck">
                                             I accept the terms and conditions of use
                                         </label>
                                     </div>
                                 </div>
-                                <!-- Colum Two Inputs -->
-                                <div class="col-md-6">
 
+                                <div class="col-md-6">
                                     <!-- Position -->
-                                    <div class="mb-3" style="padding-bottom: 10px;">
+                                    <div class="mb-3">
                                         <label class="form-label d-block">Position</label>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="position" id="leftSide"
-                                                value="left">
+                                                value="left" required>
                                             <label class="form-check-label" for="leftSide">Left Side</label>
                                         </div>
-
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="position" id="rightSide"
                                                 value="right">
@@ -100,95 +104,65 @@
                                         </div>
                                     </div>
 
+                                    <!-- Confirm Password -->
                                     <div class="mb-3">
-                                        <label for="confirmPassword" class="form-label">Confirm Password <small
+                                        <label for="password_confirmation" class="form-label">Confirm Password <small
                                                 class="text-danger"> * </small></label>
-                                        <input type="password" class="form-control" id="confirmPassword"
-                                            placeholder="Confirm your password">
+                                        <input type="password" class="form-control" id="password_confirmation"
+                                            name="password_confirmation" placeholder="Confirm your password" required>
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="dateOfBirth" class="form-label">Date of Birth <small
-                                                class="text-danger"> * </small></label>
-                                        <input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth"
-                                            required>
-                                        <!-- <small class="text-danger">You must be at least 18 years old</small> -->
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="authType" class="form-label">Authentication Number</label>
-                                        <div id="authNumberContainer">
-                                            <!-- Default shown field (NID) -->
-                                            <input type="text" class="form-control" id="NIDNumber" name="authNumber"
-                                                placeholder="NID Number">
 
-                                            <!-- Hidden fields -->
+                                    <!-- Date of Birth -->
+                                    <div class="mb-3">
+                                        <label for="date_of_birth" class="form-label">Date of Birth <small
+                                                class="text-danger"> * </small></label>
+                                        <input type="date" class="form-control" id="date_of_birth"
+                                            name="date_of_birth" required>
+                                    </div>
+
+                                    <!-- Authentication Number -->
+                                    <div class="mb-3">
+                                        <label class="form-label">Authentication Number</label>
+                                        <div id="authNumberContainer">
+                                            <input type="text" class="form-control" id="NIDNumber"
+                                                name="authentication_number" placeholder="NID Number">
                                             <input type="text" class="form-control d-none" id="BirthNumber"
-                                                name="authNumber" placeholder="Birth Registration Number">
+                                                name="authentication_number" placeholder="Birth Registration Number">
                                             <input type="text" class="form-control d-none" id="PassportNumber"
-                                                name="authNumber" placeholder="Passport Number">
+                                                name="authentication_number" placeholder="Passport Number">
                                         </div>
                                     </div>
+
                                     <!-- Email -->
                                     <div class="mb-3">
                                         <label for="email" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="password"
-                                            placeholder="Enter your email" />
+                                        <input type="email" class="form-control" id="email" name="email"
+                                            placeholder="Enter your email">
                                     </div>
+
+                                    <!-- District -->
                                     <div class="mb-3">
-                                        <label for="authType" class="form-label">Select District</label>
-                                        <select id="district" name="district_id" class="form-select">
-                                            <option value="">-- সিলেক্ট জেলা --</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="authType" class="form-label">Select Union</label>
-                                        <select id="union" name="union_id" class="form-select">
-                                            <option value="">-- সিলেক্ট ইউনিয়ন --</option>
+                                        <label for="district_id" class="form-label">Select District</label>
+                                        <select id="district_id" name="district_id" class="form-select" required>
+                                            <option value="">-- Select Zila --</option>
                                         </select>
                                     </div>
 
-
-                                    <!-- <div class="form-check terms-check">
-                                        <input class="form-check-input" type="checkbox" id="termsCheck" />
-                                        <label class="form-check-label" for="termsCheck">
-                                            I accept the terms and conditions of use
-                                        </label>
-                                    </div> -->
+                                    <!-- Union -->
+                                    <div class="mb-3">
+                                        <label for="union_id" class="form-label">Select Union</label>
+                                        <select id="union_id" name="union_id" class="form-select" required>
+                                            <option value="">-- Select Union --</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                            <!-- <div class="mb-3">
-                                <label for="name" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="name" placeholder="Enter your full name" />
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="mobileNumber" class="form-label">Mobile Number</label>
-                                <input type="tel" class="form-control" id="mobileNumber"
-                                    placeholder="Enter your mobile number" />
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password"
-                                    placeholder="Create a password" />
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="confirmPassword" class="form-label">Confirm Password</label>
-                                <input type="password" class="form-control" id="confirmPassword"
-                                    placeholder="Confirm your password">
-                            </div>
-
-                            <div class="form-check terms-check">
-                                <input class="form-check-input" type="checkbox" id="termsCheck" />
-                                <label class="form-check-label" for="termsCheck">
-                                    I accept the terms and conditions of use
-                                </label>
-                            </div> -->
 
                             <div class="d-grid gap-2">
                                 <button type="submit" class="rainbow-btn">Sign Up</button>
                             </div>
                         </form>
+
 
                         <div class="signin-link">
                             <p class="text-muted">

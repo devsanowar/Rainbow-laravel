@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
@@ -12,8 +13,10 @@ return new class extends Migration {
     {
         Schema::create('unions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('upazila_id')->constrained()->onDelete('cascade');
-            $table->string('name');
+            $table->foreignId('upazila_id')->constrained()->onDelete('cascade'); // foreign key to upazilas.id
+            $table->string('name', 25);
+            $table->string('bn_name', 25);
+            $table->string('url', 50);
             $table->timestamps();
         });
     }
