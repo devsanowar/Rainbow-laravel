@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Member;
 
 use App\Models\User;
+use App\Models\Union;
 use App\Models\Upazila;
+use App\Models\District;
 use App\Models\Division;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,20 +23,21 @@ class RegisterController extends Controller
         return view('website.layouts.auth-member.register', compact('divisions'));
     }
 
-    public function register(MembersStoreRequest $request)
+    public function register(Request $request)
     {
         try {
+
             User::create([
                 'system_admin' => User::ROLE_MEMBER,
                 'sponsor_username' => $request->sponsor_username,
                 'name' => $request->name,
                 'authentication_type' => $request->authentication_type,
                 'authentication_number' => $request->authentication_number,
-                'mobile_number' => $request->mobile_number,
-                'division' => $request->division_id,
-                'district' => $request->district_id,
-                'upazila' => $request->upazila_id,
-                'union' => $request->union_id,
+                'phone' => $request->phone,
+                'division_id' => $request->division_id,
+                'district_id' => $request->district_id,
+                'upazila_id' => $request->upazila_id,
+                'union_id' => $request->union_id,
                 'position' => $request->position,
                 'date_of_birth' => $request->date_of_birth,
                 'email' => $request->email,

@@ -6,6 +6,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Division;
+use App\Models\District;
+use App\Models\Upazila;
+use App\Models\Union;
+
 
 class User extends Authenticatable
 {
@@ -32,6 +37,26 @@ class User extends Authenticatable
     public const ROLE_CUSTOMER = 'Customer';
 
     protected $guarded = ['id'];
+
+     public function division()
+    {
+        return $this->belongsTo(Division::class)->select(['id', 'name']);
+    }
+
+    public function district()
+    {
+        return $this->belongsTo(District::class)->select(['id', 'district_name']);
+    }
+
+    public function upazila()
+    {
+        return $this->belongsTo(Upazila::class)->select(['id', 'upazila_name']);
+    }
+
+    public function union()
+    {
+        return $this->belongsTo(Union::class)->select(['id', 'name']);
+    }
 
     /**
      * The attributes that should be hidden for serialization.

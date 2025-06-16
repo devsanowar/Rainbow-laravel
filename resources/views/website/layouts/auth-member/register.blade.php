@@ -76,10 +76,10 @@
                                     <div class="mb-3">
                                         <label for="mobile_number" class="form-label">Phone Number <small
                                                 class="text-danger">*</small></label>
-                                        <input type="tel" class="form-control" id="mobile_number" name="mobile_number"
-                                            placeholder="Enter your mobile number" value="{{ old('mobile_number') }}"
+                                        <input type="tel" class="form-control" id="mobile_number" name="phone"
+                                            placeholder="Enter your mobile number" value="{{ old('phone') }}"
                                             required />
-                                        @error('mobile_number')
+                                        @error('phone')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
                                     </div>

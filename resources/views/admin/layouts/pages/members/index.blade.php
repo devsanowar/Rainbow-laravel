@@ -37,58 +37,45 @@
                     </h4>
                 </div>
                 <div class="body">
-                    <table id="districtDataTable" class="table table-bordered table-striped table-hover dataTable js-exportable" >
+                    <table id="membersDataTable" class="table table-bordered table-striped table-hover dataTable js-exportable" >
                         <thead>
                             <tr>
                                 <th style="width: 60px">S/N</th>
                                 <th>Full Name</th>
                                 <th>Phone</th>
+                                <th>Position</th>
                                 <th>Division</th>
                                 <th>District</th>
                                 <th>Upazila</th>
                                 <th>Union</th>
-                                <th style="width: 60px">Status</th>
-                                <th style="width: 160px">Action</th>
+                                <th style="width: 80px">Action</th>
                             </tr>
                         </thead>
 
                         <tbody>
-                            {{-- @foreach ($districts as $key=>$district)
-                            <tr id="districtRow-{{ $district->id }}">
-                                <td>{{ $key+1 }}</td>
-                                <td class="district-name">{{ $district->name }}</td>
-
+                            @foreach ($members as $key=>$member)
+                                 <td>{{ $key+1 }}</td>
+                                <td>{{ $member->name }}</td>                         
+                                <td>{{ $member->phone }}</td>                      
+                                <td>{{ $member->position }}</td>                      
+                                <td>{{ $member->division->name }}</td>                      
+                                <td>{{ $member->district->district_name }}</td>                      
+                                <td>{{ $member->upazila->upazila_name }}</td>                      
+                                <td>{{ $member->union->name }}</td>                      
                                 <td>
-                                    <button data-id="{{ $district->id }}" class="btn btn-sm status-toggle-btn {{ $district->is_active ? 'btn-success' : 'btn-danger' }}">
-                                        {{ $district->is_active ? 'Active' : 'DeActive' }}
-                                    </button>
-                                </td>
-                                <td>
-                                    <a href="javascript:void(0)" class="btn btn-warning btn-sm editDistrict"
-                                       data-id="{{ $district->id }}"
-                                       data-name="{{ $district->district_name }}"
-                                       data-status="{{ $district->is_active }}">
-                                        <i class="material-icons text-white">edit</i>
-                                    </a>
-
-                                    <form class="d-inline-block" action="{{ route('district.destroy',$district->id) }}" method="POST">
+                                    <form class="d-inline-block" action="" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm show_confirm"><i class="material-icons">delete</i></button>
                                     </form>
-
                                 </td>
                             </tr>
 
-                            @endforeach --}}
+                            @endforeach
 
                         </tbody>
                     </table>
                 </div>
-
-            
-
-
             </div>
         </div>
     </div>
@@ -114,13 +101,44 @@
 <script src="{{ asset('backend') }}/assets/js/pages/tables/jquery-datatable.js"></script>
 <script src="{{ asset('backend') }}/assets/js/sweetalert2.all.min.js"></script>
 
+<script>
+    $('.show_confirm').click(function(event){
+    let form = $(this).closest('form');
+    event.preventDefault();
+
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+        if (result.isConfirmed) {
+            form.submit();
+            Swal.fire({
+            title: "Deleted!",
+            text: "Your file has been deleted.",
+            icon: "success"
+            });
+        }
+        });
+
+});
 
 
- <!-- Script For status change -->
- <script>
-    const districtStatusRoute = "{{ route('district.status') }}";
-    const csrfToken = "{{ csrf_token() }}";
+// Pagelength override scripts
+
+$.extend(true, $.fn.dataTable.defaults, {
+    "pageLength": 20,
+    "lengthMenu": [ [10, 20, 50, -1], [10, 20, 50, "All"] ]
+    });
+
+    $(document).ready(function() {
+        $('#membersDataTable').DataTable();
+    });
+
 </script>
-<script src="{{ asset('backend') }}/assets/js/district.js"></script>
 
 @endpush
