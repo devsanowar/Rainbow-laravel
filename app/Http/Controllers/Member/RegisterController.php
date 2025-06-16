@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\MembersStoreRequest;
+use Brian2694\Toastr\Facades\Toastr;
 
 class RegisterController extends Controller
 {
@@ -20,22 +21,25 @@ class RegisterController extends Controller
 
     public function register(MembersStoreRequest $request)
     {
-        return $request->all();
+
         User::create([
             'sponsor_username' => $request->sponsor_username,
             'name' => $request->name,
             'authentication_type' => $request->authentication_type,
             'authentication_number' => $request->authentication_number,
             'mobile_number' => $request->mobile_number,
-            'division_id' => $request->division_id,
-            'district_id' => $request->district_id,
-            'upazila_id' => $request->upazila_id,
-            'union_id' => $request->union_id,
+            'division' => $request->division_id,
+            'district' => $request->district_id,
+            'upazila' => $request->upazila_id,
+            'union' => $request->union_id,
             'position' => $request->position,
             'date_of_birth' => $request->date_of_birth,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+
+        Toastr::success('Member registered successfully');
+        return redirect()->back();
     }
 
     public function getUpazilas($district_id)

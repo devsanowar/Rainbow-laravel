@@ -22,7 +22,7 @@ class MembersStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'sponsor_username' => 'required|string|max:255',
+            'sponsor_username' => 'required|string|max:255|unique:users,sponsor_username',
             'password' => 'required|string|min:6|confirmed',
             'name' => 'required|string|max:255',
             'authentication_type' => 'required|in:NID,Birth,Passport',
@@ -43,6 +43,7 @@ class MembersStoreRequest extends FormRequest
     {
         return [
             'sponsor_username.required' => 'Sponsor username is required.',
+            'sponsor_username.unique' => 'This sponsor username already exists.',
             'password.required' => 'Password is required.',
             'password.confirmed' => 'Password confirmation does not match.',
             'name.required' => 'Full name is required.',

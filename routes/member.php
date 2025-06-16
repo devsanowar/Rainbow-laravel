@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Member\LocationController;
+use App\Http\Controllers\Member\LoginController;
 use App\Http\Controllers\Member\RegisterController;
 
 
@@ -15,6 +16,8 @@ Route::prefix('member')->group(function () {
     Route::get('get-upazilas/{district_id}', [LocationController::class, 'getUpazilas']);
     Route::get('get-unions/{upazila_id}', [LocationController::class, 'getUnions']);
     Route::post('register', [RegisterController::class, 'register'])->name('member.register');
+
+    Route::get('login/form', [LoginController::class, 'loginForm'])->name('member.loginForm');
 });
 
 

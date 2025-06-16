@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('sponsor_username')->nullable();
-            $table->tinyInteger('position')->default(0);
+            $table->string('position')->nullable();
             $table->string('date_of_birth')->nullable();
             $table->string('authentication_type')->nullable();
             $table->string('authentication_number')->nullable();
