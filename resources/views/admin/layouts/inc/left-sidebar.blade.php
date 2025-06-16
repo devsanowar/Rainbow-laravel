@@ -157,6 +157,11 @@ $menuItem = ManageMenuItem::first();
                 </li>
             @endif
 
+            <li class="{{ $isUserPageActive ? 'active' : '' }}">
+                <a href="{{ route('members.index') }}"><i class="zmdi zmdi-accounts"></i><span>Members</span></a>
+            </li>
+
+
             <li class="{{ Request::is('moblieSMS*') ? 'active' : '' }}"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-email"></i><span>SMS</span> </a>
                 <ul class="ml-menu">
                     <li class="{{ Request::is('moblieSMS/sms') ? 'active' : '' }}"><a href="{{ route('mobile.sms') }}">Send SMS</a></li>

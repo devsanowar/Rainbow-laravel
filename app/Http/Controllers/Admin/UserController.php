@@ -20,8 +20,8 @@ class UserController extends Controller
 {
     public function userCreate()
     {
-        $users = User::all();
-        return view('admin.layouts.profile.create_user', compact('users'));
+        $admins = User::where('system_admin', 'Admin')->get();
+        return view('admin.layouts.profile.create_user', compact('admins'));
     }
 
     public function storeUser(Request $request)
@@ -31,7 +31,7 @@ class UserController extends Controller
             'email' => ['required', new Unique('users', 'email')],
             'phone' => ['required', new Unique('users', 'phone')],
             'password' => 'required|string|min:6|confirmed',
-            'system_admin' => 'required',
+            // 'system_admin' => 'required',
         ]);
 
 
@@ -39,7 +39,7 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
-            'system_admin' => $request->system_admin,
+            // 'system_admin' => $request->system_admin,
             'password' => Hash::make($request->password),
         ]);
 
