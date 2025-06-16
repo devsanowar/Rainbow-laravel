@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Member\DashboardController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -18,11 +19,12 @@ Route::prefix('member')->group(function () {
     Route::post('register', [RegisterController::class, 'register'])->name('member.register');
 
     Route::get('login/form', [LoginController::class, 'loginForm'])->name('member.loginForm');
+    Route::post('login', [LoginController::class, 'login'])->name('member.login');
+    Route::post('logout', [LoginController::class, 'loginout'])->name('member.logout');
 });
 
 
-Route::prefix('member')->middleware(['auth', 'member'])->group(function () {
-
-
+Route::prefix('member')->middleware(['member'])->group(function () {
+    Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('member.dashboard');
 });
 

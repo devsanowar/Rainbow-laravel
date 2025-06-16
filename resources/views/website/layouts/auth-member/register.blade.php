@@ -220,7 +220,7 @@
 
                         <div class="signin-link">
                             <p class="text-muted">
-                                Already have an account? <a href="memberLogin.html" class="text-primary">Login In</a>
+                                Already have an account? <a href="{{ route('member.loginForm') }}" class="text-primary">Login In</a>
                             </p>
                         </div>
                     </div>

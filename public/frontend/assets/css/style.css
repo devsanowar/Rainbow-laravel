@@ -985,7 +985,7 @@ nav a {
 /* =====================Sign Up Page styles start =============== */
 .form-section {
   background-color: #f8f9fa;
-  min-height: 100vh;
+  min-height: 80vh;
   display: flex;
   align-items: center;
 }

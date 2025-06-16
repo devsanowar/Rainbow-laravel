@@ -26,6 +26,11 @@ class User extends Authenticatable
     //     'image',
     // ];
 
+    public const ROLE_MEMBER = 'Member';
+    public const ROLE_ADMIN = 'Admin';
+    public const ROLE_DEALER = 'Dealer';
+    public const ROLE_CUSTOMER = 'Customer';
+
     protected $guarded = ['id'];
 
     /**
