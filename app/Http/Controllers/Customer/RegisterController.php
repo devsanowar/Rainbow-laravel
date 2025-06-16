@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Models\User;
-use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
@@ -13,31 +12,10 @@ use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
-    public function showLoginForm()
-    {
-        if (Auth::check()) {
-            Toastr::info('You are already logged in.');
-            return redirect()->route('customer.dashboard');
-        }
-        return view('customer-auth.customer-login');
-    }
-
-
-    public function login(LoginRequest $request)
-    {
-        $credentials = $request->only('phone', 'password');
-
-        if (Auth::attempt($credentials)) {
-            Toastr::success('Successfully logged in.');
-            return redirect()->route('customer.dashboard');
-        }
-
-        return back()->with('error', 'Invalid phone or password!!');
-    }
-
+    
     public function register()
     {
-        return view('customer-auth.customer-register');
+        return view('website.layouts.auth-customer.customer-register');
     }
 
     public function store(CustomerStoreRequest $request)

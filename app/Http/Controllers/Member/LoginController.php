@@ -13,6 +13,12 @@ class LoginController extends Controller
 {
     public function loginForm()
     {
+        if (Auth::check()) {
+            if(Auth::user()->system_admin === 'Member'){
+                Toastr::info('You are already logged in.');
+                return redirect()->route('member.dashboard');
+            }
+        }
         return view('website.layouts.auth-member.login');
     }
 

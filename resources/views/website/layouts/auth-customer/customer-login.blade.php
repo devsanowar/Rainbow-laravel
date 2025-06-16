@@ -16,13 +16,13 @@
                         <form>
                             <div class="mb-3">
                                 <label for="mobileNumber" class="form-label">Mobile Number</label>
-                                <input type="tel" class="form-control" id="mobileNumber"
+                                <input type="tel" class="form-control" id="mobileNumber" name="phone"
                                     placeholder="Enter your mobile number" />
                             </div>
 
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password"
+                                <input type="password" class="form-control" id="password" name="password"
                                     placeholder="Create a password" />
                             </div>
 
@@ -33,7 +33,7 @@
 
                         <div class="signin-link">
                             <p class="text-muted">
-                                Already have an account? <a href="{{ route('customer.register') }}" class="text-primary">Sign Up</a>
+                                Already have an account? <a href="{{ route('customer.registerForm') }}" class="text-primary">Sign Up</a>
                             </p>
                         </div>
                     </div>

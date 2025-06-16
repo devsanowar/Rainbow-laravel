@@ -43,8 +43,8 @@
                 <div class="icon-user" id="userIcon">
                     <i class="fas fa-user"></i>
                     <div class="dropdown">
-                        <a href="login.html">Login</a>
-                        <a href="sign-up.html">Register</a>
+                        <a href="{{ route('customer.loginForm') }}">Customer Login</a>
+                        <a href="{{ route('customer.registerForm') }}">Customer Register</a>
                         <a href="{{ route('member.loginForm') }}">Member Login</a>
                         <a href="{{ route('member.registerForm') }}">Member Register</a>
                         <a href="#">Dashboard</a>
@@ -73,8 +73,8 @@
                     <div class="icon-user" id="userIcon">
                         <i class="fas fa-user"></i>
                         <div class="dropdown">
-                            <a href="login.html">Login</a>
-                            <a href="sign-up.html">Register</a>
+                            <a href="{{ route('customer.loginForm') }}">Customer Login</a>
+                            <a href="{{ route('customer.registerForm') }}">Customer Register</a>
                             <a href="{{ route('member.loginForm') }}">Member Login</a>
                             <a href="{{ route('member.registerForm') }}">Member Register</a>
                             <a href="#">Dashboard</a>

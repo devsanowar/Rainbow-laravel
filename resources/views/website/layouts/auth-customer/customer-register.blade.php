@@ -15,20 +15,20 @@
 
                         <form>
                             <div class="mb-3">
-                                <label for="name" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="name"
+                                <label for="name" class="form-label">Full Name</label>
+                                <input type="text" class="form-control" id="name" name="name"
                                     placeholder="Enter your full name" />
                             </div>
 
                             <div class="mb-3">
                                 <label for="mobileNumber" class="form-label">Mobile Number</label>
-                                <input type="tel" class="form-control" id="mobileNumber"
+                                <input type="tel" class="form-control" id="mobileNumber" name="phone"
                                     placeholder="Enter your mobile number" />
                             </div>
 
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password"
+                                <input type="password" class="form-control" id="password" name="password"
                                     placeholder="Create a password" />
                             </div>
 
@@ -52,7 +52,7 @@
 
                         <div class="signin-link">
                             <p class="text-muted">
-                                Already have an account? <a href="{{ route('customer.login') }}" class="text-primary">Sign In</a>
+                                Already have an account? <a href="{{ route('customer.loginForm') }}" class="text-primary">Sign In</a>
                             </p>
                         </div>
                     </div>
