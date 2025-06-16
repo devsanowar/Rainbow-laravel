@@ -63,7 +63,7 @@
                                 <td>{{ $member->upazila->upazila_name }}</td>                      
                                 <td>{{ $member->union->name }}</td>                      
                                 <td>
-                                    <form class="d-inline-block" action="" method="POST">
+                                    <form class="d-inline-block" action="{{ route('member.destroy', $member->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm show_confirm"><i class="material-icons">delete</i></button>

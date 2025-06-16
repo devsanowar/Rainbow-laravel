@@ -268,6 +268,7 @@ Route::prefix('admin')
 
         // Members route here
         Route::get('members', [MemberController::class, 'index'])->name('members.index');
+        Route::delete('members/destroy/{id}', [MemberController::class, 'destroy'])->name('member.destroy');
 
 
 });
