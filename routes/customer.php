@@ -11,15 +11,15 @@ Route::prefix('customer')->group(function () {
     Route::post('register', [RegisterController::class, 'store'])->name('customer.register');
 
     Route::get('login/form/', [LoginController::class, 'showLoginForm'])->name('customer.loginForm');
-    Route::post('login', [LoginController::class, 'login'])->name('customer.login.submit');
+    Route::post('login', [LoginController::class, 'login'])->name('customer.login');
 
 
     Route::post('logout', [RegisterController::class, 'logout'])->name('customer.logout');
 
+});
 
-    // Only protect authenticated routes
-    Route::middleware(['customer'])->group(function () {
-        Route::get('dashboard', [CustomerController::class, 'dashboard'])->name('customer.dashboard');
-    });
+
+Route::prefix('customer')->middleware(['customer'])->group(function () {
+    Route::get('dashboard', [CustomerController::class, 'dashboard'])->name('customer.dashboard');
 });
 

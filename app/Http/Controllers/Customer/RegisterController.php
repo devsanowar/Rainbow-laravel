@@ -30,10 +30,10 @@ class RegisterController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        // Auth::login($user); // Auto login
+        Auth::login($user); // Auto login
 
         Toastr::success('Welcome! Your account has been created.');
-        return redirect()->back(); // Or wherever your dashboard is
+        return redirect()->route('customer.dashboard'); // Or wherever your dashboard is
     }
 
     public function logout(Request $request)

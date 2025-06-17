@@ -13,7 +13,8 @@
                             <!-- <p class="text-muted">Create your account</p> -->
                         </div>
 
-                        <form>
+                        <form action="{{ route('customer.login') }}" method="POST">
+                            @csrf
                             <div class="mb-3">
                                 <label for="mobileNumber" class="form-label">Username</label>
                                 <input type="tel" class="form-control" id="mobileNumber" name="cus_username" 
@@ -23,7 +24,7 @@
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
                                 <input type="password" class="form-control" id="password" name="password"
-                                    placeholder="Create a password" />
+                                    placeholder="Enter a password" />
                             </div>
 
                             <div class="d-grid gap-2">

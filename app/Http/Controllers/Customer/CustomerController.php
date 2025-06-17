@@ -8,6 +8,6 @@ use Illuminate\Http\Request;
 class CustomerController extends Controller
 {
     public function dashboard(){
-        return view('customer-auth.dashboard');
+        return view('website.layouts.auth-customer.dashboard.dashboard');
     }
 }

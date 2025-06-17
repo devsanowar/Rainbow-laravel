@@ -17,12 +17,12 @@ class is_customer
     public function handle(Request $request, Closure $next): Response
     {
         if (!Auth::check()) {
-            return redirect()->route('customer.login');
+            return redirect()->route('customer.loginForm');
         }
 
         if (Auth::user()->system_admin !== 'Customer') {
             Auth::logout();
-            return redirect()->route('customer.login')->with('error', 'You are not authorized to access this page.');
+            return redirect()->route('customer.loginForm')->with('error', 'You are not authorized to access this page.');
         }
 
         return $next($request);

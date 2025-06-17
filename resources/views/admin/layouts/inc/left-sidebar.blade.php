@@ -1,7 +1,7 @@
 @php
-include_once resource_path('views/admin/layouts/inc/active-variable.blade.php');
-use App\Models\ManageMenuItem;
-$menuItem = ManageMenuItem::first();
+    include_once resource_path('views/admin/layouts/inc/active-variable.blade.php');
+    use App\Models\ManageMenuItem;
+    $menuItem = ManageMenuItem::first();
 @endphp
 
 <aside id="leftsidebar" class="sidebar">
@@ -83,19 +83,25 @@ $menuItem = ManageMenuItem::first();
                     <li class="{{ request()->routeIs('category.*') ? 'active' : '' }}">
                         <a href="{{ route('category.index') }}">Category</a>
                     </li>
-                    @if($menuItem->subcategory_status === 0)
-                    <li class="{{ request()->routeIs('subcategory.*') ? 'active' : '' }}">
-                        <a href="{{ route('subcategory.index') }}">Sub Category</a>
-                    </li>
+                    @if ($menuItem->subcategory_status === 0)
+                        <li class="{{ request()->routeIs('subcategory.*') ? 'active' : '' }}">
+                            <a href="{{ route('subcategory.index') }}">Sub Category</a>
+                        </li>
                     @endif
-                    @if($menuItem->brand_status === 0)
-                    <li class="{{ request()->routeIs('brand.*') ? 'active' : '' }}">
-                        <a href="{{ route('brand.index') }}">Brand</a>
-                    </li>
+                    @if ($menuItem->brand_status === 0)
+                        <li class="{{ request()->routeIs('brand.*') ? 'active' : '' }}">
+                            <a href="{{ route('brand.index') }}">Brand</a>
+                        </li>
                     @endif
 
                 </ul>
             </li>
+
+            <li class="{{ $isOrderPageActive ? 'active' : '' }}">
+                <a href="{{ route('order.index') }}"><i class="zmdi zmdi-shopping-cart"></i><span>Orders <span
+                            class="order-count">{{ $pendingOrder }}</span></span></a>
+            </li>
+
 
 
             <li class="{{ $isShippingPageActive ? 'active' : '' }}">
@@ -103,8 +109,6 @@ $menuItem = ManageMenuItem::first();
                     <span>Shipping</span>
                 </a>
             </li>
-
-
 
 
             {{-- District Menu --}}
@@ -117,9 +121,19 @@ $menuItem = ManageMenuItem::first();
                 <a href="{{ route('upazila.index') }}"><i class="zmdi zmdi-map"></i><span>Upazila</span></a>
             </li>
 
-            <li class="{{ $isOrderPageActive ? 'active' : '' }}">
-                <a href="{{ route('order.index') }}"><i class="zmdi zmdi-shopping-cart"></i><span>Orders <span
-                            class="order-count">{{ $pendingOrder }}</span></span></a>
+
+            <li class="{{ $isProductActive ? 'active open' : '' }}">
+                <a href="javascript:void(0);" class="menu-toggle"> <i class="zmdi zmdi-money-box"></i>
+                    <span>Point Sale</span>
+                </a>
+                <ul class="ml-menu">
+                    <li class="{{ request()->routeIs('point.saleForm') ? 'active' : '' }}">
+                        <a href="{{ route('point.saleForm') }}">Point Sale</a>
+                    </li>
+                    <li class="{{ request()->routeIs('point_sale.index') ? 'active' : '' }}">
+                        <a href="{{ route('point_sale.index') }}">Manage Point Sale</a>
+                    </li>
+                </ul>
             </li>
 
 
@@ -162,11 +176,15 @@ $menuItem = ManageMenuItem::first();
             </li>
 
 
-            <li class="{{ Request::is('moblieSMS*') ? 'active' : '' }}"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-email"></i><span>SMS</span> </a>
+            <li class="{{ Request::is('moblieSMS*') ? 'active' : '' }}"><a href="javascript:void(0);"
+                    class="menu-toggle"><i class="zmdi zmdi-email"></i><span>SMS</span> </a>
                 <ul class="ml-menu">
-                    <li class="{{ Request::is('moblieSMS/sms') ? 'active' : '' }}"><a href="{{ route('mobile.sms') }}">Send SMS</a></li>
-                    <li class="{{ Request::is('moblieSMS/custom-sms') ? 'active' : '' }}"><a href="{{ route('custom.sms') }}">Custome SMS</a></li>
-                    <li class="{{ Request::is('moblieSMS/sms-report') ? 'active' : '' }}"><a href="{{ route('sms_report.sms') }}">SMS Report</a></li>
+                    <li class="{{ Request::is('moblieSMS/sms') ? 'active' : '' }}"><a
+                            href="{{ route('mobile.sms') }}">Send SMS</a></li>
+                    <li class="{{ Request::is('moblieSMS/custom-sms') ? 'active' : '' }}"><a
+                            href="{{ route('custom.sms') }}">Custome SMS</a></li>
+                    <li class="{{ Request::is('moblieSMS/sms-report') ? 'active' : '' }}"><a
+                            href="{{ route('sms_report.sms') }}">SMS Report</a></li>
                 </ul>
             </li>
 
@@ -232,8 +250,7 @@ $menuItem = ManageMenuItem::first();
                 </ul>
             </li>
 
-            <li
-                class="{{ request()->routeIs('privilege.*') }}">
+            <li class="{{ request()->routeIs('privilege.*') }}">
                 <a href="javascript:void(0);" class="menu-toggle">
                     <i class="zmdi zmdi-settings"></i>
                     <span>Privilege</span>

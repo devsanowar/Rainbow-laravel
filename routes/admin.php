@@ -34,6 +34,7 @@ use App\Http\Controllers\Admin\PostCategoryController;
 use App\Http\Controllers\Admin\ReturnrefundController;
 use App\Http\Controllers\Admin\WebsiteColorController;
 use App\Http\Controllers\Admin\PaymentMethodController;
+use App\Http\Controllers\Admin\PointSaleController;
 use App\Http\Controllers\Admin\PrivacypolicyController;
 use App\Http\Controllers\Admin\PrivilegeController;
 use App\Http\Controllers\Admin\WebsiteSettingController;
@@ -269,6 +270,11 @@ Route::prefix('admin')
         // Members route here
         Route::get('members', [MemberController::class, 'index'])->name('members.index');
         Route::delete('members/destroy/{id}', [MemberController::class, 'destroy'])->name('member.destroy');
+
+
+        // Point sale
+        Route::get('point-sale/', [PointSaleController::class, 'index'])->name('point_sale.index');
+        Route::get('point-sale/form/', [PointSaleController::class, 'pointSaleForm'])->name('point.saleForm');
 
 
 });

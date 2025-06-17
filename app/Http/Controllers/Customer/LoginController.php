@@ -24,11 +24,10 @@ class LoginController extends Controller
 
     public function login(LoginRequest $request)
     {
-        $credentials = $request->only('sponsor_username', 'password');
+        $credentials = $request->only('cus_username', 'password');
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-
             if ($user->system_admin === 'Customer') {
                 return redirect()->intended(route('customer.dashboard'));
             } else {
