@@ -20,19 +20,20 @@ class RegisterController extends Controller
 
     public function store(CustomerStoreRequest $request)
     {
+
         $user = User::create([
             'cus_username' => $request->cus_username,
             'name' => $request->name,
             'phone' => $request->phone,
             'email' => $request->email ?? 'guest_' . time() . rand(100, 999) . '@example.com',
-            'system_admin' => 'Customer',
+            'system_admin' => User::ROLE_CUSTOMER,
             'password' => Hash::make($request->password),
         ]);
 
-        Auth::login($user); // Auto login
+        // Auth::login($user); // Auto login
 
         Toastr::success('Welcome! Your account has been created.');
-        return redirect()->route('customer.dashboard'); // Or wherever your dashboard is
+        return redirect()->back(); // Or wherever your dashboard is
     }
 
     public function logout(Request $request)

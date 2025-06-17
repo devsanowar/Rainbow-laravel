@@ -15,8 +15,8 @@
 
                         <form>
                             <div class="mb-3">
-                                <label for="mobileNumber" class="form-label">Mobile Number</label>
-                                <input type="tel" class="form-control" id="mobileNumber" name="phone"
+                                <label for="mobileNumber" class="form-label">Username</label>
+                                <input type="tel" class="form-control" id="mobileNumber" name="cus_username" 
                                     placeholder="Enter your mobile number" />
                             </div>
 

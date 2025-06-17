@@ -8,7 +8,7 @@ use App\Http\Controllers\Customer\RegisterController;
 
 Route::prefix('customer')->group(function () {
     Route::get('register/form/', [RegisterController::class, 'register'])->name('customer.registerForm');
-    Route::post('register-store', [RegisterController::class, 'store'])->name('customer.store');
+    Route::post('register', [RegisterController::class, 'store'])->name('customer.register');
 
     Route::get('login/form/', [LoginController::class, 'showLoginForm'])->name('customer.loginForm');
     Route::post('login', [LoginController::class, 'login'])->name('customer.login.submit');

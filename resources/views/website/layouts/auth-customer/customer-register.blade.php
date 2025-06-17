@@ -13,7 +13,7 @@
                             <!-- <p class="text-muted">Create your account</p> -->
                         </div>
 
-                        <form method="POST" action="">
+                        <form method="POST" action="{{ route('customer.register') }}">
                             @csrf
 
                             <!-- Username -->
@@ -69,11 +69,7 @@
                             <!-- Confirm Password -->
                             <div class="mb-3">
                                 <label for="confirmPassword" class="form-label">Confirm Password</label>
-                                <input type="password" class="form-control @error('confirm_password') is-invalid @enderror"
-                                    id="confirmPassword" name="confirm_password" placeholder="Confirm your password" />
-                                @error('confirm_password')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
+                                <input type="password" class="form-control" id="confirmPassword" name="password_confirmation" placeholder="Confirm your password" />
                             </div>
 
                             <!-- Terms Checkbox -->

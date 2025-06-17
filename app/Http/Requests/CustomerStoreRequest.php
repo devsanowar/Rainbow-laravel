@@ -27,7 +27,7 @@ class CustomerStoreRequest extends FormRequest
                 'string',
                 'max:255',
                 'regex:/^[a-zA-Z0-9]+$/',
-                'unique:users,cus_username' // Only letters and spaces
+                'unique:users,cus_username', // Only letters and spaces
             ],
             'name' => [
                 'required',
@@ -41,14 +41,7 @@ class CustomerStoreRequest extends FormRequest
                 'regex:/^01[3-9][0-9]{8}$/', // Bangladeshi phone format: 11 digits starting with 013-019
                 'unique:users,phone', // Ensures phone is unique in 'users' table
             ],
-            'password' => [
-                'required',
-                'string',
-                'min:8',
-                'max:64',
-                'confirmed', // You must also send a `password_confirmation` field
-                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/', // Strong password: upper, lower, number, special char
-            ],
+            'password' => ['required', 'string', 'min:6', 'max:64', 'confirmed', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/'],
         ];
     }
 
