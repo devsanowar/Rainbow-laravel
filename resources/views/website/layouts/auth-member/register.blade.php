@@ -29,16 +29,19 @@
                                         @enderror
                                     </div>
 
+                                    <!-- Salutation -->
                                     <div class="mb-3">
-                                        <label for="authentication_type" class="form-label">Salutation <small
+                                        <label for="salutation" class="form-label">Salutation <small
                                                 class="text-danger">*</small></label>
-                                        <select class="form-select" id="authentication_type" name="authentication_type"
-                                            required>
-                                            <option value="Mr">Mr.</option>
-                                            <option value="Mrs">Mrs.</option>
-                                            <option value="Ms">Ms.</option>
+                                        <select class="form-select" id="salutation" name="salutation" required>
+                                            <option value="Mr" {{ old('salutation') == 'Mr' ? 'selected' : '' }}>Mr.
+                                            </option>
+                                            <option value="Mrs" {{ old('salutation') == 'Mrs' ? 'selected' : '' }}>Mrs.
+                                            </option>
+                                            <option value="Ms" {{ old('salutation') == 'Ms' ? 'selected' : '' }}>Ms.
+                                            </option>
                                         </select>
-                                        @error('authentication_type')
+                                        @error('salutation')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
                                     </div>
@@ -163,10 +166,10 @@
 
                                     <!-- Username -->
                                     <div class="mb-3">
-                                        <label class="form-label"> Username <small class="text-danger">*</small></label>
-                                        <input type="text" class="form-control" id="username" name="username"
-                                            placeholder="Username" value="{{ old('username') }}">
-                                        @error('username')
+                                        <label class="form-label">Username <small class="text-danger">*</small></label>
+                                        <input type="text" class="form-control" id="username" name="member_username"
+                                            placeholder="Username" value="{{ old('member_username') }}">
+                                        @error('member_username')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
                                     </div>
@@ -256,56 +259,64 @@
 @endsection
 
 @push('scripts')
-<script>
-    // ✅ Make sure jQuery is already loaded before this
-    $(document).ready(function () {
-        // Division -> District
-        $('#division_id').on('change', function() {
-            const divisionID = $(this).val();
-            if (divisionID) {
-                $.get('/member/get-districts/' + divisionID, function(data) {
-                    $('#district_id').empty().append('<option value="">-- Select Zila --</option>');
-                    $('#upazila_id').empty().append('<option value="">-- Select Upazila --</option>');
-                    $('#union_id').empty().append('<option value="">-- Select Union --</option>');
+    <script>
+        // ✅ Make sure jQuery is already loaded before this
+        $(document).ready(function() {
+            // Division -> District
+            $('#division_id').on('change', function() {
+                const divisionID = $(this).val();
+                if (divisionID) {
+                    $.get('/member/get-districts/' + divisionID, function(data) {
+                        $('#district_id').empty().append(
+                            '<option value="">-- Select Zila --</option>');
+                        $('#upazila_id').empty().append(
+                            '<option value="">-- Select Upazila --</option>');
+                        $('#union_id').empty().append(
+                            '<option value="">-- Select Union --</option>');
 
-                    $.each(data, function(key, value) {
-                        $('#district_id').append(`<option value="${value.id}">${value.district_name}</option>`);
+                        $.each(data, function(key, value) {
+                            $('#district_id').append(
+                                `<option value="${value.id}">${value.district_name}</option>`
+                                );
+                        });
                     });
-                });
-            }
-        });
+                }
+            });
 
-        // District -> Upazila
-        $('#district_id').on('change', function() {
-            const districtID = $(this).val();
-            if (districtID) {
-                $.get('/member/get-upazilas/' + districtID, function(data) {
-                    $('#upazila_id').empty().append('<option value="">-- Select Upazila --</option>');
-                    $('#union_id').empty().append('<option value="">-- Select Union --</option>');
+            // District -> Upazila
+            $('#district_id').on('change', function() {
+                const districtID = $(this).val();
+                if (districtID) {
+                    $.get('/member/get-upazilas/' + districtID, function(data) {
+                        $('#upazila_id').empty().append(
+                            '<option value="">-- Select Upazila --</option>');
+                        $('#union_id').empty().append(
+                            '<option value="">-- Select Union --</option>');
 
-                    $.each(data, function(key, value) {
-                        $('#upazila_id').append(`<option value="${value.id}">${value.upazila_name}</option>`);
+                        $.each(data, function(key, value) {
+                            $('#upazila_id').append(
+                                `<option value="${value.id}">${value.upazila_name}</option>`
+                                );
+                        });
                     });
-                });
-            }
-        });
+                }
+            });
 
-        // Upazila -> Union
-        $('#upazila_id').on('change', function() {
-            const upazilaID = $(this).val();
-            if (upazilaID) {
-                $.get('/member/get-unions/' + upazilaID, function(data) {
-                    $('#union_id').empty().append('<option value="">-- Select Union --</option>');
+            // Upazila -> Union
+            $('#upazila_id').on('change', function() {
+                const upazilaID = $(this).val();
+                if (upazilaID) {
+                    $.get('/member/get-unions/' + upazilaID, function(data) {
+                        $('#union_id').empty().append(
+                            '<option value="">-- Select Union --</option>');
 
-                    $.each(data, function(key, value) {
-                        $('#union_id').append(`<option value="${value.id}">${value.name}</option>`);
+                        $.each(data, function(key, value) {
+                            $('#union_id').append(
+                                `<option value="${value.id}">${value.name}</option>`);
+                        });
                     });
-                });
-            }
+                }
+            });
         });
-    });
-</script>
-
-
+    </script>
 @endpush
-

@@ -23,6 +23,8 @@ class MembersStoreRequest extends FormRequest
     {
         return [
             'sponsor_username' => 'required|string|max:255|unique:users,sponsor_username',
+            'salutation' => 'required|string|max:10',
+            'member_username' => 'required|string|max:50|unique:users,member_username',
             'password' => 'required|string|min:6|confirmed',
             'name' => 'required|string|max:255',
             'authentication_type' => 'required|in:NID,Birth,Passport',
@@ -44,13 +46,27 @@ class MembersStoreRequest extends FormRequest
         return [
             'sponsor_username.required' => 'Sponsor username is required.',
             'sponsor_username.unique' => 'This sponsor username already exists.',
+
+            'salutation.required' => 'Salutation is required.',
+            'salutation.string' => 'Salutation must be a valid text.',
+            'salutation.max' => 'Salutation may not be greater than 10 characters.',
+
+            'member_username.required' => 'Member username is required.',
+            'member_username.string' => 'Member username must be a valid text.',
+            'member_username.max' => 'Member username may not be greater than 50 characters.',
+            'member_username.unique' => 'This username is already taken. Please choose another.',
+
             'password.required' => 'Password is required.',
             'password.confirmed' => 'Password confirmation does not match.',
+
             'name.required' => 'Full name is required.',
+
             'authentication_type.required' => 'Please select an authentication type.',
             'authentication_number.required' => 'Authentication number is required.',
+
             'phone.required' => 'Mobile number is required.',
             'phone.regex' => 'Mobile number format is invalid.',
+
             'division_id.required' => 'Please select a division.',
             'district_id.required' => 'Please select a district.',
             'upazila_id.required' => 'Please select an upazila.',

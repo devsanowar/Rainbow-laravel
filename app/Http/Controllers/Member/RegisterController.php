@@ -25,18 +25,21 @@ class RegisterController extends Controller
 
     public function register(Request $request)
     {
-        do {
-            $referrerId = random_int(100000, 999999);
-        } while (User::where('referrer_id', $referrerId)->exists());
 
+
+        // do {
+        //     $referrerId = random_int(100000, 999999);
+        // } while (User::where('referrer_id', $referrerId)->exists());
 
         try {
 
             User::create([
                 'system_admin' => User::ROLE_MEMBER,
                 'sponsor_username' => $request->sponsor_username,
-                'referrer_id' => $referrerId,
+                // 'referrer_id' => $referrerId,  // No need at this moment
                 'name' => $request->name,
+                'salutation' => $request->salutation,
+                'member_username' => $request->member_username,
                 'authentication_type' => $request->authentication_type,
                 'authentication_number' => $request->authentication_number,
                 'phone' => $request->phone,
