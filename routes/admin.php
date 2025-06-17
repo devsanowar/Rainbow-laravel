@@ -274,7 +274,7 @@ Route::prefix('admin')
 
         // Point sale
         Route::get('point-sale/', [PointSaleController::class, 'index'])->name('point_sale.index');
-        Route::get('point-sale/form/', [PointSaleController::class, 'pointSaleForm'])->name('point.saleForm');
+        Route::post('point-sale/store/', [PointSaleController::class, 'store'])->name('point_sale.store');
 
 
 });

@@ -18,6 +18,9 @@
   <!-- Hero Slider JS -->
   <script src="{{ asset('frontend') }}/assets/js/logoSlider.js"></script>
 
+      <!-- Auth Type Js -->
+    <script src="{{ asset('frontend') }}/assets/js/authType.js"></script>
+
   <!-- Custom JS -->
   <script src="{{ asset('frontend') }}/assets/js/script.js"></script>
 

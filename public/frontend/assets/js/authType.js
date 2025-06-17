@@ -1,10 +1,14 @@
-document.getElementById("authType").addEventListener("change", function () {
-  // Hide all inputs first
-  document.querySelectorAll("#authNumberContainer input").forEach((input) => {
-    input.classList.add("d-none");
-  });
+        function updateAuthPlaceholder() {
+        const selectedType = document.getElementById("authentication_type_id").value;
+        const input = document.getElementById("authentication_number_id");
 
-  // Show the selected one
-  const selectedType = this.value;
-  document.getElementById(selectedType + "Number").classList.remove("d-none");
-});
+        if (selectedType === "NID") {
+            input.placeholder = "NID Number";
+        } else if (selectedType === "Birth") {
+            input.placeholder = "Birth Registration Number";
+        } else if (selectedType === "Passport") {
+            input.placeholder = "Passport Number";
+        }
+    }
+
+    window.addEventListener("DOMContentLoaded", updateAuthPlaceholder);

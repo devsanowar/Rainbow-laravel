@@ -29,6 +29,20 @@
                                         @enderror
                                     </div>
 
+                                    <div class="mb-3">
+                                        <label for="authentication_type" class="form-label">Salutation <small
+                                                class="text-danger">*</small></label>
+                                        <select class="form-select" id="authentication_type" name="authentication_type"
+                                            required>
+                                            <option value="Mr">Mr.</option>
+                                            <option value="Mrs">Mrs.</option>
+                                            <option value="Ms">Ms.</option>
+                                        </select>
+                                        @error('authentication_type')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+
                                     <!-- Password -->
                                     <div class="mb-3">
                                         <label for="password" class="form-label">Password <small
@@ -55,7 +69,7 @@
                                     <div class="mb-3">
                                         <label for="authentication_type" class="form-label">Authentication Type <small
                                                 class="text-danger">*</small></label>
-                                        <select class="form-select" id="authentication_type" name="authentication_type"
+                                        <select class="form-select" id="authentication_type_id" name="authentication_type"
                                             onchange="updateAuthPlaceholder()" required>
                                             <option value="NID"
                                                 {{ old('authentication_type') == 'NID' ? 'selected' : '' }}>NID Number
@@ -77,8 +91,7 @@
                                         <label for="mobile_number" class="form-label">Phone Number <small
                                                 class="text-danger">*</small></label>
                                         <input type="tel" class="form-control" id="mobile_number" name="phone"
-                                            placeholder="Enter your mobile number" value="{{ old('phone') }}"
-                                            required />
+                                            placeholder="Enter your mobile number" value="{{ old('phone') }}" required />
                                         @error('phone')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
@@ -131,8 +144,9 @@
                                         <label class="form-label d-block">Position</label>
                                         <div class="form-check form-check-inline"
                                             style="margin-top: 6px; margin-bottom:6px">
-                                            <input class="form-check-input" type="radio" name="position" id="leftSide"
-                                                value="left" {{ old('position') == 'left' ? 'checked' : '' }} required>
+                                            <input class="form-check-input" type="radio" name="position"
+                                                id="leftSide" value="left"
+                                                {{ old('position') == 'left' ? 'checked' : '' }} required>
                                             <label class="form-check-label" for="leftSide">Left Side</label>
                                         </div>
                                         <div class="form-check form-check-inline"
@@ -144,6 +158,16 @@
                                         </div>
                                         @error('position')
                                             <br><small class="text-danger">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+
+                                    <!-- Username -->
+                                    <div class="mb-3">
+                                        <label class="form-label"> Username <small class="text-danger">*</small></label>
+                                        <input type="text" class="form-control" id="username" name="username"
+                                            placeholder="Username" value="{{ old('username') }}">
+                                        @error('username')
+                                            <small class="text-danger">{{ $message }}</small>
                                         @enderror
                                     </div>
 
@@ -170,7 +194,7 @@
                                     <div class="mb-3">
                                         <label class="form-label">Authentication Number <small
                                                 class="text-danger">*</small></label>
-                                        <input type="text" class="form-control" id="authentication_number"
+                                        <input type="text" class="form-control" id="authentication_number_id"
                                             name="authentication_number" placeholder="NID Number"
                                             value="{{ old('authentication_number') }}">
                                         @error('authentication_number')
@@ -220,7 +244,8 @@
 
                         <div class="signin-link">
                             <p class="text-muted">
-                                Already have an account? <a href="{{ route('member.loginForm') }}" class="text-primary">Login In</a>
+                                Already have an account? <a href="{{ route('member.loginForm') }}"
+                                    class="text-primary">Login In</a>
                             </p>
                         </div>
                     </div>
@@ -231,10 +256,12 @@
 @endsection
 
 @push('scripts')
-    <script>
-        // Division change => Load districts
+<script>
+    // ✅ Make sure jQuery is already loaded before this
+    $(document).ready(function () {
+        // Division -> District
         $('#division_id').on('change', function() {
-            var divisionID = $(this).val();
+            const divisionID = $(this).val();
             if (divisionID) {
                 $.get('/member/get-districts/' + divisionID, function(data) {
                     $('#district_id').empty().append('<option value="">-- Select Zila --</option>');
@@ -242,42 +269,43 @@
                     $('#union_id').empty().append('<option value="">-- Select Union --</option>');
 
                     $.each(data, function(key, value) {
-                        $('#district_id').append('<option value="' + value.id + '">' + value
-                            .district_name + '</option>');
+                        $('#district_id').append(`<option value="${value.id}">${value.district_name}</option>`);
                     });
                 });
             }
         });
 
-        // District change => Load upazilas
+        // District -> Upazila
         $('#district_id').on('change', function() {
-            var districtID = $(this).val();
+            const districtID = $(this).val();
             if (districtID) {
                 $.get('/member/get-upazilas/' + districtID, function(data) {
                     $('#upazila_id').empty().append('<option value="">-- Select Upazila --</option>');
                     $('#union_id').empty().append('<option value="">-- Select Union --</option>');
 
                     $.each(data, function(key, value) {
-                        $('#upazila_id').append('<option value="' + value.id + '">' + value
-                            .upazila_name + '</option>');
+                        $('#upazila_id').append(`<option value="${value.id}">${value.upazila_name}</option>`);
                     });
                 });
             }
         });
 
-        // Upazila change => Load unions
+        // Upazila -> Union
         $('#upazila_id').on('change', function() {
-            var upazilaID = $(this).val();
+            const upazilaID = $(this).val();
             if (upazilaID) {
                 $.get('/member/get-unions/' + upazilaID, function(data) {
                     $('#union_id').empty().append('<option value="">-- Select Union --</option>');
 
                     $.each(data, function(key, value) {
-                        $('#union_id').append('<option value="' + value.id + '">' + value.name +
-                            '</option>');
+                        $('#union_id').append(`<option value="${value.id}">${value.name}</option>`);
                     });
                 });
             }
         });
-    </script>
+    });
+</script>
+
+
 @endpush
+

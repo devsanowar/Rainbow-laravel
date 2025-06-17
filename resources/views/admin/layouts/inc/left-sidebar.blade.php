@@ -127,11 +127,8 @@
                     <span>Point Sale</span>
                 </a>
                 <ul class="ml-menu">
-                    <li class="{{ request()->routeIs('point.saleForm') ? 'active' : '' }}">
-                        <a href="{{ route('point.saleForm') }}">Point Sale</a>
-                    </li>
                     <li class="{{ request()->routeIs('point_sale.index') ? 'active' : '' }}">
-                        <a href="{{ route('point_sale.index') }}">Manage Point Sale</a>
+                        <a href="{{ route('point_sale.index') }}">Point Sale</a>
                     </li>
                 </ul>
             </li>
