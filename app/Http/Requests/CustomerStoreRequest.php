@@ -22,6 +22,13 @@ class CustomerStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'cus_username' => [
+                'required',
+                'string',
+                'max:255',
+                'regex:/^[a-zA-Z0-9]+$/',
+                'unique:users,cus_username' // Only letters and spaces
+            ],
             'name' => [
                 'required',
                 'string',
@@ -48,6 +55,12 @@ class CustomerStoreRequest extends FormRequest
     public function messages()
     {
         return [
+            'cus_username.required' => 'Username is required.',
+            'cus_username.string' => 'Username must be a valid string.',
+            'cus_username.max' => 'Username must not exceed 255 characters.',
+            'cus_username.regex' => 'Username may only contain letters and numbers without spaces.',
+            'cus_username.unique' => 'This username is already taken.',
+
             'name.required' => 'Full name is required.',
             'name.string' => 'Name must be a valid string.',
             'name.max' => 'Name must not exceed 255 characters.',

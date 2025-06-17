@@ -21,6 +21,7 @@ class RegisterController extends Controller
     public function store(CustomerStoreRequest $request)
     {
         $user = User::create([
+            'cus_username' => $request->cus_username,
             'name' => $request->name,
             'phone' => $request->phone,
             'email' => $request->email ?? 'guest_' . time() . rand(100, 999) . '@example.com',
