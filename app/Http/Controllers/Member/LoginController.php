@@ -24,7 +24,7 @@ class LoginController extends Controller
 
     public function login(MemberloginRequest $request)
     {
-        $credentials = $request->only('sponsor_username', 'password');
+        $credentials = $request->only('member_username', 'password');
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();

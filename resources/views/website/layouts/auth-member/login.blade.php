@@ -18,9 +18,9 @@
                             <div class="mb-3">
                                 <label for="mobileNumber" class="form-label">Username <small
                                         class="text-danger">*</small></label>
-                                <input type="text" class="form-control" id="mobileNumber" name="sponsor_username"
+                                <input type="text" class="form-control" id="mobileNumber" name="member_username"
                                     placeholder="Enter your username" />
-                                @error('sponsor_username')
+                                @error('member_username')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>

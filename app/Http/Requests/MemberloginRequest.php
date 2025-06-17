@@ -22,7 +22,7 @@ class MemberloginRequest extends FormRequest
     public function rules(): array
     {
        return [
-            'sponsor_username' => 'required|string|max:255',
+            'member_username' => 'required|string|max:255',
             'password' => 'required',
         ];
     }
@@ -30,7 +30,7 @@ class MemberloginRequest extends FormRequest
     public function messages()
     {
         return [
-            'sponsor_username.required' => 'Sponsor username is required.',
+            'member_username.required' => 'Member username is required.',
             'password.required' => 'Password is required.',
         ];
     }
