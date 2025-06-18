@@ -23,7 +23,8 @@ Route::prefix('member')->group(function () {
     Route::post('login', [LoginController::class, 'login'])->name('member.login');
     Route::post('logout', [LoginController::class, 'loginout'])->name('member.logout');
 
-    Route::get('products', [ProductController::class, 'memberProducts'])->name('member_product.index');
+    Route::get('/member/products', [DashboardController::class, 'loadProducts'])->name('member.products');
+
 });
 
 

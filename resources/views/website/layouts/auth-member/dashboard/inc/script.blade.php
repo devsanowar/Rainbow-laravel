@@ -9,3 +9,5 @@
             event.target.classList.add('active');
         }
     </script>
+
+    @stack('scripts')

@@ -201,3 +201,37 @@ body {
 	background-color: var(--secondary-color);
 	color: #fff;
 }
+
+/*==============================================
+
+Pagination style css
+
+================================================*/
+
+    .simple-modern-pagination .page-link {
+        border: none;
+        background: #f8f9fa;
+        margin: 0 4px;
+        color: #2e2e2e;
+        border-radius: 6px;
+        padding: 6px 14px;
+        transition: background 0.2s, color 0.2s;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    .simple-modern-pagination .page-item.active .page-link {
+        background-color: #f97a00;
+        color: #fff;
+        font-weight: bold;
+    }
+
+    .simple-modern-pagination .page-item.disabled .page-link {
+        background-color: #e2e6ea;
+        color: #666666;
+        cursor: not-allowed;
+    }
+
+    .simple-modern-pagination .page-link:hover {
+        background-color: #e2e6ea;
+        color: #f97a00;
+    }
