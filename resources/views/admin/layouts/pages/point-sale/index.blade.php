@@ -43,7 +43,9 @@
                         @php
                             $totalAmount = 0;
                         @endphp
-                        <table class="table table-bordered table-striped dataTable table-hover js-basic-example">
+                        {{-- <table id="pointSaleDataTable" class="table table-bordered table-striped dataTable table-hover js-basic-example display nowrap" style="width:100%"> --}}
+                        <table id="pointSaleDataTable" class="table table-bordered">
+
                             <thead>
                                 <tr>
                                     <th>S/N</th>
@@ -55,7 +57,7 @@
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="salesTable">
                                 @foreach ($pointSales as $key => $sale)
                                     @php $totalAmount += $sale->amount; @endphp
                                     <tr id="sale-row-{{ $sale->id }}">
@@ -75,12 +77,10 @@
                                             </a>
 
                                             <!-- Edit or Delete (optional) -->
-                                            <form action="" method="POST" class="d-inline-block">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="btn btn-danger btn-sm show_confirm" type="submit"><i
-                                                        class="material-icons">delete</i></button>
-                                            </form>
+                                            <button class="btn btn-danger btn-sm deletePointSale" data-id="{{ $sale->id }}">
+                                                <i class="material-icons">delete</i>
+                                            </button>
+
                                         </td>
                                     </tr>
                                 @endforeach
@@ -109,10 +109,118 @@
 
 @push('scripts')
     <script src="{{ asset('backend') }}/assets/bundles/datatablescripts.bundle.js"></script>
+    <script src="{{ asset('backend') }}/assets/plugins/jquery-datatable/buttons/dataTables.buttons.min.js"></script>
+    <script src="{{ asset('backend') }}/assets/plugins/jquery-datatable/buttons/buttons.bootstrap4.min.js"></script>
+    <script src="{{ asset('backend') }}/assets/plugins/jquery-datatable/buttons/buttons.colVis.min.js"></script>
+    <script src="{{ asset('backend') }}/assets/plugins/jquery-datatable/buttons/buttons.flash.min.js"></script>
+    <script src="{{ asset('backend') }}/assets/plugins/jquery-datatable/buttons/buttons.html5.min.js"></script>
+    <script src="{{ asset('backend') }}/assets/plugins/jquery-datatable/buttons/buttons.print.min.js"></script>
     <!-- Custom Js -->
     <script src="{{ asset('backend') }}/assets/js/pages/tables/jquery-datatable.js"></script>
+
     <script src="{{ asset('backend') }}/assets/js/sweetalert2.all.min.js"></script>
 
+    <!-- JSZip (for Excel export) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+
+    <!-- pdfmake (for PDF export) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/vfs_fonts.js"></script>
+
+
+
+    <script src="{{ asset('backend') }}/assets/js/point_sale.js"></script>
+
+    <script>
+$(document).on('click', '.deletePointSale', function () {
+    let id = $(this).data('id');
+    let url = `/admin/point-sale/delete/${id}`;
+
+    if (confirm("Are you sure you want to delete this?")) {
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}',
+                _method: 'DELETE'
+            },
+            success: function (response) {
+                toastr.success(response.message || "Deleted successfully");
+                $(`#sale-row-${id}`).remove();
+            },
+            error: function (xhr) {
+                toastr.error("Something went wrong!");
+                console.error(xhr.responseText);
+            }
+        });
+    }
+});
+
+
+
+    </script>
+
+    <!-- add script code -->
+    <script>
+        $(document).ready(function() {
+            $('#pointSaleForm').on('submit', function(e) {
+                e.preventDefault();
+
+                $.ajax({
+                    url: "{{ route('point_sale.store') }}",
+                    method: "POST",
+                    data: $(this).serialize(),
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        console.log("Response:", response); // debug করার জন্য
+
+                        $('#addPointSaleModal').modal('hide');
+                        $('#pointSaleForm')[0].reset();
+
+                        // ✅ সার্ভার থেকে আসা মেসেজ ব্যবহার করুন
+                        toastr.success(response.message);
+
+                        let newRow = `
+                            <tr id="sale-row-${response.id}">
+                                <td>${response.index}</td>
+                                <td>${response.user_name}</td>
+                                <td>${response.amount}</td>
+                                <td>${response.points}</td>
+                                <td>${response.admin_name}</td>
+                                <td>${response.created_at}</td>
+                                <td>
+                                    <a href="javascript:void(0)" class="btn btn-warning btn-sm editPointSale"
+                                        data-id="${response.id}" data-user-id="${response.user_id}"
+                                        data-user-name="${response.user_name}" data-amount="${response.amount}"
+                                        data-points="${response.points}">
+                                        <i class="material-icons text-white">edit</i>
+                                    </a>
+                                    <button class="btn btn-danger btn-sm deletePointSale" data-id="${response.id}">
+                                        <i class="material-icons">delete</i>
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
+                        $('tbody').prepend(newRow); // ✅ এখন এটি উপরে বসবে
+                    },
+                    error: function(xhr) {
+                        let errors = xhr.responseJSON.errors;
+                        let errorMessages = '';
+                        $.each(errors, function(key, value) {
+                            errorMessages += value + '<br>';
+                        });
+                        toastr.error(errorMessages);
+                    }
+
+                });
+            });
+        });
+    </script>
+
+
+    <!-- Edit script code -->
     <script>
         $(document).on('click', '.editPointSale', function() {
             let button = $(this);
@@ -135,6 +243,8 @@
         });
     </script>
 
+
+    <!-- Update script code -->
     <script>
         $('#updateSaleForm').on('submit', function(e) {
             e.preventDefault();
@@ -167,12 +277,9 @@
                             data-points="${response.points}">
                             <i class="material-icons text-white">edit</i>
                         </a>
-                        <form action="" method="POST" class="d-inline-block">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-danger btn-sm show_confirm" type="submit"><i
-                                    class="material-icons">delete</i></button>
-                        </form>
+                        <button class="btn btn-danger btn-sm deletePointSale" data-id="${response.id}">
+                            <i class="material-icons">delete</i>
+                        </button>
                     </td>`;
 
                     $('#sale-row-' + response.id).html(updatedRow);

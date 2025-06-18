@@ -9,7 +9,9 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" action="{{ route('point_sale.store') }}" method="POST">
+                {{-- <form class="form-horizontal" action="{{ route('point_sale.store') }}" method="POST"> --}}
+                    <form id="pointSaleForm" method="POST" action="{{ route('point_sale.store') }}">
+
                     @csrf
                     {{-- Member Select --}}
                     <div class="col-lg-12 col-md-12 col-sm-8 col-xs-7 mb-3">
