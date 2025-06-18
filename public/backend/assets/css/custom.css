@@ -31,6 +31,17 @@ background: var(--priamary) !important;
 line-height: 50px;
 }
 
+
+.sidebar .menu .list a {
+	color: #2f2f2f !important;
+	font-weight: 500 !important;
+	font-size: 18px !important;
+}
+
+.sidebar .menu .list a i {
+	font-size: 18px !important;
+}
+
 .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show >
 .btn-primary.dropdown-toggle {
 color: #fff;
