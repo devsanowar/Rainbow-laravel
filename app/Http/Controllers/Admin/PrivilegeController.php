@@ -25,4 +25,6 @@ class PrivilegeController extends Controller
 
         return response()->json(['status' => 'success', 'message' => 'Privileges updated successfully!']);
     }
+
+    
 }

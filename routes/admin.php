@@ -275,6 +275,8 @@ Route::prefix('admin')
         // Point sale
         Route::get('point-sale/', [PointSaleController::class, 'index'])->name('point_sale.index');
         Route::post('point-sale/store/', [PointSaleController::class, 'store'])->name('point_sale.store');
+        Route::post('/point-sale/update', [PointSaleController::class, 'update'])->name('point-sale.update');
+
 
 
 });

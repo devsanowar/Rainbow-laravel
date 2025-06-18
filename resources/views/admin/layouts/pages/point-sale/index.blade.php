@@ -2,13 +2,12 @@
 @section('title', 'All Point Sales')
 
 @push('styles')
-
     <!-- JQuery DataTable Css -->
     <link rel="stylesheet" href="{{ asset('backend') }}/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="{{ asset('backend') }}/assets/css/sweetalert2.min.css">
     <link rel="stylesheet" href="{{ asset('backend') }}/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
 
-<!-- JSZip for Excel export -->
+    <!-- JSZip for Excel export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
     <!-- pdfmake for PDF export -->
@@ -59,7 +58,7 @@
                             <tbody>
                                 @foreach ($pointSales as $key => $sale)
                                     @php $totalAmount += $sale->amount; @endphp
-                                    <tr>
+                                    <tr id="sale-row-{{ $sale->id }}">
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $sale->user->name ?? 'N/A' }}</td>
                                         <td>{{ number_format($sale->amount, 2) }}</td>
@@ -68,9 +67,13 @@
                                         <td>{{ $sale->created_at->format('d M Y') }}</td>
                                         <td>
 
-                                            <a href="javascript:void(0)" class="btn btn-warning btn-sm editDistrict">
+                                            <a href="javascript:void(0)" class="btn btn-warning btn-sm editPointSale"
+                                                data-id="{{ $sale->id }}" data-user-id="{{ $sale->user_id }}"
+                                                data-user-name="{{ $sale->user->name ?? 'N/A' }}"
+                                                data-amount="{{ $sale->amount }}" data-points="{{ $sale->points }}">
                                                 <i class="material-icons text-white">edit</i>
                                             </a>
+
                                             <!-- Edit or Delete (optional) -->
                                             <form action="" method="POST" class="d-inline-block">
                                                 @csrf
@@ -94,6 +97,7 @@
 
                     <!-- Add Modal -->
                     @include('admin.layouts.pages.point-sale.create')
+                    @include('admin.layouts.pages.point-sale.edit')
 
                     <!-- Edit Modal (if needed) -->
                     {{-- @include('admin.layouts.pages.point-sale.edit') --}}
@@ -109,5 +113,74 @@
     <script src="{{ asset('backend') }}/assets/js/pages/tables/jquery-datatable.js"></script>
     <script src="{{ asset('backend') }}/assets/js/sweetalert2.all.min.js"></script>
 
-    
+    <script>
+        $(document).on('click', '.editPointSale', function() {
+            let button = $(this);
+
+            let saleId = button.data('id');
+            let userId = button.data('user-id');
+            let amount = button.data('amount');
+            let points = button.data('points');
+
+            // ইনপুট ফিল্ডে ভ্যালু সেট
+            $('#sale_id').val(saleId);
+            $('#edit_amount').val(amount);
+            $('#edit_points').val(points);
+
+            // সিলেক্ট বক্সে ইউজার আইডি সেট করে ট্রিগার করা হচ্ছে
+            $('#edit_user_id').val(userId).trigger('change');
+
+            // মডাল শো
+            $('#editSaleModal').modal('show');
+        });
+    </script>
+
+    <script>
+        $('#updateSaleForm').on('submit', function(e) {
+            e.preventDefault();
+
+            let formData = $(this).serialize();
+
+            $.ajax({
+                url: '{{ route('point-sale.update') }}', // 🔁 আপনার রাউট চেক করুন
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    $('#editSaleModal').modal('hide');
+                    $('#updateSaleForm')[0].reset();
+
+                    // ✅ toastr success message
+                    toastr.success('Sale updated successfully');
+
+                    // ✅ Updated row HTML including index
+                    let updatedRow = `
+                    <td>${response.index}</td>
+                    <td>${response.user_name}</td>
+                    <td>${parseFloat(response.amount).toFixed(2)}</td>
+                    <td>${response.points}</td>
+                    <td>${response.admin_name}</td>
+                    <td>${response.created_at}</td>
+                    <td>
+                        <a href="javascript:void(0)" class="btn btn-warning btn-sm editPointSale"
+                            data-id="${response.id}" data-user-id="${response.user_id}"
+                            data-user-name="${response.user_name}" data-amount="${response.amount}"
+                            data-points="${response.points}">
+                            <i class="material-icons text-white">edit</i>
+                        </a>
+                        <form action="" method="POST" class="d-inline-block">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger btn-sm show_confirm" type="submit"><i
+                                    class="material-icons">delete</i></button>
+                        </form>
+                    </td>`;
+
+                    $('#sale-row-' + response.id).html(updatedRow);
+                },
+                error: function(xhr) {
+                    toastr.success('Sale updated successfully');
+                }
+            });
+        });
+    </script>
 @endpush
