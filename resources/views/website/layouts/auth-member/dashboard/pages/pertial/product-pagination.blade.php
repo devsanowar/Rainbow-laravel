@@ -58,45 +58,45 @@
          <!-- Product Card End -->
      </div>
 
-<!-- Pagination -->
-<div class="d-flex justify-content-center mt-4">
-    <ul class="pagination simple-modern-pagination mb-0">
-        {{-- Previous --}}
-        @if ($products->onFirstPage())
-            <li class="page-item disabled">
-                <span class="page-link">Pervios</span>
-            </li>
-        @else
-            <li class="page-item">
-                <a class="page-link" href="{{ $products->previousPageUrl() }}" rel="prev">Pervios</a>
-            </li>
-        @endif
+     <!-- Pagination -->
+     <div class="d-flex justify-content-center mt-4">
+         <ul class="pagination simple-modern-pagination mb-0">
+             {{-- Previous --}}
+             @if ($products->onFirstPage())
+                 <li class="page-item disabled">
+                     <span class="page-link">Pervios</span>
+                 </li>
+             @else
+                 <li class="page-item">
+                     <a class="page-link" href="{{ $products->previousPageUrl() }}" rel="prev">Pervios</a>
+                 </li>
+             @endif
 
-        {{-- Page Numbers --}}
-        @foreach ($products->links()->elements[0] as $page => $url)
-            @if ($page == $products->currentPage())
-                <li class="page-item active">
-                    <span class="page-link">{{ $page }}</span>
-                </li>
-            @else
-                <li class="page-item">
-                    <a class="page-link" href="{{ $url }}">{{ $page }}</a>
-                </li>
-            @endif
-        @endforeach
+             {{-- Page Numbers --}}
+             @foreach ($products->links()->elements[0] as $page => $url)
+                 @if ($page == $products->currentPage())
+                     <li class="page-item active">
+                         <span class="page-link">{{ $page }}</span>
+                     </li>
+                 @else
+                     <li class="page-item">
+                         <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                     </li>
+                 @endif
+             @endforeach
 
-        {{-- Next --}}
-        @if ($products->hasMorePages())
-            <li class="page-item">
-                <a class="page-link" href="{{ $products->nextPageUrl() }}" rel="next">Next</a>
-            </li>
-        @else
-            <li class="page-item disabled">
-                <span class="page-link">Next</span>
-            </li>
-        @endif
-    </ul>
-</div>
+             {{-- Next --}}
+             @if ($products->hasMorePages())
+                 <li class="page-item">
+                     <a class="page-link" href="{{ $products->nextPageUrl() }}" rel="next">Next</a>
+                 </li>
+             @else
+                 <li class="page-item disabled">
+                     <span class="page-link">Next</span>
+                 </li>
+             @endif
+         </ul>
+     </div>
 
 
  </div>
