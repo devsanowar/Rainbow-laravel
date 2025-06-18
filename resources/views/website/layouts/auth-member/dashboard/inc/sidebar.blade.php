@@ -93,7 +93,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="nav-link" onclick="showContent('teamMembers')">
+                            <a href="#" class="nav-link" onclick="showContent('shop')">
                                 <i class="fas fa-angle-right me-2"></i> Purchase
                             </a>
                         </li>

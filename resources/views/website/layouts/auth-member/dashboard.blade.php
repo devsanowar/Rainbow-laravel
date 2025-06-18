@@ -58,7 +58,7 @@
             <!-- Sections -->
             <div id="myProfile" class="content-section">
                 <h2>My Profile</h2>
-                <p>View your personal information.</p>
+                <p>hello</p>
             </div>
 
             <div id="updateProfile" class="content-section d-none">
@@ -82,8 +82,7 @@
             </div>
 
             <div id="shop" class="content-section d-none">
-                <h2>Shop</h2>
-                <p>Browse and purchase products.</p>
+                @include('website.layouts.auth-member.dashboard.pages.products')
             </div>
 
             <div id="wallet" class="content-section d-none">

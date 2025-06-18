@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Member\ProductController;
 use App\Http\Controllers\Member\DashboardController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,6 +22,8 @@ Route::prefix('member')->group(function () {
     Route::get('login/form', [LoginController::class, 'loginForm'])->name('member.loginForm');
     Route::post('login', [LoginController::class, 'login'])->name('member.login');
     Route::post('logout', [LoginController::class, 'loginout'])->name('member.logout');
+
+    Route::get('products', [ProductController::class, 'memberProducts'])->name('member_product.index');
 });
 
 

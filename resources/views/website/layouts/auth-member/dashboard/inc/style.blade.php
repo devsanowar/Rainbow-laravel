@@ -9,6 +9,9 @@
 
     <!-- Custom CSS -->
     <!-- <link rel="stylesheet" href="css/style.css" /> -->
+        <!-- Custom CSS -->
+    {{-- <link rel="stylesheet" href="{{ asset('frontend') }}/assets/css/style.css" /> --}}
+
 
     <!-- responsiveness -->
     <link rel="stylesheet" href="{{ asset('frontend') }}/assets/css/responsive.css" />

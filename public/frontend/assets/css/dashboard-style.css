@@ -14,7 +14,6 @@
   --font-family: "Rubik", sans-serif;
   --transition: all 0.3s ease;
 }
-
 /* ========== Reset & Base ========== */
 * {
   margin: 0;
@@ -115,4 +114,90 @@ body {
 
 .dropdown-toggle::after {
   display: none;
+}
+
+
+/* ===========Shop Page Design Styles start================= */
+
+
+.product-card {
+  border: none;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+}
+
+.product-card img {
+  object-fit: cover;
+  height: 200px;
+}
+
+.product-name {
+	font-size: 1.2rem;
+	font-weight: 600;
+  
+}
+
+.product-name a{
+  color: var(--secondary-color) !important;
+  text-decoration: none !important;
+}
+
+
+.product-price {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  font-weight: bold;
+	font-size: 20px;
+	font-weight: bold;
+	margin-top: 5px;
+	margin-bottom: 20px;
+}
+
+
+.current-price {
+  font-weight: 700;
+  color: var(--primary-color);
+  font-size: 1.1rem;
+}
+
+.original-price {
+  text-decoration: line-through;
+  color: #adb5bd;
+  margin-left: 8px;
+  font-size: 0.9rem;
+}
+
+.discount-percent {
+  color: #fd79a8;
+  font-weight: 600;
+  margin-left: 8px;
+  font-size: 0.9rem;
+}
+
+.rainbow-btn {
+	display: inline-block;
+	padding: 10px 25px;
+	font-size: 16px;
+	font-weight: 500;
+	background-color: var(--primary-color);
+	color: #000;
+	border: none;
+	display: inline-block;
+	border-radius: 4px;
+	text-align: center;
+	transition: var(--transition);
+	cursor: pointer;
+  text-decoration: none;
+}
+
+.rainbow-btn:hover {
+	background-color: var(--secondary-color);
+	color: #fff;
 }

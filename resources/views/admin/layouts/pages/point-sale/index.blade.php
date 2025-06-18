@@ -132,32 +132,29 @@
     <script src="{{ asset('backend') }}/assets/js/point_sale.js"></script>
 
     <script>
-$(document).on('click', '.deletePointSale', function () {
-    let id = $(this).data('id');
-    let url = `/admin/point-sale/delete/${id}`;
+        $(document).on('click', '.deletePointSale', function () {
+            let id = $(this).data('id');
+            let url = `/admin/point-sale/delete/${id}`;
 
-    if (confirm("Are you sure you want to delete this?")) {
-        $.ajax({
-            url: url,
-            type: 'POST',
-            data: {
-                _token: '{{ csrf_token() }}',
-                _method: 'DELETE'
-            },
-            success: function (response) {
-                toastr.success(response.message || "Deleted successfully");
-                $(`#sale-row-${id}`).remove();
-            },
-            error: function (xhr) {
-                toastr.error("Something went wrong!");
-                console.error(xhr.responseText);
+            if (confirm("Are you sure you want to delete this?")) {
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        _method: 'DELETE'
+                    },
+                    success: function (response) {
+                        toastr.success(response.message || "Deleted successfully");
+                        $(`#sale-row-${id}`).remove();
+                    },
+                    error: function (xhr) {
+                        toastr.error("Something went wrong!");
+                        console.error(xhr.responseText);
+                    }
+                });
             }
         });
-    }
-});
-
-
-
     </script>
 
     <!-- add script code -->
