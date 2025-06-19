@@ -27,7 +27,7 @@
                                 <th>Product Thumbnail</th>
                                 <th>Product Name</th>
                                 <th>Product Price</th>
-                                <th>Created At</th>
+                                <th>Deleted At</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -39,7 +39,7 @@
                                 <td><img src="{{ asset($product->thumbnail) }}" alt="" width="50"></td>
                                 <td>{{ $product->product_name }}</td>
                                 <td>{{ $product->selling_price }}</td>
-                                <td>{{ $product->created_at->diffForHumans() }}</td>
+                                <td>{{ $product->deleted_at->diffForHumans() }}</td>
                                 <td>
                                     <a href="{{ route('product.restore',$product->id) }}" class="btn btn-primary btn-sm"> Restore </a>
 

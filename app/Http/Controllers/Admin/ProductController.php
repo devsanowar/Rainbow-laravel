@@ -56,6 +56,7 @@ class ProductController extends Controller
             'discount_price' => $request->discount_price,
             'discount_type' => $request->discount_type,
             'stock_quantity' => $request->stock_quantity,
+            'points' => $request->points,
             // 'in_stock' => $request->in_stock,
             // 'colors' => $request->colors ? json_encode($request->colors) : null,
             // 'sizes' => $request->sizes ? json_encode($request->sizes) : null,
@@ -89,65 +90,8 @@ class ProductController extends Controller
         return view('admin.layouts.pages.product.edit', compact('product', 'categories', 'brands'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    // public function update(Request $request, $id)
-    // {
-    //     $product = Product::findOrFail($id);
 
-    //     // Handle thumbnail
-    //     if ($request->hasFile('thumbnail')) {
-    //         if ($product->thumbnail && file_exists(public_path($product->thumbnail))) {
-    //             unlink(public_path($product->thumbnail));
-    //         }
-    //         $productThumbnail = $this->productImage($request);
-    //     } else {
-    //         $productThumbnail = $product->thumbnail; // retain old
-    //     }
-
-    //     // Handle multiple images
-    //     if ($request->hasFile('images')) {
-    //         if ($product->images) {
-    //             foreach (json_decode($product->images, true) as $oldImage) {
-    //                 if (file_exists(public_path($oldImage))) {
-    //                     unlink(public_path($oldImage));
-    //                 }
-    //             }
-    //         }
-    //         $images = $this->productMultipleImages($request);
-    //     } else {
-    //         $images = json_decode($product->images, true); // retain old
-    //     }
-
-    //     // Update product
-    //     $product->update([
-    //         'category_id' => $request->category_id,
-    //         // 'subcategory_id' => $request->subcategory_id,
-    //         // 'brand_id' => $request->brand_id,
-    //         'product_name' => $request->product_name,
-    //         'product_slug' => Str::slug($request->product_name),
-    //         // 'sku' => $request->sku,
-    //         'short_description' => $request->short_description,
-    //         'long_description' => $request->long_description,
-    //         'regular_price' => $request->regular_price,
-    //         'discount_price' => $request->discount_price,
-    //         'discount_type' => $request->discount_type,
-    //         'stock_quantity' => $request->stock_quantity,
-    //         // 'in_stock' => $request->in_stock,
-    //         // 'colors' => $request->colors ? json_encode($request->colors) : null,
-    //         // 'sizes' => $request->sizes ? json_encode($request->sizes) : null,
-    //         'thumbnail' => $productThumbnail,
-    //         'images' => $images ? json_encode($images) : null,
-    //         'is_featured' => $request->is_featured,
-    //         'is_active' => $request->is_active,
-    //     ]);
-
-    //     return response()->json([
-    //         'success' => true,
-    //     ]);
-    // }
-
+    // Product update
     public function update(Request $request, $id)
     {
         $product = Product::findOrFail($id);
@@ -197,6 +141,7 @@ class ProductController extends Controller
             'discount_price' => $request->discount_price,
             'discount_type' => $request->discount_type,
             'stock_quantity' => $request->stock_quantity,
+            'points' => $request->points,
             'thumbnail' => $productThumbnail,
             'images' => json_encode($finalImages),
             'is_featured' => $request->is_featured,
