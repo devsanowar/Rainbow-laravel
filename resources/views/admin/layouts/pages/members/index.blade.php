@@ -42,26 +42,28 @@
                             <tr>
                                 <th style="width: 60px">S/N</th>
                                 <th>Full Name</th>
+                                <th>Username</th>
                                 <th>Phone</th>
                                 <th>Position</th>
                                 <th>Division</th>
                                 <th>District</th>
                                 <th>Upazila</th>
                                 <th>Union</th>
-                                <th style="width: 80px">Action</th>
+                                <th style="width: 40px">Action</th>
                             </tr>
                         </thead>
 
                         <tbody>
                             @foreach ($members as $key=>$member)
                                  <td>{{ $key+1 }}</td>
-                                <td>{{ $member->name }}</td>                         
-                                <td>{{ $member->phone }}</td>                      
-                                <td>{{ $member->position }}</td>                      
-                                <td>{{ $member->division->name }}</td>                      
-                                <td>{{ $member->district->district_name }}</td>                      
-                                <td>{{ $member->upazila->upazila_name }}</td>                      
-                                <td>{{ $member->union->name }}</td>                      
+                                <td>{{ $member->name ? : 'N\A'}}</td>                         
+                                <td>{{ $member->member_username ? : 'N\A' }}</td>                         
+                                <td>{{ $member->phone ? : 'N\A'}}</td>                      
+                                <td>{{ $member->position ? : 'N\A'}}</td>                      
+                                <td>{{ $member->division->name ? : 'N\A'}}</td>                      
+                                <td>{{ $member->district->district_name ? : 'N\A'}}</td>                      
+                                <td>{{ $member->upazila->upazila_name ? : 'N\A'}}</td>                      
+                                <td>{{ $member->union->name ? : 'N\A'}}</td>                      
                                 <td>
                                     <form class="d-inline-block" action="{{ route('member.destroy', $member->id) }}" method="POST">
                                         @csrf

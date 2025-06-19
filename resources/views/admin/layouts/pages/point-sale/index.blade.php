@@ -50,6 +50,7 @@
                                 <tr>
                                     <th>S/N</th>
                                     <th>Member Name</th>
+                                    <th>UserName</th>
                                     <th>Amount (৳)</th>
                                     <th>Points</th>
                                     <th>Admin</th>
@@ -63,6 +64,7 @@
                                     <tr id="sale-row-{{ $sale->id }}">
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $sale->user->name ?? 'N/A' }}</td>
+                                        <td>{{ $sale->user->member_username ?? 'N/A' }}</td>
                                         <td>{{ number_format($sale->amount, 2) }}</td>
                                         <td>{{ $sale->points }}</td>
                                         <td>{{ $sale->admin->name ?? 'System' }}</td>
@@ -89,7 +91,7 @@
                                 <tr>
                                     <th colspan="3">Total</th>
                                     <th>{{ number_format($totalAmount, 2) }} TK</th>
-                                    <th colspan="3"></th>
+                                    <th colspan="4"></th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -183,6 +185,7 @@
                             <tr id="sale-row-${response.id}">
                                 <td>${response.index}</td>
                                 <td>${response.user_name}</td>
+                                <td>${response.member_username}</td>
                                 <td>${response.amount}</td>
                                 <td>${response.points}</td>
                                 <td>${response.admin_name}</td>
@@ -259,10 +262,11 @@
                     // ✅ toastr success message
                     toastr.success('Sale updated successfully');
 
-                    // ✅ Updated row HTML including index
+                    // ✅ Updated row HTML including index 
                     let updatedRow = `
                     <td>${response.index}</td>
                     <td>${response.user_name}</td>
+                    <td>${response.member_username}</td>
                     <td>${parseFloat(response.amount).toFixed(2)}</td>
                     <td>${response.points}</td>
                     <td>${response.admin_name}</td>

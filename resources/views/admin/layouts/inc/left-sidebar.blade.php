@@ -122,12 +122,12 @@
             </li>
 
 
-            <li class="{{ $isProductActive ? 'active open' : '' }}">
+            <li class="{{ $isPointActive ? 'active open' : '' }}">
                 <a href="javascript:void(0);" class="menu-toggle"> <i class="zmdi zmdi-money-box"></i>
                     <span>Point Sale</span>
                 </a>
                 <ul class="ml-menu">
-                    <li class="{{ request()->routeIs('point_sale.index') ? 'active' : '' }}">
+                    <li class="{{ request()->routeIs('point_sale') ? 'active' : '' }}">
                         <a href="{{ route('point_sale.index') }}">Point Sale</a>
                     </li>
                 </ul>
@@ -168,7 +168,7 @@
                 </li>
             @endif
 
-            <li class="{{ $isUserPageActive ? 'active' : '' }}">
+            <li class="{{ $isMemberPageActive ? 'active' : '' }}">
                 <a href="{{ route('members.index') }}"><i class="zmdi zmdi-accounts"></i><span>Members</span></a>
             </li>
 

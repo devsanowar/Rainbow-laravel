@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class MemberController extends Controller
 {
     public function index(){
-        $members = User::with(['division','district','upazila','union'])->where('system_admin', 'Member')->select(['id','name', 'phone', 'position', 'division_id', 'district_id', 'upazila_id', 'union_id'])->get();
+        $members = User::with(['division','district','upazila','union'])->where('system_admin', 'Member')->select(['id','name', 'member_username', 'phone', 'position', 'division_id', 'district_id', 'upazila_id', 'union_id'])->get();
 
         return view('admin.layouts.pages.members.index', compact('members'));
     }

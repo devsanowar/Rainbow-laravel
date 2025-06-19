@@ -18,7 +18,7 @@ class PointSaleController extends Controller
             ->latest()
             ->get();
         $users = User::where('system_admin', 'Member')
-            ->select(['id', 'name'])
+            ->select(['id', 'name', 'member_username'])
             ->get();
         return view('admin.layouts.pages.point-sale.index', compact('users', 'pointSales'));
     }
@@ -58,6 +58,7 @@ class PointSaleController extends Controller
             'message' => 'Point Sale Successfully Done.',
             'id' => $pointSale->id,
             'user_name' => $pointSale->user->name ?? 'N/A',
+            'member_username' => $pointSale->user->member_username ?? 'N/A',
             'amount' => number_format($pointSale->amount, 2),
             'points' => $pointSale->points,
             'admin_name' => $pointSale->admin->name ?? 'System',
@@ -81,6 +82,7 @@ class PointSaleController extends Controller
             'id' => $sale->id,
             'user_id' => $sale->user_id,
             'user_name' => $sale->user->name,
+            'member_username' => $sale->user->member_username ?? 'N/A',
             'amount' => $sale->amount,
             'points' => $sale->points,
             'admin_name' => $sale->admin->name ?? 'System',

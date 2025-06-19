@@ -21,8 +21,11 @@ $isOrderPageActive = request()->routeIs('order.*');
 $isDistrictPageActive = request()->routeIs('district.*');
 $isUpazilaPageActive = request()->routeIs('upazila.*');
 $isUserPageActive = request()->routeIs('user.*');
+$isMemberPageActive = request()->routeIs('members.*');
 $isPaymentMethodPageActive = request()->routeIs('payment_method.*');
 $isMessagePageActive = request()->routeIs('message.*') || request()->routeIs('inboxed_message') || request()->routeIs('block-list.*');
 $isShippingPageActive = request()->routeIs('shipping.*');
 $pendingOrder = App\Models\Order::where('status', 'pending')->count();
 $isPagesMenuActive = request()->routeIs('privacy_policy') || request()->routeIs('terms_and_condtion') || request()->routeIs('return_refund');
+$isPointActive = request()->routeIs('point_sale.*');
+
