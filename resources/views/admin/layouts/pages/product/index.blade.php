@@ -121,6 +121,13 @@
 <script src="{{ asset('backend') }}/assets/js/pages/tables/jquery-datatable.js"></script>
 <script src="{{ asset('backend') }}/assets/js/sweetalert2.all.min.js"></script>
 
+    <!-- JSZip (for Excel export) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+
+    <!-- pdfmake (for PDF export) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/vfs_fonts.js"></script>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

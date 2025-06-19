@@ -1,4 +1,25 @@
 
+
+// Custom print and number filter option
+
+    $(document).ready(function () {
+        if ($.fn.DataTable.isDataTable('#productDataTable')) {
+            $('#productDataTable').DataTable().destroy();
+        }
+
+        $('#productDataTable').DataTable({
+            dom: '<"top-controls"<"dataTables_length"l><"dt-buttons"B><"dataTables_filter"f>>tip',
+            buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+            // dom: 'Blfrtip', // note: 'l' = length menu
+            // buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+            pageLength: 20,
+            lengthMenu: [[20, 50, 100, 250, 500, -1], [20, 50, 100, 250, 500, "All"]]
+        });
+    });
+
+
+
+
 $('.show_confirm').click(function(event){
         let form = $(this).closest('form');
         event.preventDefault();
@@ -59,15 +80,4 @@ $('.show_confirm').click(function(event){
         });
     });
 
-
-    // Pagelength override scripts
-
-    $.extend(true, $.fn.dataTable.defaults, {
-    "pageLength": 20,
-    "lengthMenu": [ [10, 20, 50, -1], [10, 20, 50, "All"] ]
-    });
-
-    $(document).ready(function() {
-        $('#productDataTable').DataTable();
-    });
 
