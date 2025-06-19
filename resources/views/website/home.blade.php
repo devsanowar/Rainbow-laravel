@@ -170,13 +170,12 @@
                         @forelse ($categories as $category)
                             <div class="col-6 col-sm-4 col-md-3 col-lg-2">
                                 <div class="single-category">
-                                    <img src="{{ asset($category->image) }}"
-                                        class="img-fluid" alt="category_1_img">
+                                    <img src="{{ asset($category->image) }}" class="img-fluid" alt="category_1_img">
                                     <h4><a href="#">{{ $category->category_name }}</a></h4>
                                 </div>
                             </div>
                         @empty
-                        <h4 style="color:#ccc; text-align: center;">Category not found!!</h4>
+                            <h4 style="color:#ccc; text-align: center;">Category not found!!</h4>
                         @endforelse
 
                     </div>
@@ -365,46 +364,52 @@
     <!-- ======= FOOTER END ======= -->
     @include('website.layouts.inc.script')
 
-
     <script>
-    $(document).ready(function() {
-        $(document).on('submit', '.add-to-cart-form', function(e) {
-            e.preventDefault();
+        $(document).ready(function() {
+            $(document).on('submit', '.add-to-cart-form', function(e) {
+                e.preventDefault();
 
-            let form = $(this);
-            let formData = form.serialize();
+                let form = $(this);
+                let formData = form.serialize();
 
-            let button = form.find('.btn-buy');
-            let spinner = button.find('.spinner-border');
+                let button = form.find('.btn-buy');
+                let spinner = button.find('.spinner-border');
 
-            button.prop('disabled', true);
-            spinner.removeClass('d-none');
+                button.prop('disabled', true);
+                spinner.removeClass('d-none');
 
-            $.ajax({
-                url: "{{ route('addToCart') }}",
-                method: "POST",
-                data: formData,
-                success: function(response) {
-                    toastr.success(response.message, '', { timeOut: 1500 });
-                    $('#cart-count').text(response.cart_count);
+                $.ajax({
+                    url: "{{ route('addToCart') }}",
+                    method: "POST",
+                    data: formData,
+                    success: function(response) {
+                        toastr.success(response.message, '', {
+                            timeOut: 1500
+                        });
 
-                    // Optionally display the updated cart content if needed
-                    console.log(response.cart_contents);
+                        $('#cart-count').text(response.itemCount);
 
-                    spinner.addClass('d-none');
-                    button.prop('disabled', false);
+                        spinner.addClass('d-none');
+                        button.prop('disabled', false);
 
-                    $('#cart-count').text(response.itemCount);
-                },
-                error: function() {
-                    toastr.error('Failed to add product.', '', { timeOut: 2000 });
-                    spinner.addClass('d-none');
-                    button.prop('disabled', false);
-                }
+                        // ✅ Full cart body refresh from server
+                        if (response.cart_html) {
+                            $('#cartBody').html(response.cart_html);
+                        }
+                    },
+                    error: function() {
+                        toastr.error('Failed to add product.', '', {
+                            timeOut: 2000
+                        });
+
+                        spinner.addClass('d-none');
+                        button.prop('disabled', false);
+                    }
+                });
             });
         });
-    });
-</script>
+    </script>
+
 
 </body>
 

@@ -40,7 +40,10 @@ Route::get('/product-single-page/{id}', [FrontendController::class, 'productSing
 
 Route::get('/shoping-cart', [CartController::class, 'cartPage'])->name('cart.page');
 Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('addToCart');
-Route::get('remove-from-cart/{id}', [CartController::class, 'removeFromCart'])->name('removefrom.cart');
+
+Route::post('remove-from-cart', [CartController::class, 'removeFromCart'])->name('removefrom.cart');
+
+
 Route::post('/cart/update', [CartController::class, 'updateCart'])->name('cart.update');
 
 

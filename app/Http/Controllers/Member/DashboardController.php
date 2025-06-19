@@ -17,7 +17,7 @@ class DashboardController extends Controller
             ->limit(8)
             ->get(['id', 'product_name', 'product_slug', 'regular_price', 'points', 'discount_price', 'discount_type', 'thumbnail']);
 
-        return view('website.layouts.auth-member.dashboard', compact('products', 'cartContents'));
+        return view('website.layouts.auth-member.dashboard', compact('products', 'cartContents'))->render();;
     }
 
     public function loadProducts(Request $request)

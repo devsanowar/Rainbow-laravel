@@ -45,7 +45,7 @@ class CartController extends Controller
             $cart[$product->id] = [
                 'id' => $product->id,
                 'name' => $product->product_name,
-                'points' => $product->points, 
+                'points' => $product->points,
                 'price' => $final_price,
                 'quantity' => $qty,
                 'thumbnail' => $product->thumbnail,
@@ -63,23 +63,42 @@ class CartController extends Controller
             'message' => 'Product added to cart',
             'cart_count' => count($cart),
             'itemCount' => $itemCount,
+            'new_item' => $cart[$product->id], // 👍 send item for JS to append
         ]);
+
     }
 
-    public function removeFromCart($id)
-    {
-        $cart = session()->get('cart', []);
 
-        // Remove the item if it exists in the cart
-        if (isset($cart[$id])) {
-            unset($cart[$id]);
-            session()->put('cart', $cart);
-            Toastr::success('Product removed from cart successfully!', 'Success');
-        } else {
-            Toastr::warning('Product not found in cart!', 'Warning');
+
+    // public function removeFromCart($id)
+    // {
+    //     $cart = session()->get('cart', []);
+
+    //     // Remove the item if it exists in the cart
+    //     if (isset($cart[$id])) {
+    //         unset($cart[$id]);
+    //         session()->put('cart', $cart);
+    //         Toastr::success('Product removed from cart successfully!', 'Success');
+    //     } else {
+    //         Toastr::warning('Product not found in cart!', 'Warning');
+    //     }
+    //     return back();
+    // }
+
+    public function removeFromCart(Request $request)
+        {
+            $id = $request->id;
+            $cart = session()->get('cart', []);
+
+            if (isset($cart[$id])) {
+                unset($cart[$id]);
+                session()->put('cart', $cart);
+                return response()->json(['message' => 'Product removed from cart successfully!']);
+            }
+
+            return response()->json(['message' => 'Product not found in cart!'], 404);
         }
-        return back();
-    }
+
 
     public function updateCart(Request $request)
     {

@@ -1,13 +1,10 @@
 <?php
 
-use App\Http\Controllers\Member\ProductController;
-use App\Http\Controllers\Member\DashboardController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Member\LocationController;
 use App\Http\Controllers\Member\LoginController;
+use App\Http\Controllers\Member\LocationController;
 use App\Http\Controllers\Member\RegisterController;
+use App\Http\Controllers\Member\DashboardController;
 
 
 
@@ -24,6 +21,8 @@ Route::prefix('member')->group(function () {
     Route::post('logout', [LoginController::class, 'loginout'])->name('member.logout');
     
     Route::get('products', [DashboardController::class, 'loadProducts'])->name('member.products');
+
+
 });
 
 
