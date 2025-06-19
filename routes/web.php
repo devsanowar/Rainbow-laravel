@@ -42,8 +42,6 @@ Route::get('/shoping-cart', [CartController::class, 'cartPage'])->name('cart.pag
 Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('addToCart');
 
 Route::post('remove-from-cart', [CartController::class, 'removeFromCart'])->name('removefrom.cart');
-
-
 Route::post('/cart/update', [CartController::class, 'updateCart'])->name('cart.update');
 
 

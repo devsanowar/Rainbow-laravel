@@ -12,35 +12,41 @@
                                 <th scope="col">Product Name</th>
                                 <th scope="col">Points</th>
                                 <th scope="col">Price</th>
-                                <th style="width: 60px" scope="col">Quantity</th>
+                                <th style="width: 250px" scope="col">Quantity</th>
                                 <th scope="col">Total</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody id="cartBody">
                             @forelse ($cartContents as $productId => $cartItem)
-                                <tr id="cart-item-{{ $productId }}">
+                                <tr id="cart-item-{{ $productId }}" data-id="{{ $productId }}">
                                     <td>
                                         <img src="{{ asset($cartItem['thumbnail']) }}" class="product-img"
                                             alt="Product" width="50" />
                                     </td>
                                     <td>{{ $cartItem['name'] }}</td>
-                                    <td>{{ number_format(($cartItem['points'] ?? 0) * $cartItem['quantity'], 2) }}</td>
+                                    {{-- <td>{{ number_format(($cartItem['points'] ?? 0) * $cartItem['quantity'], 2) }}</td> --}}
+                                    <!-- Subtotal Points -->
+                                    <td class="cart-points">{{ number_format(($cartItem['points'] ?? 0) * $cartItem['quantity'], 2) }}</td>
                                     <td>{{ number_format($cartItem['price'], 2) }} Tk</td>
-                                    <td>
+                                    {{-- <td>
                                         <input type="number" class="form-control form-control-sm"
                                             value="{{ $cartItem['quantity'] }}" min="1">
+                                    </td> --}}
+                                    <!-- Quantity -->
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-secondary cart-minus"
+                                            data-action="decrease">-</button>
+                                        <input type="number"
+                                            class="form-control form-control-sm cart-qty d-inline-block w-25 text-center"
+                                            value="{{ $cartItem['quantity'] }}" readonly>
+                                        <button class="btn btn-sm btn-outline-secondary cart-plus"
+                                            data-action="increase">+</button>
                                     </td>
                                     <td>{{ number_format($cartItem['price'] * $cartItem['quantity'], 2) }} Tk</td>
-                                    {{-- <td class="product-remove">
-                                        <a class="remove-button btn btn-sm btn-danger"
-                                            href="{{ route('removefrom.cart', $productId) }}"
-                                            onclick="return confirm('Are you sure?')">
-                                            <i class="fa fa-times"></i>
-                                        </a>
-                                    </td> --}}
                                     <td class="product-remove">
-                                        <button class="remove-button btn btn-sm btn-danger remove-from-cart" data-id="{{ $productId }}">
+                                        <button class="remove-button btn btn-sm btn-danger remove-from-cart"
+                                            data-id="{{ $productId }}">
                                             <i class="fa fa-times"></i>
                                         </button>
                                     </td>
@@ -131,34 +137,69 @@
 
 
 @push('scripts')
-<script>
-    $(document).ready(function () {
-        $(document).on('click', '.remove-from-cart', function (e) {
+    <script>
+        $(document).ready(function() {
+            $(document).on('click', '.remove-from-cart', function(e) {
+                e.preventDefault();
+
+                let id = $(this).data('id');
+
+                if (!confirm('Are you sure?')) return;
+
+                $.ajax({
+                    url: "{{ route('removefrom.cart') }}",
+                    method: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        id: id
+                    },
+                    success: function(response) {
+                        $('#cart-item-' + id).remove(); // row remove করবে
+
+                        toastr.success(response.message); // success message
+                    },
+                    error: function() {
+                        toastr.error('Something went wrong');
+                    }
+                });
+            });
+        });
+    </script>
+
+
+    <script>
+        $(document).on('click', '.cart-minus, .cart-plus', function(e) {
             e.preventDefault();
 
-            let id = $(this).data('id');
-
-            if (!confirm('Are you sure?')) return;
+            let $btn = $(this);
+            let $row = $btn.closest('tr');
+            let productId = $row.data('id');
+            let action = $btn.data('action');
 
             $.ajax({
-                url: "{{ route('removefrom.cart') }}",
+                url: '{{ route('cart.update') }}',
                 method: 'POST',
                 data: {
                     _token: '{{ csrf_token() }}',
-                    id: id
+                    product_id: productId,
+                    action: action,
                 },
-                success: function (response) {
-                    $('#cart-item-' + id).remove(); // row remove করবে
+                success: function(response) {
+                    if (response.success) {
+                        $row.find('.cart-qty').val(response.quantity);
+                        $row.find('.cart-price').text('৳' + response.subtotal);
+                        $row.find('.cart-points').text(response.subtotalPoints);
 
-                    toastr.success(response.message); // success message
+                        // Update cart total values
+                        $('.cart-subtotal').text('৳' + response.totalAmount);
+                        $('.cart-total').text('৳' + response.totalAmount);
+                        $('#cart-count').text(response.itemCount);
+                    }
                 },
-                error: function () {
-                    toastr.error('Something went wrong');
+                error: function() {
+                    toastr.error('Something went wrong!');
                 }
             });
         });
-    });
-</script>
-
-
+    </script>
 @endpush
