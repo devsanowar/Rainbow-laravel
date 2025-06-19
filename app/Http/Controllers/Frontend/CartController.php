@@ -7,19 +7,17 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
 
-
 class CartController extends Controller
 {
     public function cartPage()
     {
         $cartContents = session()->get('cart', []);
-        return $cartContents;
+        dd($cartContents);
 
         $totalAmount = 0;
         foreach ($cartContents as $item) {
             $totalAmount += $item['price'] * $item['quantity'];
         }
-
 
         return view('website.layouts.pages.cart.cart_page', compact('cartContents', 'totalAmount'));
     }
@@ -46,8 +44,9 @@ class CartController extends Controller
             $cart[$product->id]['quantity'] += $qty;
         } else {
             $cart[$product->id] = [
-                'id'       => $product->id,
+                'id' => $product->id,
                 'name' => $product->product_name,
+                'points' => $product->points,
                 'price' => $final_price,
                 'quantity' => $qty,
                 'thumbnail' => $product->thumbnail,
@@ -83,64 +82,36 @@ class CartController extends Controller
         return back();
     }
 
-
-    // public function cartUpdate(Request $request)
-    // {
-    //     // dd($request->all());
-    //     foreach ($request->quantities as $rowId => $qty) {
-    //         // Cart::update($rowId, $qty);
-    //     }
-
-    //     Toastr::success('Cart Successfully Updated!!');
-
-    //     return redirect()->back();
-    // }
-
-
     public function updateCart(Request $request)
-{
-    $cart = session()->get('cart', []);
+    {
+        $cart = session()->get('cart', []);
 
-    $productId = $request->product_id;
-    $action = $request->action;
+        $productId = $request->product_id;
+        $action = $request->action;
 
-    if (isset($cart[$productId])) {
-        if ($action === 'increase') {
-            $cart[$productId]['quantity'] += 1;
-        } elseif ($action === 'decrease' && $cart[$productId]['quantity'] > 1) {
-            $cart[$productId]['quantity'] -= 1;
+        if (isset($cart[$productId])) {
+            if ($action === 'increase') {
+                $cart[$productId]['quantity'] += 1;
+            } elseif ($action === 'decrease' && $cart[$productId]['quantity'] > 1) {
+                $cart[$productId]['quantity'] -= 1;
+            }
+
+            session()->put('cart', $cart);
+
+            $subtotal = $cart[$productId]['price'] * $cart[$productId]['quantity'];
+            $totalAmount = array_sum(array_map(fn($item) => $item['price'] * $item['quantity'], $cart));
+
+            $itemCount = array_sum(array_column($cart, 'quantity'));
+
+            return response()->json([
+                'success' => true,
+                'quantity' => $cart[$productId]['quantity'],
+                'subtotal' => $subtotal,
+                'totalAmount' => $totalAmount,
+                'itemCount' => $itemCount,
+            ]);
         }
 
-        session()->put('cart', $cart);
-
-        $subtotal = $cart[$productId]['price'] * $cart[$productId]['quantity'];
-        $totalAmount = array_sum(array_map(fn($item) => $item['price'] * $item['quantity'], $cart));
-
-        $itemCount = array_sum(array_column($cart, 'quantity'));
-
-
-        return response()->json([
-            'success' => true,
-            'quantity' => $cart[$productId]['quantity'],
-            'subtotal' => $subtotal,
-            'totalAmount' => $totalAmount,
-            'itemCount' => $itemCount,
-        ]);
+        return response()->json(['success' => false]);
     }
-
-    return response()->json(['success' => false]);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

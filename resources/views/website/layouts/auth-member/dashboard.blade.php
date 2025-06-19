@@ -86,6 +86,10 @@
                 @include('website.layouts.auth-member.dashboard.pages.products')
             </div>
 
+            <div id="cartPage" class="content-section d-none">
+                @include('website.layouts.auth-member.dashboard.pages.cart-page')
+            </div>
+
             <div id="wallet" class="content-section d-none">
                 <h2>Wallet</h2>
                 <p>Track your earnings and transactions.</p>

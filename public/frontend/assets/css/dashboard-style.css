@@ -252,3 +252,80 @@ Pagination style css
         background-color: #e2e6ea;
         color: #f97a00;
     }
+
+
+    /* ==============Checkout Page Styles====================== */
+.chekout-cart-section .table th,
+.chekout-cart-section .table td {
+  vertical-align: middle;
+  text-align: center;
+}
+
+.chekout-cart-section .product-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.chekout-cart-section .card-summary {
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.chekout-cart-section .coupon-input {
+  border-radius: 5px 0 0 5px;
+}
+
+.chekout-cart-section .btn-apply {
+  border-radius: 0 5px 5px 0;
+}
+
+.order-success-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.order-success-content {
+  max-width: 400px;
+  width: 90%;
+}
+.invoice {
+  display: inline-block;
+  padding: 5px 20px;
+  background-color: #000;
+  border-radius: 5px;
+  margin: 5px 0;
+}
+.invoice-text {
+  color: #fff !important;
+}
+
+
+.marco-btn {
+    display: inline-block;
+    padding: 10px 25px;
+    font-size: 16px;
+    font-weight: 500;
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    display: inline-block;
+    border-radius: 4px;
+    text-align: center;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.marco-btn:hover {
+    background-color: var(--secondary-color);
+    color: #fff;
+}

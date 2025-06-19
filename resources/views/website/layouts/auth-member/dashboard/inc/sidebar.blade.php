@@ -103,7 +103,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="nav-link" onclick="showContent('generation')">
+                            <a href="#" class="nav-link" onclick="showContent('cartPage')">
                                 <i class="fas fa-angle-right me-2"></i> Cart
                             </a>
                         </li>
