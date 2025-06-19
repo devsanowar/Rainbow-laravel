@@ -43,7 +43,7 @@
                              <input type="hidden" name="order_qty" value="1">
                              <button type="submit" class="rainbow-btn btn-buy mt-auto w-100">
                                  Add to Cart
-                                 <span class="spinner-border spinner-border-sm d-none"></span>
+                                 {{-- <span class="spinner-border spinner-border-sm d-none"></span> --}}
                              </button>
                          </form>
 

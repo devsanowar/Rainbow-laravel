@@ -18,3 +18,4 @@
 
     <!-- Dashbaord css -->
     <link rel="stylesheet" href="{{ asset('frontend') }}/assets/css/dashboard-style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>s

@@ -47,7 +47,7 @@
             let formData = form.serialize();
 
             let button = form.find('.btn-buy');
-            let spinner = form.find('.spinner-border'); // ✅ safer: search from form
+            let spinner = button.find('.spinner-border');  // ✅ safer: search button
 
             button.prop('disabled', true);
             spinner.removeClass('d-none');
@@ -61,12 +61,12 @@
 
                     $('#cart-count').text(response.itemCount); // ✅ only one set
 
-                    // ✅ Hide spinner, enable button
+                    // ✅ Stop spinner
                     spinner.addClass('d-none');
                     button.prop('disabled', false);
                 },
                 error: function () {
-                    toastr.error('Failed to add product.', '', { timeOut: 2000 });
+                    toastr.error('Failed to add product.', '', { timeOut: 1500 });
                     spinner.addClass('d-none');
                     button.prop('disabled', false);
                 }
