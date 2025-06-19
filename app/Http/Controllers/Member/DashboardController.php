@@ -10,12 +10,14 @@ class DashboardController extends Controller
 {
     public function dashboard()
     {
+        $cartContents = session()->get('cart', []);
+
         $products = Product::where('is_active', 1)
             ->latest()
             ->limit(8)
-            ->get(['id', 'product_name', 'product_slug', 'regular_price', 'discount_price', 'discount_type', 'thumbnail']);
+            ->get(['id', 'product_name', 'product_slug', 'regular_price', 'points', 'discount_price', 'discount_type', 'thumbnail']);
 
-        return view('website.layouts.auth-member.dashboard', compact('products'));
+        return view('website.layouts.auth-member.dashboard', compact('products', 'cartContents'));
     }
 
     public function loadProducts(Request $request)

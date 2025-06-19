@@ -12,7 +12,6 @@ class CartController extends Controller
     public function cartPage()
     {
         $cartContents = session()->get('cart', []);
-        dd($cartContents);
 
         $totalAmount = 0;
         foreach ($cartContents as $item) {
@@ -46,7 +45,7 @@ class CartController extends Controller
             $cart[$product->id] = [
                 'id' => $product->id,
                 'name' => $product->product_name,
-                'points' => $product->points,
+                'points' => $product->points, 
                 'price' => $final_price,
                 'quantity' => $qty,
                 'thumbnail' => $product->thumbnail,

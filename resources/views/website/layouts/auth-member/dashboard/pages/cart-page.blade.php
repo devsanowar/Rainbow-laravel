@@ -10,37 +10,40 @@
                                 <tr>
                                     <th scope="col">Image</th>
                                     <th scope="col">Product Name</th>
+                                    <th scope="col">Points</th>
                                     <th scope="col">Size</th>
                                     <th scope="col">Price</th>
-                                    <th scope="col">Quantity</th>
+                                    <th style="width: 60px" scope="col">Quantity</th>
                                     <th scope="col">Total</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td><img src="assets/images/product/kids-shoes.png" class="product-img"
+                                @forelse ($cartContents as $productId => $cartItem)
+                                    <tr>
+                                    <td><img src="{{ asset($cartItem['thumbnail']) }}" class="product-img"
                                             alt="Product" />
                                     </td>
-                                    <td>Vitamin D3</td>
+                                    <td>{{ $cartItem['name'] }}</td>
+                                    <td>{{ number_format(($cartItem['points'] ?? 0) * $cartItem['quantity'], 2) }}</td>
                                     <td>Medium</td>
-                                    <td>৳25</td>
+                                    <td>{{ number_format($cartItem['price'], 2) }} Tk</td>
                                     <td><input type="number" class="form-control form-control-sm" value="2" min="1">
                                     </td>
-                                    <td>৳50</td>
-                                    <td><button class="btn btn-sm btn-danger">Remove</button></td>
-                                </tr>
-                                <tr>
-                                    <td><img src="assets/images/product/sports.png" class="product-img" alt="Product" />
+                                    <td>{{ number_format($cartItem['price'] * $cartItem['quantity'], 2) }} Tk</td>
+                                    <td class="product-remove">
+                                        <a class="remove-button" href="{{ route('removefrom.cart', $productId) }}"
+                                        onclick="return confirm('Are you sure?')">
+                                        <i class="fa fa-times"></i>
+                                        </a>
                                     </td>
-                                    <td>Omega-3 Fish Oil</td>
-                                    <td>Large</td>
-                                    <td>৳40</td>
-                                    <td><input type="number" class="form-control form-control-sm" value="1" min="1">
-                                    </td>
-                                    <td>৳40</td>
-                                    <td><button class="btn btn-sm btn-danger">Remove</button></td>
+
                                 </tr>
+                                @empty
+                                    <p>Cart Content!!</p>
+                                @endforelse
+                                
+                                
                             </tbody>
                         </table>
                     </div>
