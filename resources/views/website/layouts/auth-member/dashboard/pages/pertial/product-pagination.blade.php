@@ -9,7 +9,7 @@
                      <div class="card-body d-flex flex-column">
                          <h5 class="product-name"><a href="singleProduct.html">{{ $product->product_name }}</a></h5>
                          <p class="text-muted">
-                             Superfood for Energy & Immunity
+                             POINT - <span class="point">{{ $product->points }}</span>
                          </p>
 
                          <p class="product-price mb-2">
