@@ -9,7 +9,7 @@
                         <thead class="table-light">
                             <tr>
                                 <th scope="col">Image</th>
-                                <th scope="col">Product Name</th>
+                                <th scope="col">Name</th>
                                 <th scope="col">Points</th>
                                 <th scope="col">Price</th>
                                 <th style="width: 250px" scope="col">Quantity</th>

@@ -21,51 +21,105 @@ class CartController extends Controller
         return view('website.layouts.pages.cart.cart_page', compact('cartContents', 'totalAmount'));
     }
 
+    // public function addToCart(Request $request)
+    // {
+    //     $product = Product::findOrFail($request->product_id);
+    //     $qty = $request->order_qty ?? 1;
+
+    //     // Determine final price based on discount
+    //     $final_price = $product->regular_price;
+
+    //     if ($product->discount_price > 0) {
+    //         if ($product->discount_type === 'percent') {
+    //             $final_price = $product->regular_price - ($product->regular_price * $product->discount_price) / 100;
+    //         } elseif ($product->discount_type === 'flat') {
+    //             $final_price = $product->regular_price - $product->discount_price;
+    //         }
+    //     }
+
+    //     $cart = session()->get('cart', []);
+
+    //     if (isset($cart[$product->id])) {
+    //         $cart[$product->id]['quantity'] += $qty;
+    //     } else {
+    //         $cart[$product->id] = [
+    //             'id' => $product->id,
+    //             'name' => $product->product_name,
+    //             'points' => $product->points,
+    //             'price' => $final_price,
+    //             'quantity' => $qty,
+    //             'thumbnail' => $product->thumbnail,
+    //             'regular_price' => $product->regular_price,
+    //             'discount_price' => $product->discount_price,
+    //             'discount_type' => $product->discount_type,
+    //         ];
+    //     }
+
+    //     session()->put('cart', $cart);
+
+    //     $itemCount = array_sum(array_column($cart, 'quantity'));
+
+    //     return response()->json([
+    //         'message' => 'Product added to cart',
+    //         'cart_count' => count($cart),
+    //         'itemCount' => $itemCount,
+    //         'new_item' => $cart[$product->id], // 👍 send item for JS to append
+    //     ]);
+    // }
+
+
     public function addToCart(Request $request)
-    {
-        $product = Product::findOrFail($request->product_id);
-        $qty = $request->order_qty ?? 1;
+{
+    $product = Product::findOrFail($request->product_id);
+    $qty = $request->order_qty ?? 1;
 
-        // Determine final price based on discount
-        $final_price = $product->regular_price;
-
-        if ($product->discount_price > 0) {
-            if ($product->discount_type === 'percent') {
-                $final_price = $product->regular_price - ($product->regular_price * $product->discount_price) / 100;
-            } elseif ($product->discount_type === 'flat') {
-                $final_price = $product->regular_price - $product->discount_price;
-            }
+    $final_price = $product->regular_price;
+    if ($product->discount_price > 0) {
+        if ($product->discount_type === 'percent') {
+            $final_price -= ($product->regular_price * $product->discount_price) / 100;
+        } elseif ($product->discount_type === 'flat') {
+            $final_price -= $product->discount_price;
         }
-
-        $cart = session()->get('cart', []);
-
-        if (isset($cart[$product->id])) {
-            $cart[$product->id]['quantity'] += $qty;
-        } else {
-            $cart[$product->id] = [
-                'id' => $product->id,
-                'name' => $product->product_name,
-                'points' => $product->points,
-                'price' => $final_price,
-                'quantity' => $qty,
-                'thumbnail' => $product->thumbnail,
-                'regular_price' => $product->regular_price,
-                'discount_price' => $product->discount_price,
-                'discount_type' => $product->discount_type,
-            ];
-        }
-
-        session()->put('cart', $cart);
-
-        $itemCount = array_sum(array_column($cart, 'quantity'));
-
-        return response()->json([
-            'message' => 'Product added to cart',
-            'cart_count' => count($cart),
-            'itemCount' => $itemCount,
-            'new_item' => $cart[$product->id], // 👍 send item for JS to append
-        ]);
     }
+
+    $cart = session()->get('cart', []);
+    if (isset($cart[$product->id])) {
+        $cart[$product->id]['quantity'] += $qty;
+    } else {
+        $cart[$product->id] = [
+            'id' => $product->id,
+            'name' => $product->product_name,
+            'points' => $product->points,
+            'price' => $final_price,
+            'quantity' => $qty,
+            'thumbnail' => $product->thumbnail,
+            'regular_price' => $product->regular_price,
+            'discount_price' => $product->discount_price,
+            'discount_type' => $product->discount_type,
+        ];
+    }
+
+    session()->put('cart', $cart);
+
+    $itemCount = array_sum(array_column($cart, 'quantity'));
+    $totalAmount = array_sum(array_map(function ($item) {
+        return $item['price'] * $item['quantity'];
+    }, $cart));
+
+    // ✅ Generate HTML row
+    $cartRow = view('website.layouts.auth-member.dashboard.pages.pertial.cart-row', ['cartItem' => $cart[$product->id]])->render();
+
+    return response()->json([
+        'message' => 'Product added to cart',
+        'cart_count' => count($cart),
+        'itemCount' => $itemCount,
+        'productId' => $product->id,
+        'cart_row' => $cartRow,
+        'subtotal' => number_format($totalAmount, 2),
+        'total' => number_format($totalAmount, 2),
+    ]);
+}
+
 
     public function updateCart(Request $request)
     {
