@@ -65,118 +65,77 @@ class CartController extends Controller
             'itemCount' => $itemCount,
             'new_item' => $cart[$product->id], // 👍 send item for JS to append
         ]);
-
     }
 
+    public function updateCart(Request $request)
+    {
+        $cart = session()->get('cart', []);
 
+        $productId = $request->product_id;
+        $action = $request->action;
 
-    // public function removeFromCart($id)
-    // {
-    //     $cart = session()->get('cart', []);
-
-    //     // Remove the item if it exists in the cart
-    //     if (isset($cart[$id])) {
-    //         unset($cart[$id]);
-    //         session()->put('cart', $cart);
-    //         Toastr::success('Product removed from cart successfully!', 'Success');
-    //     } else {
-    //         Toastr::warning('Product not found in cart!', 'Warning');
-    //     }
-    //     return back();
-    // }
-
-    public function removeFromCart(Request $request)
-        {
-            $id = $request->id;
-            $cart = session()->get('cart', []);
-
-            if (isset($cart[$id])) {
-                unset($cart[$id]);
-                session()->put('cart', $cart);
-                return response()->json(['message' => 'Product removed from cart successfully!']);
+        if (isset($cart[$productId])) {
+            // Quantity Update Logic
+            if ($action === 'increase') {
+                $cart[$productId]['quantity'] += 1;
+            } elseif ($action === 'decrease' && $cart[$productId]['quantity'] > 1) {
+                $cart[$productId]['quantity'] -= 1;
             }
 
-            return response()->json(['message' => 'Product not found in cart!'], 404);
+            // Save updated cart to session
+            session()->put('cart', $cart);
+
+            // Calculate updated values
+            $quantity = $cart[$productId]['quantity'];
+            $unitPrice = $cart[$productId]['price'];
+            $unitPoints = $cart[$productId]['points'] ?? 0;
+
+            $itemTotal = $unitPrice * $quantity;
+            $itemPointsTotal = $unitPoints * $quantity;
+
+            $totalAmount = array_sum(array_map(fn($item) => $item['price'] * $item['quantity'], $cart));
+            $itemCount = array_sum(array_column($cart, 'quantity'));
+
+            return response()->json([
+                'success' => true,
+                'quantity' => $quantity,
+                'subtotal' => number_format($itemTotal, 2), // for per product row display
+                'subtotalPoints' => number_format($itemPointsTotal, 2),
+                'totalAmount' => number_format($totalAmount, 2),
+                'itemCount' => $itemCount,
+                'itemTotal' => number_format($itemTotal, 2), // same as subtotal
+            ]);
         }
 
+        // Product not found in cart
+        return response()->json([
+            'success' => false,
+            'message' => 'Product not found in cart.',
+        ]);
+    }
 
-//     public function updateCart(Request $request)
-//     {
-//         $cart = session()->get('cart', []);
-
-//         $productId = $request->product_id;
-//         $action = $request->action;
-
-//         if (isset($cart[$productId])) {
-//             if ($action === 'increase') {
-//                 $cart[$productId]['quantity'] += 1;
-//             } elseif ($action === 'decrease' && $cart[$productId]['quantity'] > 1) {
-//                 $cart[$productId]['quantity'] -= 1;
-//             }
-
-//             session()->put('cart', $cart);
-
-//             $subtotal = $cart[$productId]['price'] * $cart[$productId]['quantity'];
-//             $totalAmount = array_sum(array_map(fn($item) => $item['price'] * $item['quantity'], $cart));
-
-//             $itemCount = array_sum(array_column($cart, 'quantity'));
-
-//             return response()->json([
-//                 'success' => true,
-//                 'quantity' => $cart[$productId]['quantity'],
-//                 'subtotal' => $subtotal,
-//                 'totalAmount' => $totalAmount,
-//                 'itemCount' => $itemCount,
-//             ]);
-//         }
-
-//         return response()->json(['success' => false]);
-//     }
-
-
-
-
-public function updateCart(Request $request)
+    public function removeFromCart(Request $request)
 {
+    $id = $request->id;
     $cart = session()->get('cart', []);
 
-    $productId = $request->product_id;
-    $action = $request->action;
-
-    if (isset($cart[$productId])) {
-        if ($action === 'increase') {
-            $cart[$productId]['quantity'] += 1;
-        } elseif ($action === 'decrease' && $cart[$productId]['quantity'] > 1) {
-            $cart[$productId]['quantity'] -= 1;
-        }
+    if (isset($cart[$id])) {
+        unset($cart[$id]);
 
         session()->put('cart', $cart);
 
-        $quantity = $cart[$productId]['quantity'];
-        $subtotal = $cart[$productId]['price'] * $quantity;
-        $subtotalPoints = ($cart[$productId]['points'] ?? 0) * $quantity;
-
+        // Recalculate totalAmount and itemCount after removing
         $totalAmount = array_sum(array_map(fn($item) => $item['price'] * $item['quantity'], $cart));
         $itemCount = array_sum(array_column($cart, 'quantity'));
 
         return response()->json([
-            'success' => true,
-            'quantity' => $quantity,
-            'subtotal' => number_format($subtotal, 2),
-            'subtotalPoints' => number_format($subtotalPoints, 2),
+            'message' => 'Product removed from cart successfully!',
             'totalAmount' => number_format($totalAmount, 2),
             'itemCount' => $itemCount,
         ]);
     }
 
-    return response()->json(['success' => false]);
+    return response()->json(['message' => 'Product not found in cart!'], 404);
 }
 
-
-
-
-
-
- }
-
-
+}

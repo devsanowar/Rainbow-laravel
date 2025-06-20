@@ -12,12 +12,21 @@ class DashboardController extends Controller
     {
         $cartContents = session()->get('cart', []);
 
+        // ✅ Total amount calculate করো
+        $totalAmount = array_sum(
+            array_map(function ($item) {
+                return $item['price'] * $item['quantity'];
+            }, $cartContents),
+        );
+
+        // ✅ অন্যান্য পণ্য লোড
         $products = Product::where('is_active', 1)
             ->latest()
             ->limit(8)
             ->get(['id', 'product_name', 'product_slug', 'regular_price', 'points', 'discount_price', 'discount_type', 'thumbnail']);
 
-        return view('website.layouts.auth-member.dashboard', compact('products', 'cartContents'))->render();;
+        // ✅ View return with totalAmount
+        return view('website.layouts.auth-member.dashboard', compact('products', 'cartContents', 'totalAmount'))->render();
     }
 
     public function loadProducts(Request $request)
